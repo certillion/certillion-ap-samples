@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import br.com.esec.icpm.libs.Certillion;
 import br.com.esec.icpm.libs.signature.BatchSignatureRequest;
-import br.com.esec.icpm.libs.signature.response.handler.SignatureBatchAsynchHandler;
+import br.com.esec.icpm.libs.signature.response.handler.batch.SignatureBatchAsynchHandler;
 import br.com.esec.icpm.sample.ap.library.signature.ClientIdentity;
 
 public class BatchSignatureAsynchronousSample {

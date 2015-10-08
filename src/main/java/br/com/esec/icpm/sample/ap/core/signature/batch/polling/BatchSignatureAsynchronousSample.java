@@ -131,7 +131,6 @@ public class BatchSignatureAsynchronousSample {
 			document.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(url).toLowerCase()));
 			document.setUrlToDocument(url);
 			documents.add(document);
-
 		}
 
 		// Set the request document

@@ -22,8 +22,6 @@ public class SignatureSimpleDocumentAsynchronousWithAdRtSample {
 		// Synch
 		Certillion
 			.signature()
-//			.useHost("https://10.0.0.10")
-			.useHost("http://10.0.0.10:8080")
 			.toUser(identifier)
 			.adRt()
 			.simple()

@@ -7,7 +7,7 @@ public class ClientIdentity {
 	public static void config() {
 		Certillion
 			.config()
-			.useTestHost()
+			.useTestServer()
 //			.keystorePath(System.getProperty("certillion.keystore", "client.jks"))
 //			.keystoreType(System.getProperty("certillion.storetype", "JKS"))
 //			.keyAlias(System.getProperty("certillion.alias"))

@@ -24,7 +24,7 @@ public class AttachSignatureSample {
 			.signature()
 			.simple()
 			.waitFor(transactionId)
-			.save(new FileInputStream(inputPath), new FileOutputStream(outputPath));
+			.saveAttached(new FileInputStream(inputPath), new FileOutputStream(outputPath));
 		
 	}
 	
