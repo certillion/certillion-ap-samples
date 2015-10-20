@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.esec.icpm.libs.Certillion;
+import br.com.esec.icpm.libs.Server;
 import br.com.esec.icpm.libs.signature.BatchSignatureRequest;
 import br.com.esec.icpm.libs.signature.response.handler.batch.SignatureBatchAsynchHandler;
 import br.com.esec.icpm.sample.ap.library.signature.ClientIdentity;
@@ -36,7 +37,7 @@ public class BatchSignatureAsynchronousSample {
 			.signature()
 			.toUser(identifier)
 			.batch()
-			.cades()
+			.adobePdf()
 			.message(message);
 		
 		for (Document document : documents) {
@@ -46,12 +47,15 @@ public class BatchSignatureAsynchronousSample {
 		
 		SignatureBatchAsynchHandler signatureResponse = signatureRequest
 				.asynchSign()
-				.waitTo(30);
+				.waitTo(120);
 		
 		for (Document document : documents) {
-			signatureResponse
-				.save(new FileOutputStream(document.outputPath));
+			FileOutputStream out = new FileOutputStream(document.outputPath);
+			signatureResponse.saveAttached(out);
+			out.close();
 		}
+		
+		System.exit(0);
 	}
 
 	static class Document {

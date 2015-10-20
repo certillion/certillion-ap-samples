@@ -14,7 +14,8 @@
 		<compiler.source>1.6</compiler.source>
 		<compiler.target>1.6</compiler.target>
 
-		<certillion.client.version>1.1.5</certillion.client.version>
+		<certillion.client.version>1.1.6-SNAPSHOT</certillion.client.version>
+		<cxf.version>2.7.3</cxf.version>
 	</properties>
 
 	<dependencies>
@@ -24,6 +25,43 @@
 			<groupId>br.com.esec.icpm</groupId>
 			<artifactId>certillion-client-library</artifactId>
 			<version>${certillion.client.version}</version>
+		</dependency>
+
+		<!-- CXF (JAX-WS implementation) -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!-- Jetty is needed if you're are not using the CXFServlet -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>${cxf.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-jdk14</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- RESTEASY (JAX-RS implementation) -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.0.2.Final</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-simple</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- HTTPCLIENT -->
@@ -52,6 +90,13 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
+		</dependency>
+		
+		<!-- SLF4J to LOG4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.12</version>
 		</dependency>
 	</dependencies>
 	<build>
