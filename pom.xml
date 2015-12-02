@@ -14,7 +14,7 @@
 		<compiler.source>1.6</compiler.source>
 		<compiler.target>1.6</compiler.target>
 
-		<certillion.client.version>1.1.8</certillion.client.version>
+		<certillion.client.version>1.1.9-SNAPSHOT</certillion.client.version>
 		<cxf.version>2.7.3</cxf.version>
 	</properties>
 

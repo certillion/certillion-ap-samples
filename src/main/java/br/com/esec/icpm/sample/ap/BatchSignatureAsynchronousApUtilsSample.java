@@ -33,6 +33,7 @@ import br.com.esec.icpm.sample.util.ImportDocs;
 import br.com.esec.icpm.server.factory.Status;
 import br.com.esec.icpm.server.ws.MobileUserType;
 
+@Deprecated
 @SuppressWarnings("restriction")
 public class BatchSignatureAsynchronousApUtilsSample {
 	private static final String wsUri = WsSignerAddress.get()

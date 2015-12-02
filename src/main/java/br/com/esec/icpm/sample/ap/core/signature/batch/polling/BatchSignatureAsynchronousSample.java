@@ -22,29 +22,30 @@ import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
 import br.com.esec.icpm.mss.ws.BatchSignatureComplexDocumentReqType;
 import br.com.esec.icpm.mss.ws.BatchSignatureComplexDocumentRespType;
 import br.com.esec.icpm.mss.ws.BatchSignatureTIDsRespType;
-import br.com.esec.icpm.mss.ws.DocumentSignatureInfoType;
 import br.com.esec.icpm.mss.ws.DocumentSignatureStatusInfoType;
 import br.com.esec.icpm.mss.ws.HashDocumentInfoType;
 import br.com.esec.icpm.mss.ws.MessagingModeType;
 import br.com.esec.icpm.mss.ws.SignaturePortType;
 import br.com.esec.icpm.mss.ws.SignatureStandardType;
 import br.com.esec.icpm.mss.ws.SignatureStatusReqType;
-import br.com.esec.icpm.sample.ap.core.WsSignerAddress;
 import br.com.esec.icpm.server.factory.Status;
 import br.com.esec.icpm.server.ws.ICPMException;
 import br.com.esec.icpm.server.ws.MobileUserType;
 
-@SuppressWarnings("restriction")
 public class BatchSignatureAsynchronousSample {
 
 	private static final String CADES_EXTENSION = "p7s";
 	private static final String XADES_EXTENSION = "xml";
 	private static final String PDF_EXTENSION = "pdf";
+	
+	//private static final String ADRRESS = WsSignerAddress.get();
+	private static final String ADRRESS = "http://labs.certillion.com";
+	
+	private static final String CERTILLION_SERVER_SOAP_URI = ADRRESS + "/mss/serviceAp_prod.wsdl";
+	private static final String CERTILLION_SERVER_REST_UPLOAD_URL = ADRRESS + "/mss/restful/applicationProvider/document";
+	private static final String CERTILLION_SERVER_REST_DOWNLOAD_URL = ADRRESS + "/mss/restful/applicationProvider/document/signed/%s";
 
-	private static final String uploadUrl = WsSignerAddress.get() + "/mss/restAp/document";
-	private static final String downloadUrl = WsSignerAddress.get() + "/mss/restAp/document/signed/%s";
-
-	private static List<String> urls = new ArrayList<String>();
+	private static List<String> paths = new ArrayList<String>();
 	private static String uniqueIdentifier = null;
 	private static String dataToBeDisplayed = null;
 	private static String standard = null;
@@ -64,24 +65,20 @@ public class BatchSignatureAsynchronousSample {
 			} else if (i == 2) {
 				standard = args[i];
 			} else {
-				urls.add(args[i]);
+				paths.add(args[i]);
 			}
 		}
 
 		List<HashDocumentInfoType> documents = new ArrayList<HashDocumentInfoType>();
-		List<DocumentSignatureInfoType> signatures = null;
 		List<DocumentSignatureStatusInfoType> signaturesStatus = null;
 		long transactionId = 0;
 
-		// Get the signaturePort
-		String endpointAddr = WsSignerAddress.get() + "/mss/serviceAp.wsdl";
-
-		System.out.println("Connecting to Signature Service... " + endpointAddr);
+		System.out.println("Connecting to Signature Service... " + CERTILLION_SERVER_SOAP_URI);
 		System.out.println();
 		System.out.println();
 		System.out.println();
 
-		URL urlws = new URL(endpointAddr);
+		URL urlws = new URL(CERTILLION_SERVER_SOAP_URI);
 		Service signatureService = Service.create(urlws, SignaturePortType.QNAME);
 		SignaturePortType signaturePortType = signatureService.getPort(SignaturePortType.class);
 
@@ -97,12 +94,16 @@ public class BatchSignatureAsynchronousSample {
 		request.setSignatureStandard(SignatureStandardType.valueOf(standard));
 
 		// upload files from each url
-		for (String url : urls) {
-			System.out.println("Sending document '" + url + "'... ");
-			URL fileUrl = new URL(url);
+		for (String path : paths) {
+			System.out.println("Sending document '" + path + "'... ");
+			File file = new File(path);
+			if(!file.exists())
+				throw new IllegalStateException("The file " + path + " can not be found.");
+			
+			URL fileUrl = file.toURI().toURL();
 			InputStream sourceIn = fileUrl.openStream();
 
-			URL obj = new URL(uploadUrl);
+			URL obj = new URL(CERTILLION_SERVER_REST_UPLOAD_URL);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.setDoInput(true);
 			con.setDoOutput(true);
@@ -126,10 +127,10 @@ public class BatchSignatureAsynchronousSample {
 			// Get hash from uploaded file, create document and save the
 			// document in the list
 			HashDocumentInfoType document = new HashDocumentInfoType();
-			document.setDocumentName(FilenameUtils.getName(url));
+			document.setDocumentName(FilenameUtils.getName(path));
 			document.setHash(response.toString());
-			document.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(url).toLowerCase()));
-			document.setUrlToDocument(url);
+			document.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(path).toLowerCase()));
+			document.setUrlToDocument(path);
 			documents.add(document);
 		}
 
@@ -176,9 +177,10 @@ public class BatchSignatureAsynchronousSample {
 		} catch (ICPMException e) {
 			System.err.println("Error " + e.getFaultInfo().getStatusCode() + " " + e.getFaultInfo().getStatusDetail());
 		}
+		
 		// saves signature
 		if (request.getSignatureStandard() == SignatureStandardType.CADES) {
-			downloadSignatures(signaturesStatus, transactionId, CADES_EXTENSION);
+			System.out.println("CAdES can not be downloaded. Saving dettached signature.");
 		} else if (request.getSignatureStandard() == SignatureStandardType.XADES) {
 			downloadSignatures(signaturesStatus, transactionId, XADES_EXTENSION);
 		} else if (request.getSignatureStandard() == SignatureStandardType.ADOBEPDF) {
@@ -196,7 +198,7 @@ public class BatchSignatureAsynchronousSample {
 				try {
 					output = new FileOutputStream(signatureFile);
 					if (document.getStatus().getStatusCode() != Status.USER_CANCELED.getCode()) {
-						signedDocumentIn = new URL(String.format(downloadUrl, String.valueOf(document.getTransactionId()))).openStream();
+						signedDocumentIn = new URL(String.format(CERTILLION_SERVER_REST_DOWNLOAD_URL, String.valueOf(document.getTransactionId()))).openStream();
 						IOUtils.copy(signedDocumentIn, output);
 					} else {
 						i++;

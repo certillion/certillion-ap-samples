@@ -47,6 +47,7 @@ import br.com.esec.icpm.server.factory.Status;
 import br.com.esec.icpm.server.ws.ICPMException;
 import br.com.esec.icpm.server.ws.MobileUserType;
 
+@Deprecated
 public class BatchSignatureAsynchronousApUtilsPollSample {
 	private static final String wsUri = WsSignerAddress.get()
 			+ "/mss/restAp/uploadDocument";
