@@ -41,7 +41,7 @@ public class BatchSignatureAsynchronousSample {
 	//private static final String ADRRESS = WsSignerAddress.get();
 	private static final String ADRRESS = "http://labs.certillion.com";
 	
-	private static final String CERTILLION_SERVER_SOAP_URI = ADRRESS + "/mss/serviceAp_prod.wsdl";
+	private static final String CERTILLION_SERVER_SOAP_WSDL_URL = ADRRESS + "/mss/serviceAp_prod.wsdl";
 	private static final String CERTILLION_SERVER_REST_UPLOAD_URL = ADRRESS + "/mss/restful/applicationProvider/document";
 	private static final String CERTILLION_SERVER_REST_DOWNLOAD_URL = ADRRESS + "/mss/restful/applicationProvider/document/signed/%s";
 
@@ -73,12 +73,12 @@ public class BatchSignatureAsynchronousSample {
 		List<DocumentSignatureStatusInfoType> signaturesStatus = null;
 		long transactionId = 0;
 
-		System.out.println("Connecting to Signature Service... " + CERTILLION_SERVER_SOAP_URI);
+		System.out.println("Connecting to Signature Service... " + CERTILLION_SERVER_SOAP_WSDL_URL);
 		System.out.println();
 		System.out.println();
 		System.out.println();
 
-		URL urlws = new URL(CERTILLION_SERVER_SOAP_URI);
+		URL urlws = new URL(CERTILLION_SERVER_SOAP_WSDL_URL);
 		Service signatureService = Service.create(urlws, SignaturePortType.QNAME);
 		SignaturePortType signaturePortType = signatureService.getPort(SignaturePortType.class);
 
