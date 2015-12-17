@@ -7,14 +7,13 @@ public class ClientIdentity {
 	public static void config() {
 		Certillion
 			.config()
-			.useTestServer()
-//			.keystorePath(System.getProperty("certillion.keystore", "client.jks"))
-//			.keystoreType(System.getProperty("certillion.storetype", "JKS"))
-//			.keyAlias(System.getProperty("certillion.alias"))
-//			.keystorePassword(System.getProperty("certillion.storepass"))
-//			.truststorePath(System.getProperty("certillion.truststore"))
-//			.truststoreType(System.getProperty("certillion.truststoretype"))
-//			.truststorePassword(System.getProperty("certillion.truststorepass"))
+//			.useTestServer()
+			.useProductionServer()
+			.keystorePath("C:/Users/Tales Porto/Downloads/soluti.CERTILLION.COM.2015.pfx")
+			.keystoreType("PKCS12")
+			.keyAlias("e-sec tecnologia em seguranca de dados s/a:03242841000101")
+			.keystorePassword("@dm03574(40D(u3R014")
+//			.truststorePath("C:/Users/Tales Porto/Downloads/empty-truststore")
 			.done();
 	}
 	
