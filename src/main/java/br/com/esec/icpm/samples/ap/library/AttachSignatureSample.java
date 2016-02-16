@@ -1,10 +1,9 @@
-package br.com.esec.icpm.samples.ap.library.signature.simple.attach;
+package br.com.esec.icpm.samples.ap.library;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import br.com.esec.icpm.libs.Certillion;
-import br.com.esec.icpm.samples.ap.library.signature.ClientIdentity;
 
 public class AttachSignatureSample {
 
@@ -18,7 +17,7 @@ public class AttachSignatureSample {
 		String inputPath = args[1];
 		String outputPath = args[2];
 		
-		ClientIdentity.config();
+		Configuration.config();
 		
 		Certillion
 			.signature()

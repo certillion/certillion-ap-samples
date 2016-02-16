@@ -1,4 +1,4 @@
-package br.com.esec.icpm.samples.ap.library.signature.batch.polling;
+package br.com.esec.icpm.samples.ap.library;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,9 +10,8 @@ import org.apache.commons.io.FilenameUtils;
 import br.com.esec.icpm.libs.Certillion;
 import br.com.esec.icpm.libs.signature.BatchSignatureRequest;
 import br.com.esec.icpm.libs.signature.response.handler.batch.SignatureBatchAsynchHandler;
-import br.com.esec.icpm.samples.ap.library.signature.ClientIdentity;
 
-public class BatchSignatureAsynchronousSample {
+public class SignDocumentsSample {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
@@ -30,7 +29,7 @@ public class BatchSignatureAsynchronousSample {
 			documents.add(new Document(inputPath, outPath));
 		}
 		
-		ClientIdentity.config();
+		Configuration.config();
 		
 		final BatchSignatureRequest signatureRequest = Certillion
 			.signature()
