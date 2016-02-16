@@ -4,16 +4,14 @@
 
 	<groupId>br.com.esec.icpm</groupId>
 	<artifactId>certillion-ap-samples</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
 		<compiler.source>1.6</compiler.source>
 		<compiler.target>1.6</compiler.target>
-
 		<certillion.client.version>1.1.10</certillion.client.version>
 		<cxf.version>2.7.3</cxf.version>
 	</properties>
@@ -28,6 +26,7 @@
 		</dependency>
 
 		<!-- CXF (JAX-WS implementation) -->
+		<!-- Jetty is needed if you are not using the CXFServlet -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -38,7 +37,6 @@
 			<artifactId>cxf-rt-transports-http</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
-		<!-- Jetty is needed if you're are not using the CXFServlet -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
@@ -64,44 +62,41 @@
 			</exclusions>
 		</dependency>
 
-		<!-- HTTPCLIENT -->
+		<!-- Apache commons and cia -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.3.6</version>
 		</dependency>
-
-		<!-- HTTPMIME -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
 			<version>4.2.4</version>
 		</dependency>
-
-		<!-- COMMONS-IO -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-
-		<!-- COMMONS-VALIDATOR -->
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-		
+
 		<!-- SLF4J to LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.12</version>
 		</dependency>
+
 	</dependencies>
+
 	<build>
 		<plugins>
-			<!-- Compiler plugin -->
+
+			<!-- Set Java version -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -112,43 +107,46 @@
 				</configuration>
 			</plugin>
 
-			<!-- Source publish plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
-			</plugin>
-
-			<!-- JAR plugin -->
+			<!-- Makes JAR executable -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>Main</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
 			</plugin>
 
-			<!-- Assembly plugin -->
+			<!-- Creates distribution zip -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.5.5</version>
+				<version>2.2.1</version>
 				<configuration>
-					<configuration>
-						<finalName>${project.artifactId}</finalName>
-						<descriptors>
-							<descriptor>src/main/assembly/distribution.xml</descriptor>
-						</descriptors>
-					</configuration>
-					<executions>
-						<execution>
-							<id>assembly</id>
-							<phase>package</phase>
-							<goals>
-								<goal>attached</goal>
-							</goals>
-						</execution>
-					</executions>
+					<descriptors>
+						<descriptor>src/main/assembly/dist.xml</descriptor>
+					</descriptors>
 				</configuration>
+				<executions>
+					<execution>
+						<id>assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
+
 </project>

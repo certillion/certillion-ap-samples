@@ -1,5 +1,6 @@
 /target
-certillionDocs/**
 /.classpath
 /.project
 /.settings
+/.idea
+/certillion-ap-samples.iml
