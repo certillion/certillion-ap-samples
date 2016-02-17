@@ -14,24 +14,23 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length < 1) {
-			System.out.println("Need this params: [command] [options...]");
-			System.out.println("\tcommand: ["
-					+ COMMAND_SIGN_TEXT + ", "
-					+ COMMAND_SIGN_DOCS + ", "
-					+ COMMAND_ATTACH + ", "
-					+ COMMAND_VALIDATE + "] ");
+			System.out.println(
+					"usage: certillion-ap-samples [command] [options...] \n" +
+					"\n" +
+					"\t command: [" + COMMAND_SIGN_TEXT + ", " + COMMAND_SIGN_DOCS + ", " + COMMAND_ATTACH + ", " + COMMAND_VALIDATE + "] \n" +
+					"\t options: depends of the command \n"
+			);
 			System.exit(1);
 		}
 
-		String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
 		if (COMMAND_SIGN_TEXT.equals(args[0])) {
-			SignTextSample.main(newArgs);
+			SignTextSample.main(args);
 		} else if (COMMAND_SIGN_DOCS.equals(args[0])) {
-			SignDocumentsSample.main(newArgs);
+			SignDocumentsSample.main(args);
 		} else if (COMMAND_VALIDATE.equals(args[0])) {
-			ValidateSignatureSample.main(newArgs);
+			ValidateSignatureSample.main(args);
 		} else if (COMMAND_ATTACH.equals(args[0])) {
-			AttachSignatureSample.main(newArgs);
+			AttachSignatureSample.main(args);
 		}
 	}
 

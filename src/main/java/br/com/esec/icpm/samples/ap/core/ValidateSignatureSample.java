@@ -24,13 +24,13 @@ public class ValidateSignatureSample {
 	private static final String CERTILLION_SERVER_SOAP_WSDL_URL = ADRRESS + "/mss/serviceAp_prod.wsdl";
 
 	public static void main(String[] args) throws IOException {
-		if (args.length < 1) {
-			System.out.println("ValidateSignatureSample need this params: [signatureFile] [dataFile]");
+		if (args.length < 2) {
+			System.out.println("usage: certillion-ap-samples validate-signature [signature-file] [data-file]");
 			System.exit(1);
 		}
 
-		String signatureFile = args[0];
-		String dataFile = args[1];
+		String signatureFile = args[1];
+		String dataFile = args[2];
 		DataHandler signature;
 		DataHandler content;
 

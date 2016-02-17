@@ -38,14 +38,19 @@ public class SignTextSample {
 	public static void main(String[] args) throws MalformedURLException, InterruptedException {
 
 		// validate args length
-		if (args.length < 2) {
-			System.out.println("SignTextSample need this params: [uniqueIdentifier] [textToBeSigned]");
+		if (args.length < 3) {
+			System.out.println(
+					"usage: certillion-ap-samples sign-text [identifier] [message] \n" +
+					"\n" +
+					"\t identifier: email of the user \n" +
+					"\t message: text to be signed \n"
+			);
 			System.exit(1);
 		}
 
 		// get args
-		String uniqueIdentifier = args[0];
-		String textToBeSigned = args[1];
+		String uniqueIdentifier = args[1];
+		String textToBeSigned = args[2];
 
 		// connect to service
 		log.info("Connecting to service...");

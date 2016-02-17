@@ -20,24 +20,22 @@ import org.apache.http.impl.client.HttpClientBuilder;
 public class AttachSignatureSample {
 
 	public static void main(String[] args) throws Exception {
-		if (args.length < 3) {
-			System.out.println("AttachSignatureSample need this params: [fileName or fileUrl] [Base64-encoded-signature] [transactionId] ");
+		if (args.length < 4) {
+			System.out.println("usage: certillion-ap-samples attach-signature [transaction-id] [file-url] [base64-signature]");
 			System.exit(1);
 		}
 
-		String fileName = "";
-
-		String signatureB64 = "";
-
-		String transactionId = "";
-
 		// Get arguments from request
-		for (int i = 0; i < args.length; i++) {
-			if (i == 0) {
+		String transactionId = args[1];
+		String fileName = args[2];
+		String signatureB64 = args[3];
+
+		for (int i = 1; i < args.length; i++) {
+			if (i == 1) {
 				fileName = args[i];
-			} else if (i == 1) {
-				signatureB64 = args[i];
 			} else if (i == 2) {
+				signatureB64 = args[i];
+			} else if (i == 3) {
 				transactionId = args[i];
 			}
 		}

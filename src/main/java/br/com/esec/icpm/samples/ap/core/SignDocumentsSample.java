@@ -45,15 +45,21 @@ public class SignDocumentsSample {
 	public static void main(String[] args) throws Exception {
 
 		// validate args length
-		if (args.length < 3) {
-			System.out.println("SignDocumentsSample need this params: [uniqueIdentifier] [dataToBeDisplayed] [filesPath] ");
+		if (args.length < 4) {
+			System.out.println(
+					"usage: certillion-ap-samples sign-documents [identifier] [message] [files...] \n" +
+					"\n" +
+					"\t identifier: email of the user \n" +
+					"\t message: text to be displayed \n" +
+					"\t files: path for one or more files to be signed \n"
+			);
 			System.exit(1);
 		}
 
 		// get args
-		String uniqueIdentifier = args[0];
-		String dataToBeDisplayed = args[1];
-		String[] filesPath = Arrays.copyOfRange(args, 2, args.length);
+		String uniqueIdentifier = args[1];
+		String dataToBeDisplayed = args[2];
+		String[] filesPath = Arrays.copyOfRange(args, 3, args.length);
 		SignatureStandardType standard = getStandardFromExtension(filesPath[0]);
 		validateArgs(args);
 
