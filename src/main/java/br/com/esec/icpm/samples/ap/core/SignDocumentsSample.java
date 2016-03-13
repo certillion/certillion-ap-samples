@@ -137,8 +137,8 @@ public class SignDocumentsSample {
 	}
 
 	private static void validateArgs(String[] args) {
-		String extension = args[2].substring(args[2].lastIndexOf('.'));
-		for (int i = 2; i < args.length; i++) {
+		String extension = args[3].substring(args[3].lastIndexOf('.'));
+		for (int i = 3; i < args.length; i++) {
 			if (!args[i].endsWith(extension)) {
 				System.out.println("All files must have the same extension");
 				System.exit(1);
