@@ -30,8 +30,10 @@ import br.com.esec.icpm.mss.ws.SignatureStandardType;
 import br.com.esec.icpm.mss.ws.SignatureStatusReqType;
 import br.com.esec.icpm.mss.ws.SignatureStatusRespType;
 import br.com.esec.icpm.server.factory.Status;
+import br.com.esec.icpm.server.ws.ElementsIdXmldsigOptionType;
 import br.com.esec.icpm.server.ws.ICPMException;
 import br.com.esec.icpm.server.ws.MobileUserType;
+import br.com.esec.icpm.server.ws.SignatureStandardOptionsType;
 
 /**
  * This example shows how to request the signature of on XMLDSIG_ENVELOPING document.
@@ -42,10 +44,13 @@ import br.com.esec.icpm.server.ws.MobileUserType;
  * with the server. In a real application, you should move this "polling" logic to an appropriate mechanism, such as an
  * ExecutorService, TimerService, etc.
  */
-public class SignXmldsigEnvelopingSample {
+public class SignXmldsigSample {
 
-	private static final Logger log = LoggerFactory.getLogger(SignXmldsigEnvelopingSample.class);
+	private static final Logger log = LoggerFactory.getLogger(SignXmldsigSample.class);
 	private static SignaturePortType signatureEndpoint = null;
+	private static final String BASE_TYPE = "xmldsig_";
+	private static SignatureStandardType standard;
+	private static String[] ids;
 
 	public static void main(String[] args) throws Exception {
 
@@ -56,7 +61,9 @@ public class SignXmldsigEnvelopingSample {
 					"\n" +
 					"\t identifier: email of the user \n" +
 					"\t message: text to be displayed \n" +
-					"\t file: path for one or more files to be signed \n"
+					"\t standardType: [enveloping] or [enveloped] \n" +
+					"\t IDs: xml ids to be signed (only for enveloped type). Ex: [1,2,3] \n" +
+					"\t file: path for one file to be signed \n"
 			);
 			System.exit(1);
 		}
@@ -64,10 +71,14 @@ public class SignXmldsigEnvelopingSample {
 		// get args
 		String uniqueIdentifier = args[1];
 		String dataToBeDisplayed = args[2];
-		SignatureStandardType standard = SignatureStandardType.XMLDSIG_ENVELOPING;
-		String[] filesPath = Arrays.copyOfRange(args, 3, args.length);
-		validateArgs(args);
-
+		standard = SignatureStandardType.fromValue(BASE_TYPE+args[3]);
+		String[] filesPath;
+		if(standard.equals(SignatureStandardType.XMLDSIG_ENVELOPED)){
+			ids = args[4].split(",");
+			filesPath = Arrays.copyOfRange(args, 5, args.length);
+		}else{
+			filesPath = Arrays.copyOfRange(args, 4, args.length);
+		}
 		List<HashDocumentInfoType> documents = uploadFiles(filesPath);
 
 		// connnect to service
@@ -180,6 +191,11 @@ public class SignXmldsigEnvelopingSample {
 			documentInfo.setHash(response);
 			documentInfo.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(path).toLowerCase()));
 			documentInfo.setUrlToDocument(path);
+			if(standard.equals(SignatureStandardType.XMLDSIG_ENVELOPED)){
+				documentInfo.setSignatureStandardOptions(new SignatureStandardOptionsType() {{
+	                add(new ElementsIdXmldsigOptionType(Arrays.asList(ids)));
+	            }});
+			}
 			result.add(documentInfo);
 		}
 
@@ -235,6 +251,10 @@ public class SignXmldsigEnvelopingSample {
 				return ".xml";
 			case ADOBEPDF:
 				return ".pdf";
+			case XMLDSIG_ENVELOPED:
+				return ".xml";
+			case XMLDSIG_ENVELOPING:
+				return ".xml";
 			default:
 				throw new IllegalStateException("Unknown standard");
 		}

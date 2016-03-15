@@ -1,6 +1,7 @@
 import br.com.esec.icpm.samples.ap.core.AttachSignatureSample;
 import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
 import br.com.esec.icpm.samples.ap.core.SignTextSample;
+import br.com.esec.icpm.samples.ap.core.SignXmldsigSample;
 import br.com.esec.icpm.samples.ap.core.ValidateSignatureSample;
 
 public class Main {
@@ -27,7 +28,7 @@ public class Main {
 		} else if (COMMAND_SIGN_DOCS.equals(args[0])) {
 			SignDocumentsSample.main(args);
 		} else if (COMMAND_SIGN_XMLDSIG_DOCS.equals(args[0])) {
-			SignDocumentsSample.main(args);
+			SignXmldsigSample.main(args);
 		} else if (COMMAND_VALIDATE.equals(args[0])) {
 			ValidateSignatureSample.main(args);
 		} else if (COMMAND_ATTACH.equals(args[0])) {
