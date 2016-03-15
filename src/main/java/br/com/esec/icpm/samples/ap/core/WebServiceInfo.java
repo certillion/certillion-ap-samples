@@ -1,6 +1,5 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.net.URL;
 
 public class WebServiceInfo {
 

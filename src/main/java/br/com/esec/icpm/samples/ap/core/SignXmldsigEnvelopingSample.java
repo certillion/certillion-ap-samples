@@ -34,15 +34,17 @@ import br.com.esec.icpm.server.ws.ICPMException;
 import br.com.esec.icpm.server.ws.MobileUserType;
 
 /**
- * This example shows how to request the signature of a list of documents.
+ * This example shows how to request the signature of on XMLDSIG_ENVELOPING document.
+ * 
+ * See our manual for further informations. It's possible to sign as XMLDSIG_ENVELOPED and use other parameters like sign by attribute name or Id.
  *
  * To get the response, this example uses the "polling" method, which periodically check the status of the transaction
  * with the server. In a real application, you should move this "polling" logic to an appropriate mechanism, such as an
  * ExecutorService, TimerService, etc.
  */
-public class SignDocumentsSample {
+public class SignXmldsigEnvelopingSample {
 
-	private static final Logger log = LoggerFactory.getLogger(SignDocumentsSample.class);
+	private static final Logger log = LoggerFactory.getLogger(SignXmldsigEnvelopingSample.class);
 	private static SignaturePortType signatureEndpoint = null;
 
 	public static void main(String[] args) throws Exception {
@@ -50,11 +52,11 @@ public class SignDocumentsSample {
 		// validate args length
 		if (args.length < 4) {
 			System.out.println(
-					"usage: certillion-ap-samples sign-documents [identifier] [message] [files...] \n" +
+					"usage: certillion-ap-samples sign-documents [identifier] [message] [file] \n" +
 					"\n" +
 					"\t identifier: email of the user \n" +
 					"\t message: text to be displayed \n" +
-					"\t files: path for one or more files to be signed \n"
+					"\t file: path for one or more files to be signed \n"
 			);
 			System.exit(1);
 		}
@@ -62,8 +64,8 @@ public class SignDocumentsSample {
 		// get args
 		String uniqueIdentifier = args[1];
 		String dataToBeDisplayed = args[2];
+		SignatureStandardType standard = SignatureStandardType.XMLDSIG_ENVELOPING;
 		String[] filesPath = Arrays.copyOfRange(args, 3, args.length);
-		SignatureStandardType standard = getStandardFromExtension(filesPath[0]);
 		validateArgs(args);
 
 		List<HashDocumentInfoType> documents = uploadFiles(filesPath);
@@ -140,7 +142,7 @@ public class SignDocumentsSample {
 
 	private static void validateArgs(String[] args) {
 		String extension = args[3].substring(args[3].lastIndexOf('.'));
-		for (int i = 3; i < args.length; i++) {
+		for (int i = 2; i < args.length; i++) {
 			if (!args[i].endsWith(extension)) {
 				System.out.println("All files must have the same extension");
 				System.exit(1);
@@ -223,16 +225,6 @@ public class SignDocumentsSample {
 		IOUtils.closeQuietly(inputStream);
 		IOUtils.closeQuietly(outputStream);
 		log.info("Signature saved in file {}", outputFileName);
-	}
-
-	private static SignatureStandardType getStandardFromExtension(String filePath) {
-		if (filePath.endsWith(".pdf")) {
-			return SignatureStandardType.ADOBEPDF;
-		} else if (filePath.endsWith(".xml")) {
-			return SignatureStandardType.XADES;
-		} else {
-			return SignatureStandardType.CADES;
-		}
 	}
 
 	private static String getExtensionFromStandard(SignatureStandardType standard) {

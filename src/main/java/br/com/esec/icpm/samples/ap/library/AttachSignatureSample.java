@@ -22,7 +22,7 @@ public class AttachSignatureSample {
 		Certillion
 			.signature()
 			.simple()
-			.waitFor(transactionId)
+			.waitTo(transactionId)
 			.saveAttached(new FileInputStream(inputPath), new FileOutputStream(outputPath));
 		
 	}

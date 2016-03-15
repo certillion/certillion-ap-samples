@@ -1,9 +1,6 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -11,6 +8,8 @@ import javax.activation.DataHandler;
 import javax.xml.ws.Service;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.esec.icpm.mss.ws.MessagingModeType;
 import br.com.esec.icpm.mss.ws.SignaturePortType;
@@ -19,10 +18,7 @@ import br.com.esec.icpm.mss.ws.SignatureSimpleDocumentReqType;
 import br.com.esec.icpm.mss.ws.SignatureStatusReqType;
 import br.com.esec.icpm.mss.ws.SignatureStatusRespType;
 import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.ICPMException;
 import br.com.esec.icpm.server.ws.MobileUserType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This example shows how to request the signature of a simple text message.

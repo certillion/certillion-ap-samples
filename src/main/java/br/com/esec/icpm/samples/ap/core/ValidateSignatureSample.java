@@ -15,7 +15,6 @@ import br.com.esec.icpm.mss.ws.ValidateReqType;
 import br.com.esec.icpm.mss.ws.ValidateRespType;
 import br.com.esec.icpm.server.ws.ICPMException;
 
-@SuppressWarnings("restriction")
 public class ValidateSignatureSample {
 
 	// private static final String ADRRESS = WebServiceInfo.getBaseUrl();
