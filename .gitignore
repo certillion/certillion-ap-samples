@@ -3,4 +3,5 @@
 /.project
 /.settings
 /.idea
-/certillion-ap-samples.iml
+*.iml
+*.versionsBackup

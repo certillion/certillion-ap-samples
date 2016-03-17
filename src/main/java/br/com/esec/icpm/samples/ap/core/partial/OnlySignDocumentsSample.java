@@ -1,12 +1,10 @@
 package br.com.esec.icpm.samples.ap.core.partial;
 
-import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
-import br.com.esec.icpm.mss.ws.*;
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
 import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
-import br.com.esec.icpm.samples.ap.core.WebServiceInfo;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.ICPMException;
-import br.com.esec.icpm.server.ws.MobileUserType;
+import br.com.esec.icpm.samples.ap.core.utils.Status;
+import br.com.esec.mss.ap.*;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -16,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.xml.ws.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,18 +37,22 @@ public class OnlySignDocumentsSample {
 
 			// validate args length
 			if (args.length < 3) {
-				System.out.println("usage: certillion-ap-samples only-sign-documents [config_csv] [identifier] \n");
+				System.out.println(MessageFormat.format("usage: {0} {1} <config_csv> <identifier> [<skip_download>] \n",
+						Constants.APP_NAME, Constants.COMMAND_ONLY_SIGN));
 				System.exit(1);
 			}
 
 			// get args
 			ConfigCsv config = new ConfigCsv(args[1]);
 			String uniqueIdentifier = args[2];
+			boolean skipDownload = Boolean.parseBoolean(args.length > 3 ? args[3] : "false");
 			config.read();
 
 			// sign files and save detached signatures
 			BatchSignatureTIDsRespType statusResp = signFiles(uniqueIdentifier, config);
-			downloadSignatures(statusResp, config);
+			if (!skipDownload) {
+				downloadSignatures(statusResp, config);
+			}
 			config.write();
 
 		} catch (Exception e) {
@@ -64,7 +67,7 @@ public class OnlySignDocumentsSample {
 
 		// connnect to service
 		log.info("Connecting to service...");
-		URL serviceUrl = new URL(WebServiceInfo.getApServiceUrl());
+		URL serviceUrl = new URL(Constants.WSDL_URL);
 		Service signatureService = Service.create(serviceUrl, SignaturePortType.QNAME);
 		signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 
@@ -74,7 +77,7 @@ public class OnlySignDocumentsSample {
 
 		// retrieve info about the documents to be signed
 		List<HashDocumentInfoType> documents = new ArrayList<HashDocumentInfoType>();
-		for (ConfigCsv.FileInfo info : config.getFileInfos()) {
+		for (FileInfo info : config.getFileInfos()) {
 			String path = info.getPath();
 			HashDocumentInfoType document = new HashDocumentInfoType();
 			document.setDocumentName(FilenameUtils.getName(path));
@@ -126,6 +129,13 @@ public class OnlySignDocumentsSample {
 			System.exit(1);
 		}
 
+		// save transaction-id of each document
+		for (DocumentSignatureStatusInfoType documentInfo : statusResp.getDocumentSignatureStatus()) {
+			FileInfo configInfo = config.findByName(documentInfo.getDocumentName());
+			configInfo.setTransactionId(Long.toString(documentInfo.getTransactionId()));
+		}
+
+		log.info("Signature completed.");
 		return statusResp;
 	}
 
@@ -156,11 +166,10 @@ public class OnlySignDocumentsSample {
 						byte[] signedBytes = IOUtils.toByteArray(response.getSignature().getInputStream());
 
 						// save the signature
-						ConfigCsv.FileInfo info = config.findByName(documentName);
+						FileInfo configInfo = config.findByName(documentName);
 						String signature = Base64.encodeBase64String(signedBytes);
-						info.setId(Long.toString(transactionId));
-						info.setSignature(signature);
-						log.info("The signature of {} is {}", documentName, signature);
+						configInfo.setSignature(signature);
+						log.info("Downloaded signature of document {}", documentName);
 
 					} catch (Exception e) {
 						log.error("Error downloading signatures", e);

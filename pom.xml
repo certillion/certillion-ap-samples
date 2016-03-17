@@ -4,7 +4,7 @@
 
 	<groupId>br.com.esec.icpm</groupId>
 	<artifactId>certillion-ap-samples</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 
 	<packaging>jar</packaging>
 
@@ -12,56 +12,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<compiler.source>1.6</compiler.source>
 		<compiler.target>1.6</compiler.target>
-		<certillion.client.version>1.1.10</certillion.client.version>
-		<cxf.version>2.7.3</cxf.version>
-		<slf4j.version>1.7.16</slf4j.version>
 	</properties>
 
 	<dependencies>
-
-		<!-- Certillion Client Library -->
-		<dependency>
-			<groupId>br.com.esec.icpm</groupId>
-			<artifactId>certillion-client-library</artifactId>
-			<version>${certillion.client.version}</version>
-		</dependency>
-
-		<!-- CXF (JAX-WS implementation) -->
-		<!-- Jetty is needed if you are not using the CXFServlet -->
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http-jetty</artifactId>
-			<version>${cxf.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-jdk14</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<!-- RESTEASY (JAX-RS implementation) -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>3.0.2.Final</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-simple</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 
 		<!-- Apache commons and cia -->
 		<dependency>
@@ -85,16 +38,11 @@
 			<version>1.4.0</version>
 		</dependency>
 
-		<!-- SLF4J to LOG4J -->
+		<!-- LogBack -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.6</version>
 		</dependency>
 
 	</dependencies>
@@ -113,40 +61,22 @@
 				</configuration>
 			</plugin>
 
-			<!-- Makes JAR executable -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.3</version>
 				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>Main</mainClass>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-
-			<!-- Creates distribution zip -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2.1</version>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/dist.xml</descriptor>
-					</descriptors>
+					<transformers>
+						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>br.com.esec.icpm.samples.ap.Main</mainClass>
+						</transformer>
+					</transformers>
 				</configuration>
 				<executions>
 					<execution>
-						<id>assembly</id>
 						<phase>package</phase>
 						<goals>
-							<goal>single</goal>
+							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>

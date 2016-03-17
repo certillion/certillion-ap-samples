@@ -1,34 +1,25 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.Status;
+import br.com.esec.mss.ap.*;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.xml.ws.Service;
-
-import br.com.esec.icpm.mss.ws.*;
-import br.com.esec.icpm.samples.ap.core.WebServiceInfo;
-import br.com.esec.icpm.server.ws.SignaturePolicyType;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-
-import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.ICPMException;
-import br.com.esec.icpm.server.ws.MobileUserType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This example shows how to request the signature of a list of documents.
@@ -46,13 +37,14 @@ public class SignDocumentsSample {
 
 		// validate args length
 		if (args.length < 4) {
-			System.out.println(
-					"usage: certillion-ap-samples sign-documents [identifier] [message] [files...] \n" +
+			System.out.println(MessageFormat.format(
+					"usage: {0} {1} [identifier] [message] [files...] \n" +
 					"\n" +
 					"\t identifier: email of the user \n" +
 					"\t message: text to be displayed \n" +
-					"\t files: path for one or more files to be signed \n"
-			);
+					"\t files: path for one or more files to be signed \n",
+					Constants.APP_NAME, Constants.COMMAND_SIGN_DOCS
+			));
 			System.exit(1);
 		}
 
@@ -67,8 +59,8 @@ public class SignDocumentsSample {
 
 		// connnect to service
 		log.info("Connecting to service...");
-		URL serviceUrl = new URL(WebServiceInfo.getApServiceUrl());
-		Service signatureService = Service.create(serviceUrl, SignaturePortType.QNAME);
+		URL serviceUrl = new URL(Constants.WSDL_URL);
+		Service signatureService = Service.create(serviceUrl, Constants.SERVICE_QNAME);
 		signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 
 		// set the target user
@@ -160,7 +152,7 @@ public class SignDocumentsSample {
 
 			// upload file via REST
 			log.info("Uploading file {} ...", path);
-			URL restUrl = new URL(WebServiceInfo.getUploadDocumentUrl());
+			URL restUrl = new URL(Constants.UPLOAD_URL);
 			HttpURLConnection connection = (HttpURLConnection) restUrl.openConnection();
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
@@ -213,7 +205,7 @@ public class SignDocumentsSample {
 		}
 
 		// save signature
-		URL url = new URL(WebServiceInfo.getDownloadDocumentUrl() + documentInfo.getTransactionId());
+		URL url = new URL(Constants.DOWNLOAD_URL + documentInfo.getTransactionId());
 		InputStream inputStream = url.openStream();
 		String outputFileName = "signature-" + documentInfo.getTransactionId() + extension;
 		FileOutputStream outputStream = new FileOutputStream(outputFileName);

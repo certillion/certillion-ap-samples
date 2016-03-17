@@ -1,11 +1,6 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-
-import br.com.esec.icpm.samples.ap.core.WebServiceInfo;
+import br.com.esec.icpm.samples.ap.Constants;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.http.HttpResponse;
@@ -16,6 +11,11 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 
 public class AttachSignatureSample {
 
@@ -41,7 +41,7 @@ public class AttachSignatureSample {
 		}
 
 		// Get the signaturePort
-		String endpointAddr = WebServiceInfo.getBaseUrl() + "/pdfs/signeds";
+		String endpointAddr = Constants.BASE_URL + "/pdfs/signeds";
 		URL url = new URL(endpointAddr);
 
 		// build http client

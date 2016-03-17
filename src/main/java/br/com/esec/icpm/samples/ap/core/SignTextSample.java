@@ -1,28 +1,17 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.activation.DataHandler;
-import javax.xml.ws.Service;
-
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.Status;
+import br.com.esec.mss.ap.*;
 import org.apache.commons.io.IOUtils;
-
-import br.com.esec.icpm.mss.ws.MessagingModeType;
-import br.com.esec.icpm.mss.ws.SignaturePortType;
-import br.com.esec.icpm.mss.ws.SignatureRespType;
-import br.com.esec.icpm.mss.ws.SignatureSimpleDocumentReqType;
-import br.com.esec.icpm.mss.ws.SignatureStatusReqType;
-import br.com.esec.icpm.mss.ws.SignatureStatusRespType;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.ICPMException;
-import br.com.esec.icpm.server.ws.MobileUserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.ws.Service;
+import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.MessageFormat;
 
 /**
  * This example shows how to request the signature of a simple text message.
@@ -39,12 +28,13 @@ public class SignTextSample {
 
 		// validate args length
 		if (args.length < 3) {
-			System.out.println(
-					"usage: certillion-ap-samples sign-text [identifier] [message] \n" +
+			System.out.println(MessageFormat.format(
+					"usage: {0} {1} <identifier> <message> \n" +
 					"\n" +
 					"\t identifier: email of the user \n" +
-					"\t message: text to be signed \n"
-			);
+					"\t message: text to be signed \n",
+					Constants.APP_NAME, Constants.COMMAND_SIGN_TEXT
+			));
 			System.exit(1);
 		}
 
@@ -54,8 +44,8 @@ public class SignTextSample {
 
 		// connect to service
 		log.info("Connecting to service...");
-		URL serviceUrl = new URL(WebServiceInfo.getApServiceUrl());
-		Service signatureService = Service.create(serviceUrl, SignaturePortType.QNAME);
+		URL serviceUrl = new URL(Constants.WSDL_URL);
+		Service signatureService = Service.create(serviceUrl, Constants.SERVICE_QNAME);
 		SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 
 		// set the target user
@@ -67,6 +57,7 @@ public class SignTextSample {
 		signatureReq.setDataToBeSigned(textToBeSigned);
 		signatureReq.setMobileUser(mobileUser);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
+		signatureReq.setTestMode(false);
 //		signatureSimpleDocumentReq.setSignaturePolicy(SignaturePolicyType.AD_RT);
 
 		try {
@@ -104,13 +95,13 @@ public class SignTextSample {
 			}
 
 			// extract the signature from the response
-			DataHandler signature = statusResp.getSignature();
+			byte[] signature = statusResp.getSignature();
 			log.info("Signature received successfully.");
 
 			// saves signature
 			String outputFileName = "signature-" + transactionId + ".p7s";
 			FileOutputStream output = new FileOutputStream(outputFileName);
-			IOUtils.copy(signature.getInputStream(), output);
+			IOUtils.write(signature, output);
 			output.close();
 			log.info("Signature saved in file {}", outputFileName);
 
