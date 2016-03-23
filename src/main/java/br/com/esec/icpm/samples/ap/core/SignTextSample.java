@@ -1,28 +1,21 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.io.FileOutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.activation.DataHandler;
-import javax.xml.ws.Service;
-
+import br.com.esec.icpm.mss.ws.*;
+import br.com.esec.icpm.server.factory.Status;
+import br.com.esec.icpm.server.ws.MobileUserType;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.esec.icpm.mss.ws.MessagingModeType;
-import br.com.esec.icpm.mss.ws.SignaturePortType;
-import br.com.esec.icpm.mss.ws.SignatureRespType;
-import br.com.esec.icpm.mss.ws.SignatureSimpleDocumentReqType;
-import br.com.esec.icpm.mss.ws.SignatureStatusReqType;
-import br.com.esec.icpm.mss.ws.SignatureStatusRespType;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.MobileUserType;
+import javax.activation.DataHandler;
+import javax.xml.ws.Service;
+import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * This example shows how to request the signature of a simple text message.
- *
+ * <p/>
  * To get the response, this example uses the "polling" method, which periodically check the status of the transaction
  * with the server. In a real application, you should move this "polling" logic to an appropriate mechanism, such as an
  * ExecutorService, TimerService, etc.

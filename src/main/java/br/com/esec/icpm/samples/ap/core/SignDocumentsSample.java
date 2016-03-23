@@ -1,5 +1,17 @@
 package br.com.esec.icpm.samples.ap.core;
 
+import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
+import br.com.esec.icpm.mss.ws.*;
+import br.com.esec.icpm.server.factory.Status;
+import br.com.esec.icpm.server.ws.ICPMException;
+import br.com.esec.icpm.server.ws.MobileUserType;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.activation.DataHandler;
+import javax.xml.ws.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,32 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.activation.DataHandler;
-import javax.xml.ws.Service;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
-import br.com.esec.icpm.mss.ws.BatchInfoType;
-import br.com.esec.icpm.mss.ws.BatchSignatureComplexDocumentRespType;
-import br.com.esec.icpm.mss.ws.BatchSignatureReqType;
-import br.com.esec.icpm.mss.ws.BatchSignatureTIDsRespType;
-import br.com.esec.icpm.mss.ws.DocumentSignatureStatusInfoType;
-import br.com.esec.icpm.mss.ws.MessagingModeType;
-import br.com.esec.icpm.mss.ws.SignaturePortType;
-import br.com.esec.icpm.mss.ws.SignatureStandardType;
-import br.com.esec.icpm.mss.ws.SignatureStatusReqType;
-import br.com.esec.icpm.mss.ws.SignatureStatusRespType;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.ICPMException;
-import br.com.esec.icpm.server.ws.MobileUserType;
-
 /**
  * This example shows how to request the signature of a list of documents.
- *
+ * <p/>
  * To get the response, this example uses the "polling" method, which periodically check the status of the transaction
  * with the server. In a real application, you should move this "polling" logic to an appropriate mechanism, such as an
  * ExecutorService, TimerService, etc.
@@ -66,7 +55,7 @@ public class SignDocumentsSample {
 		SignatureStandardType standard = getStandardFromExtension(filesPath[0]);
 		validateArgs(args);
 
-		List<BatchInfoType> documents = uploadFiles(filesPath);
+		List<HashDocumentInfoType> documents = uploadFiles(filesPath);
 
 		// connnect to service
 		log.info("Connecting to service...");
@@ -79,7 +68,7 @@ public class SignDocumentsSample {
 		mobileUser.setUniqueIdentifier(uniqueIdentifier);
 
 		// mount the "batch-signature" request
-		BatchSignatureReqType batchSignatureReq = new BatchSignatureReqType();
+		BatchSignatureComplexDocumentReqType batchSignatureReq = new BatchSignatureComplexDocumentReqType();
 		batchSignatureReq.setMobileUser(mobileUser);
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);
@@ -90,7 +79,7 @@ public class SignDocumentsSample {
 		try {
 			// send the "batch-signature" request to server
 			log.info("Sending request...");
-			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignature(batchSignatureReq);
+			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignatureComplexDocument(batchSignatureReq);
 			Status batchSignatureRespValue = Status.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 
 			// check the "batch-signature" response
@@ -148,15 +137,15 @@ public class SignDocumentsSample {
 		}
 	}
 
-	private static List<BatchInfoType> uploadFiles(String[] paths) throws IOException {
-		List<BatchInfoType> result = new ArrayList<BatchInfoType>();
+	private static List<HashDocumentInfoType> uploadFiles(String[] paths) throws IOException {
+		List<HashDocumentInfoType> result = new ArrayList<HashDocumentInfoType>();
 
 		for (String path : paths) {
 
 			// check if file exists
 			File file = new File(path);
 			URL fileUrl = file.toURI().toURL();
-			if(!file.exists()) {
+			if (!file.exists()) {
 				throw new IllegalStateException("The file " + path + " can not be found.");
 			}
 
@@ -173,7 +162,7 @@ public class SignDocumentsSample {
 			log.info("File uploaded, hash is {}", response);
 
 			// save the ID of the uploaded document (which is it's hash)
-			BatchInfoType documentInfo = new BatchInfoType();
+			HashDocumentInfoType documentInfo = new HashDocumentInfoType();
 			documentInfo.setDocumentName(FilenameUtils.getName(path));
 			documentInfo.setHash(response);
 			documentInfo.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(path).toLowerCase()));
