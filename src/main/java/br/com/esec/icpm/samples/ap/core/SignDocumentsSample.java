@@ -19,11 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
-import br.com.esec.icpm.mss.ws.BatchSignatureComplexDocumentReqType;
+import br.com.esec.icpm.mss.ws.BatchInfoType;
 import br.com.esec.icpm.mss.ws.BatchSignatureComplexDocumentRespType;
+import br.com.esec.icpm.mss.ws.BatchSignatureReqType;
 import br.com.esec.icpm.mss.ws.BatchSignatureTIDsRespType;
 import br.com.esec.icpm.mss.ws.DocumentSignatureStatusInfoType;
-import br.com.esec.icpm.mss.ws.HashDocumentInfoType;
 import br.com.esec.icpm.mss.ws.MessagingModeType;
 import br.com.esec.icpm.mss.ws.SignaturePortType;
 import br.com.esec.icpm.mss.ws.SignatureStandardType;
@@ -66,7 +66,7 @@ public class SignDocumentsSample {
 		SignatureStandardType standard = getStandardFromExtension(filesPath[0]);
 		validateArgs(args);
 
-		List<HashDocumentInfoType> documents = uploadFiles(filesPath);
+		List<BatchInfoType> documents = uploadFiles(filesPath);
 
 		// connnect to service
 		log.info("Connecting to service...");
@@ -79,7 +79,7 @@ public class SignDocumentsSample {
 		mobileUser.setUniqueIdentifier(uniqueIdentifier);
 
 		// mount the "batch-signature" request
-		BatchSignatureComplexDocumentReqType batchSignatureReq = new BatchSignatureComplexDocumentReqType();
+		BatchSignatureReqType batchSignatureReq = new BatchSignatureReqType();
 		batchSignatureReq.setMobileUser(mobileUser);
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);
@@ -90,7 +90,7 @@ public class SignDocumentsSample {
 		try {
 			// send the "batch-signature" request to server
 			log.info("Sending request...");
-			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignatureComplexDocument(batchSignatureReq);
+			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignature(batchSignatureReq);
 			Status batchSignatureRespValue = Status.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 
 			// check the "batch-signature" response
@@ -148,8 +148,8 @@ public class SignDocumentsSample {
 		}
 	}
 
-	private static List<HashDocumentInfoType> uploadFiles(String[] paths) throws IOException {
-		List<HashDocumentInfoType> result = new ArrayList<HashDocumentInfoType>();
+	private static List<BatchInfoType> uploadFiles(String[] paths) throws IOException {
+		List<BatchInfoType> result = new ArrayList<BatchInfoType>();
 
 		for (String path : paths) {
 
@@ -173,7 +173,7 @@ public class SignDocumentsSample {
 			log.info("File uploaded, hash is {}", response);
 
 			// save the ID of the uploaded document (which is it's hash)
-			HashDocumentInfoType documentInfo = new HashDocumentInfoType();
+			BatchInfoType documentInfo = new BatchInfoType();
 			documentInfo.setDocumentName(FilenameUtils.getName(path));
 			documentInfo.setHash(response);
 			documentInfo.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(path).toLowerCase()));
