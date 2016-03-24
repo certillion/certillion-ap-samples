@@ -1,7 +1,7 @@
 package br.com.esec.icpm.samples.ap.core;
 
 import br.com.esec.icpm.samples.ap.Constants;
-import br.com.esec.icpm.samples.ap.core.utils.Status;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.mss.ap.*;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -64,11 +64,11 @@ public class SignTextSample {
 			// send the "signature" request to server
 			log.info("Sending request...");
 			SignatureRespType signatureResp = signatureEndpoint.signatureSimpleDocument(signatureReq);
-			Status signatureRespValue = Status.valueOf(signatureResp.getStatus().getStatusMessage());
+			CertillionStatus signatureRespValue = CertillionStatus.valueOf(signatureResp.getStatus().getStatusMessage());
 			long transactionId = signatureResp.getTransactionId();
 
 			// check the "signature" response
-			if (signatureRespValue != Status.REQUEST_OK) {
+			if (signatureRespValue != CertillionStatus.REQUEST_OK) {
 				log.error("Error sending request, server returned {}", signatureRespValue);
 				System.exit(1);
 			}
@@ -80,16 +80,16 @@ public class SignTextSample {
 			// send the "get-status" request to server
 			// server keep returning "TRANSACTION_IN_PROGRESS" until the user responds
 			SignatureStatusRespType statusResp = null;
-			Status statusRespValue = null;
+			CertillionStatus statusRespValue = null;
 			do {
 				log.info("Waiting signature from user...");
 				statusResp = signatureEndpoint.statusQuery(statusReq);
-				statusRespValue = Status.valueOf(statusResp.getStatus().getStatusMessage());
+				statusRespValue = CertillionStatus.valueOf(statusResp.getStatus().getStatusMessage());
 				Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
-			} while (statusRespValue == Status.TRANSACTION_IN_PROGRESS);
+			} while (statusRespValue == CertillionStatus.TRANSACTION_IN_PROGRESS);
 
 			// check the "get-status" response
-			if (statusRespValue != Status.SIGNATURE_VALID) {
+			if (statusRespValue != CertillionStatus.SIGNATURE_VALID) {
 				log.error("Error receiving the response, the status is {}", statusRespValue);
 				System.exit(1);
 			}

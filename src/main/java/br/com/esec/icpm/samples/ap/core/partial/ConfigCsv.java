@@ -1,13 +1,11 @@
 package br.com.esec.icpm.samples.ap.core.partial;
 
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,22 +29,19 @@ public class ConfigCsv {
 
 		// scan each line, separating tokens by comma
 		for (String line : lines) {
-			FileInfo info = new FileInfo();
 			Scanner lineScanner = new Scanner(line);
 			lineScanner.useDelimiter("\\s*,\\s*");
 
 			// scan this line
-			if (lineScanner.hasNext()) {
-				info.setPath(lineScanner.next());
-			}
+			FileInfo info = new FileInfo(new File(lineScanner.next()));
 			if (lineScanner.hasNext()) {
 				info.setHash(lineScanner.next());
 			}
 			if (lineScanner.hasNext()) {
-				info.setTransactionId(lineScanner.next());
+				info.setTransactionId(Long.parseLong(lineScanner.next()));
 			}
 			if (lineScanner.hasNext()) {
-				info.setSignature(lineScanner.next());
+				info.setDetachedSignature(Base64.decodeBase64(lineScanner.next()));
 			}
 
 			// if the line was not empty, add this FileInfo to the list
@@ -64,8 +59,8 @@ public class ConfigCsv {
 			writer.printf("%s, %s, %s, %s\n",
 					info.getPath(),
 					info.getHash(),
-					info.getTransactionId(),
-					info.getSignature());
+					Long.toString(info.getTransactionId()),
+					Base64.encodeBase64String(info.getDetachedSignature()) );
 		}
 		writer.close();
 	}

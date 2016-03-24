@@ -2,7 +2,7 @@ package br.com.esec.icpm.samples.ap.core.utils;
 
 import br.com.esec.mss.ap.StatusType;
 
-public enum Status {
+public enum CertillionStatus {
 	
 	/* Codes from 100 to 199 indicates success. */
 
@@ -153,7 +153,7 @@ public enum Status {
 
 	private int code;
 	
-	private Status(int code) {
+	private CertillionStatus(int code) {
 		this.code = code;
 	}
 
@@ -169,9 +169,9 @@ public enum Status {
 		return (code >= 200);
 	}
 	
-	public static Status valueOf(int code) {
-		Status[] all = Status.values();
-		for (Status status : all) {
+	public static CertillionStatus valueOf(int code) {
+		CertillionStatus[] all = CertillionStatus.values();
+		for (CertillionStatus status : all) {
 			if (status.getCode() == code) {
 				return status;
 			}
@@ -179,7 +179,7 @@ public enum Status {
 		throw new IllegalArgumentException("Unknown Status: " + code);
 	}
 
-	public static Status from(StatusType statusType) {
+	public static CertillionStatus from(StatusType statusType) {
 		return valueOf(statusType.getStatusMessage());
 	}
 

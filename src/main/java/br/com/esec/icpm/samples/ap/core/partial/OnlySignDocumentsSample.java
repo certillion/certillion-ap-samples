@@ -1,13 +1,13 @@
 package br.com.esec.icpm.samples.ap.core.partial;
 
 import br.com.esec.icpm.samples.ap.Constants;
-import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
 import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
-import br.com.esec.icpm.samples.ap.core.utils.Status;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
+import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionFileUtils;
 import br.com.esec.mss.ap.*;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,13 +46,26 @@ public class OnlySignDocumentsSample {
 			ConfigCsv config = new ConfigCsv(args[1]);
 			String uniqueIdentifier = args[2];
 			boolean skipDownload = Boolean.parseBoolean(args.length > 3 ? args[3] : "false");
+
+			// read config
 			config.read();
 
-			// sign files and save detached signatures
-			BatchSignatureTIDsRespType statusResp = signFiles(uniqueIdentifier, config);
+			// create thread pool
+			ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
+
+			// sign files
+			BatchSignatureTIDsRespType statusResp = signFiles(config.getFileInfos(), uniqueIdentifier);
+
+			// download detached signature
 			if (!skipDownload) {
-				downloadSignatures(statusResp, config);
+				CertillionFileUtils.downloadDetachedSignatures(config.getFileInfos(), signatureEndpoint, executorService);
 			}
+
+			// shutdown thread pool
+			executorService.shutdown();
+			executorService.awaitTermination(1, TimeUnit.HOURS);
+
+			// save config
 			config.write();
 
 		} catch (Exception e) {
@@ -61,7 +74,7 @@ public class OnlySignDocumentsSample {
 		}
 	}
 
-	private static BatchSignatureTIDsRespType signFiles(String uniqueIdentifier, ConfigCsv config) throws MalformedURLException, ICPMException, InterruptedException {
+	private static BatchSignatureTIDsRespType signFiles(String uniqueIdentifier) throws MalformedURLException, ICPMException, InterruptedException {
 		String dataToBeDisplayed = "certillion-ap-samples at " + new Date().toString();
 		SignatureStandardType standard = getStandardFromExtension(config.getFileInfos().get(0).getPath());
 
@@ -99,11 +112,11 @@ public class OnlySignDocumentsSample {
 		// send the "batch-signature" request to server
 		log.info("Sending request...");
 		BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignatureComplexDocument(batchSignatureReq);
-		Status batchSignatureRespValue = Status.valueOf(batchSignatureResp.getStatus().getStatusMessage());
+		CertillionStatus batchSignatureRespValue = CertillionStatus.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 		long transactionId = batchSignatureResp.getTransactionId();
 
 		// check the "batch-signature" response
-		if (batchSignatureRespValue != Status.REQUEST_OK) {
+		if (batchSignatureRespValue != CertillionStatus.REQUEST_OK) {
 			log.error("Error sending request, server returned {}", batchSignatureRespValue);
 			System.exit(1);
 		}
@@ -115,16 +128,16 @@ public class OnlySignDocumentsSample {
 		// send the "get-status" request to server
 		// server keep returning "TRANSACTION_IN_PROGRESS" until the user responds
 		BatchSignatureTIDsRespType statusResp = null;
-		Status statusRespValue = null;
+		CertillionStatus statusRespValue = null;
 		do {
 			log.info("Waiting signature from user...");
 			statusResp = signatureEndpoint.batchSignatureTIDsStatus(statusReq);
-			statusRespValue = Status.valueOf(statusResp.getStatus().getStatusMessage());
+			statusRespValue = CertillionStatus.valueOf(statusResp.getStatus().getStatusMessage());
 			Thread.sleep(1000);
-		} while (statusResp.getStatus().getStatusCode() == Status.TRANSACTION_IN_PROGRESS.getCode());
+		} while (statusResp.getStatus().getStatusCode() == CertillionStatus.TRANSACTION_IN_PROGRESS.getCode());
 
 		// check the "get-status" response
-		if (statusRespValue != Status.REQUEST_OK) {
+		if (statusRespValue != CertillionStatus.REQUEST_OK) {
 			log.error("Error receiving the response, the status is {}", statusRespValue);
 			System.exit(1);
 		}
@@ -137,50 +150,6 @@ public class OnlySignDocumentsSample {
 
 		log.info("Signature completed.");
 		return statusResp;
-	}
-
-	private static void downloadSignatures(BatchSignatureTIDsRespType statusResp, final ConfigCsv config) throws InterruptedException {
-		ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
-
-		for (final DocumentSignatureStatusInfoType documentInfo : statusResp.getDocumentSignatureStatus()) {
-			executorService.submit(new Runnable() {
-				public void run() {
-					try {
-						String documentName = documentInfo.getDocumentName();
-						long transactionId = documentInfo.getTransactionId();
-						Status status = Status.valueOf(documentInfo.getStatus().getStatusMessage());
-						log.info("Retrieving signature of document {} ...", documentName);
-
-						// check if the user rejected this document
-						if (status != Status.SIGNATURE_VALID) {
-							log.warn("Not saving signature of document {}, status is {}", documentName, status);
-							return;
-						}
-
-						// mount the "download-signature" request
-						SignatureStatusReqType request = new SignatureStatusReqType();
-						request.setTransactionId(transactionId);
-
-						// send the "download-signature" request
-						SignatureStatusRespType response = signatureEndpoint.statusQuery(request);
-						byte[] signedBytes = IOUtils.toByteArray(response.getSignature().getInputStream());
-
-						// save the signature
-						FileInfo configInfo = config.findByName(documentName);
-						String signature = Base64.encodeBase64String(signedBytes);
-						configInfo.setSignature(signature);
-						log.info("Downloaded signature of document {}", documentName);
-
-					} catch (Exception e) {
-						log.error("Error downloading signatures", e);
-						System.exit(1);
-					}
-				}
-			});
-		}
-
-		executorService.shutdown();
-		executorService.awaitTermination(1, TimeUnit.HOURS);
 	}
 
 	private static SignatureStandardType getStandardFromExtension(String filePath) {

@@ -1,7 +1,7 @@
 package br.com.esec.icpm.samples.ap.core;
 
 import br.com.esec.icpm.samples.ap.Constants;
-import br.com.esec.icpm.samples.ap.core.utils.Status;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.mss.ap.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -80,11 +80,11 @@ public class SignDocumentsSample {
 			// send the "batch-signature" request to server
 			log.info("Sending request...");
 			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignatureComplexDocument(batchSignatureReq);
-			Status batchSignatureRespValue = Status.valueOf(batchSignatureResp.getStatus().getStatusMessage());
+			CertillionStatus batchSignatureRespValue = CertillionStatus.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 			long transactionId = batchSignatureResp.getTransactionId();
 
 			// check the "batch-signature" response
-			if (batchSignatureRespValue != Status.REQUEST_OK) {
+			if (batchSignatureRespValue != CertillionStatus.REQUEST_OK) {
 				log.error("Error sending request, server returned {}", batchSignatureRespValue);
 				System.exit(1);
 			}
@@ -96,16 +96,16 @@ public class SignDocumentsSample {
 			// send the "get-status" request to server
 			// server keep returning "TRANSACTION_IN_PROGRESS" until the user responds
 			BatchSignatureTIDsRespType statusResp = null;
-			Status statusRespValue = null;
+			CertillionStatus statusRespValue = null;
 			do {
 				log.info("Waiting signature from user...");
 				statusResp = signatureEndpoint.batchSignatureTIDsStatus(statusReq);
-				statusRespValue = Status.valueOf(statusResp.getStatus().getStatusMessage());
+				statusRespValue = CertillionStatus.valueOf(statusResp.getStatus().getStatusMessage());
 				Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
-			} while (statusResp.getStatus().getStatusCode() == Status.TRANSACTION_IN_PROGRESS.getCode());
+			} while (statusResp.getStatus().getStatusCode() == CertillionStatus.TRANSACTION_IN_PROGRESS.getCode());
 
 			// check the "get-status" response
-			if (statusRespValue != Status.REQUEST_OK) {
+			if (statusRespValue != CertillionStatus.REQUEST_OK) {
 				log.error("Error receiving the response, the status is {}", statusRespValue);
 				System.exit(1);
 			}
@@ -177,8 +177,8 @@ public class SignDocumentsSample {
 	private static void saveDetached(DocumentSignatureStatusInfoType documentInfo, String extension) throws IOException, ICPMException {
 
 		// check if the user rejected this file
-		Status status = Status.valueOf(documentInfo.getStatus().getStatusMessage());
-		if (status != Status.SIGNATURE_VALID) {
+		CertillionStatus status = CertillionStatus.valueOf(documentInfo.getStatus().getStatusMessage());
+		if (status != CertillionStatus.SIGNATURE_VALID) {
 			log.warn("Not saving signature of document {}, status is {}", documentInfo.getDocumentName(), status);
 			return;
 		}
@@ -198,8 +198,8 @@ public class SignDocumentsSample {
 	private static void saveAttached(DocumentSignatureStatusInfoType documentInfo, String extension) throws IOException {
 
 		// check if the user rejected this file
-		Status status = Status.valueOf(documentInfo.getStatus().getStatusMessage());
-		if (status != Status.SIGNATURE_VALID) {
+		CertillionStatus status = CertillionStatus.valueOf(documentInfo.getStatus().getStatusMessage());
+		if (status != CertillionStatus.SIGNATURE_VALID) {
 			log.warn("Not saving signature of document {}, status is {}", documentInfo.getDocumentName(), status);
 			return;
 		}

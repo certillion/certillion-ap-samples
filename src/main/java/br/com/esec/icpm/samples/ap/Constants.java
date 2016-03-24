@@ -23,8 +23,7 @@ public class Constants {
 
 	// web service url strings
 	public static final String BASE_URL = "http://localhost:8280";
-	public static final String DOWNLOAD_URL = BASE_URL + "/mss/restAp/document/signed/";
-	public static final String UPLOAD_URL = BASE_URL + "/mss/restAp/document";
+	public static final String REST_URL = BASE_URL + "/mss/restAp/document";
 	public static final String WSDL_URL = BASE_URL + "/mss/serviceAp.wsdl";
 
 	// web service qualified name

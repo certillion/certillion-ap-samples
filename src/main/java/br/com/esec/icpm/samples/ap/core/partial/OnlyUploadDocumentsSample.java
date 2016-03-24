@@ -1,8 +1,8 @@
 package br.com.esec.icpm.samples.ap.core.partial;
 
 import br.com.esec.icpm.samples.ap.Constants;
-import br.com.esec.icpm.samples.ap.core.utils.FileUtils;
 import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +10,6 @@ import java.text.MessageFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
 
 /**
  * This example was extracted from {@link SignDocumentsSample} and perform only the first part, the file upload.
@@ -32,13 +31,21 @@ public class OnlyUploadDocumentsSample {
 
 			// get args
 			ConfigCsv config = new ConfigCsv(args[1]);
+
+			// read config
 			config.read();
 
-			// upload files and save their info's
+			// create thread pool
 			ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
-			FileUtils.uploadFiles(config.getFileInfos(), executorService);
+
+			// upload files
+			CertillionFileUtils.uploadFiles(config.getFileInfos(), Constants.REST_URL, executorService);
+
+			// shutdown thread pool
 			executorService.shutdown();
 			executorService.awaitTermination(1, TimeUnit.HOURS);
+
+			// save config
 			config.write();
 
 		} catch (Exception e) {
