@@ -1,10 +1,11 @@
 package br.com.esec.icpm.samples.ap;
 
-import br.com.esec.icpm.samples.ap.core.SignTextSample;
-import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
 import br.com.esec.icpm.samples.ap.core.AttachSignatureSample;
+import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
+import br.com.esec.icpm.samples.ap.core.SignTextSample;
 import br.com.esec.icpm.samples.ap.core.ValidateSignatureSample;
-import br.com.esec.icpm.samples.ap.core.partial.OnlyDownloadDocumentsSample;
+import br.com.esec.icpm.samples.ap.core.partial.OnlyDownloadAttachedSample;
+import br.com.esec.icpm.samples.ap.core.partial.OnlyDownloadDetachedSample;
 import br.com.esec.icpm.samples.ap.core.partial.OnlySignDocumentsSample;
 import br.com.esec.icpm.samples.ap.core.partial.OnlyUploadDocumentsSample;
 
@@ -14,6 +15,9 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+
+
+
 		if (args.length < 1) {
 			printUsage();
 			System.exit(1);
@@ -31,8 +35,10 @@ public class Main {
 			OnlyUploadDocumentsSample.main(args);
 		} else if (Constants.COMMAND_ONLY_SIGN.equals(args[0])) {
 			OnlySignDocumentsSample.main(args);
-		} else if (Constants.COMMAND_ONLY_DOWNLOAD.equals(args[0])) {
-			OnlyDownloadDocumentsSample.main(args);
+		} else if (Constants.COMMAND_ONLY_DOWNLOAD_ATTACHED.equals(args[0])) {
+			OnlyDownloadAttachedSample.main(args);
+		} else if (Constants.COMMAND_ONLY_DOWNLOAD_DETACHED.equals(args[0])) {
+			OnlyDownloadDetachedSample.main(args);
 		} else {
 			printUsage();
 			System.exit(1);

@@ -1,18 +1,20 @@
 package br.com.esec.icpm.samples.ap.core.partial;
 
 import br.com.esec.icpm.samples.ap.Constants;
-import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
-import br.com.esec.icpm.samples.ap.core.utils.CertillionFileUtils;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
+import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
+import com.google.common.util.concurrent.ListenableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This example was extracted from {@link SignDocumentsSample} and perform only the first part, the file upload.
+ * This example was extracted from {@code SignDocumentsSample} and perform only the first part, the file upload.
  */
 public class OnlyUploadDocumentsSample {
 
@@ -31,17 +33,14 @@ public class OnlyUploadDocumentsSample {
 
 			// get args
 			ConfigCsv config = new ConfigCsv(args[1]);
-
-			// read config
 			config.read();
 
-			// create thread pool
-			ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
-
 			// upload files
-			CertillionFileUtils.uploadFiles(config.getFileInfos(), Constants.REST_URL, executorService);
+			final ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
+			ListenableFuture<List<FileInfo>> future = CertillionApUtils.uploadDocuments(config.getFileInfos(), Constants.REST_URL, executorService);
 
 			// shutdown thread pool
+			future.get();
 			executorService.shutdown();
 			executorService.awaitTermination(1, TimeUnit.HOURS);
 

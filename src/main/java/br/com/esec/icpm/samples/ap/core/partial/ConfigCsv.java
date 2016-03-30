@@ -1,7 +1,7 @@
 package br.com.esec.icpm.samples.ap.core.partial;
 
+import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -31,9 +31,14 @@ public class ConfigCsv {
 		for (String line : lines) {
 			Scanner lineScanner = new Scanner(line);
 			lineScanner.useDelimiter("\\s*,\\s*");
+			FileInfo info = new FileInfo();
 
 			// scan this line
-			FileInfo info = new FileInfo(new File(lineScanner.next()));
+			if (lineScanner.hasNext()) {
+				String filePath = lineScanner.next();
+				info.setName(FilenameUtils.getName(filePath));
+				info.setStream(new FileInputStream(filePath));
+			}
 			if (lineScanner.hasNext()) {
 				info.setHash(lineScanner.next());
 			}
@@ -41,11 +46,11 @@ public class ConfigCsv {
 				info.setTransactionId(Long.parseLong(lineScanner.next()));
 			}
 			if (lineScanner.hasNext()) {
-				info.setDetachedSignature(Base64.decodeBase64(lineScanner.next()));
+				info.setSignatureStatus(CertillionStatus.valueOf(lineScanner.next()));
 			}
 
 			// if the line was not empty, add this FileInfo to the list
-			if (info.getPath() != null) {
+			if (info.getName() != null) {
 				fileInfos.add(info);
 			}
 
@@ -56,26 +61,26 @@ public class ConfigCsv {
 	public void write() throws FileNotFoundException {
 		PrintWriter writer = new PrintWriter(path);
 		for (FileInfo info : fileInfos) {
-			writer.printf("%s, %s, %s, %s\n",
-					info.getPath(),
-					info.getHash(),
-					Long.toString(info.getTransactionId()),
-					Base64.encodeBase64String(info.getDetachedSignature()) );
+
+			if (info.getName() != null) {
+				writer.print(info.getName() + ", ");
+			}
+			if (info.getHash() != null) {
+				writer.print(info.getHash() + ", ");
+			}
+			if (info.getTransactionId() != 0) {
+				writer.print(Long.toString(info.getTransactionId()) + ", ");
+			}
+			if (info.getSignatureStatus() != null) {
+				writer.print(info.getSignatureStatus());
+			}
 		}
+
 		writer.close();
 	}
 
 	public List<FileInfo> getFileInfos() {
 		return fileInfos;
-	}
-
-	public FileInfo findByName(String name) {
-		for (FileInfo info : fileInfos) {
-			if (FilenameUtils.getName(info.getPath()).equals(name)) {
-				return info;
-			}
-		}
-		return null;
 	}
 
 }

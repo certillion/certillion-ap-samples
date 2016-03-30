@@ -1,19 +1,16 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.mss.ap.*;
+import org.apache.commons.io.IOUtils;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.xml.ws.Service;
-
-import br.com.esec.icpm.mss.ws.SignatureInfoType;
-import br.com.esec.icpm.mss.ws.SignaturePortType;
-import br.com.esec.icpm.mss.ws.ValidateReqType;
-import br.com.esec.icpm.mss.ws.ValidateRespType;
-import br.com.esec.icpm.server.ws.ICPMException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 
 @SuppressWarnings("restriction")
 public class ValidateSignatureSample {
@@ -22,6 +19,7 @@ public class ValidateSignatureSample {
 	private static final String ADRRESS = "http://labs.certillion.com";
 
 	private static final String CERTILLION_SERVER_SOAP_WSDL_URL = ADRRESS + "/mss/serviceAp_prod.wsdl";
+	private static SignaturePortType signaturePortType = null;
 
 	public static void main(String[] args) throws IOException {
 		if (args.length < 2) {
@@ -32,23 +30,23 @@ public class ValidateSignatureSample {
 		String signatureFile = args[1];
 		String dataFile = args[2];
 		DataHandler signature;
-		DataHandler content;
+		byte[] content;
 
 		// Get the signaturePort
 
 		System.out.println("Connecting to Signature Service... " + CERTILLION_SERVER_SOAP_WSDL_URL);
 		System.out.println("\n\n");
 
-		URL url = new URL(CERTILLION_SERVER_SOAP_WSDL_URL);
-		Service signatureService = Service.create(url, SignaturePortType.QNAME);
-		SignaturePortType signaturePortType = signatureService.getPort(SignaturePortType.class);
+		URL serviceUrl = new URL(Constants.WSDL_URL);
+		Service signatureService = Service.create(serviceUrl, Constants.SERVICE_QNAME);
+		signaturePortType = signatureService.getPort(SignaturePortType.class);
 
 		// set the signature and content data sources
 		FileDataSource file = new FileDataSource(new File(signatureFile));
 		signature = new DataHandler(file);
 
 		FileDataSource data = new FileDataSource(new File(dataFile));
-		content = new DataHandler(data);
+		content = IOUtils.toByteArray(data.getInputStream());
 
 		try {
 			// Request to MSS the signature of text mode synchronous

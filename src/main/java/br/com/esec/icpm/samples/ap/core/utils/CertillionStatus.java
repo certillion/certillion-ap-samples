@@ -2,6 +2,9 @@ package br.com.esec.icpm.samples.ap.core.utils;
 
 import br.com.esec.mss.ap.StatusType;
 
+/**
+ * Status codes returned by the Certillion SOAP Web Service (see documentation).
+ */
 public enum CertillionStatus {
 	
 	/* Codes from 100 to 199 indicates success. */
@@ -176,7 +179,7 @@ public enum CertillionStatus {
 				return status;
 			}
 		}
-		throw new IllegalArgumentException("Unknown Status: " + code);
+		throw new IllegalArgumentException("Unknown code: " + code);
 	}
 
 	public static CertillionStatus from(StatusType statusType) {

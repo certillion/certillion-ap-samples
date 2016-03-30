@@ -1,6 +1,7 @@
 package br.com.esec.icpm.samples.ap.core;
 
 import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.mss.ap.*;
 import org.apache.commons.io.FilenameUtils;
@@ -8,7 +9,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.activation.DataHandler;
 import javax.xml.ws.Service;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,7 +73,7 @@ public class SignDocumentsSample {
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);
 		batchSignatureReq.setSignatureStandard(standard);
-		batchSignatureReq.setDocumentsToBeSigned(documents);
+		batchSignatureReq.getDocumentsToBeSigned().addAll(documents);
 //		batchSignatureComplexDocumentReqType.setSignaturePolicy(SignaturePolicyType.AD_RT);
 
 		try {
@@ -152,7 +152,7 @@ public class SignDocumentsSample {
 
 			// upload file via REST
 			log.info("Uploading file {} ...", path);
-			URL restUrl = new URL(Constants.UPLOAD_URL);
+			URL restUrl = new URL(Constants.REST_URL);
 			HttpURLConnection connection = (HttpURLConnection) restUrl.openConnection();
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
@@ -166,7 +166,7 @@ public class SignDocumentsSample {
 			HashDocumentInfoType documentInfo = new HashDocumentInfoType();
 			documentInfo.setDocumentName(FilenameUtils.getName(path));
 			documentInfo.setHash(response);
-			documentInfo.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(path).toLowerCase()));
+			documentInfo.setContentType(CertillionApUtils.getContentTypeFromExtension(path));
 			documentInfo.setUrlToDocument(path);
 			result.add(documentInfo);
 		}
@@ -187,10 +187,10 @@ public class SignDocumentsSample {
 		SignatureStatusReqType request = new SignatureStatusReqType();
 		request.setTransactionId(documentInfo.getTransactionId());
 		SignatureStatusRespType response = signatureEndpoint.statusQuery(request);
-		DataHandler signature = response.getSignature();
+		byte[] signature = response.getSignature();
 		String outputFileName = "signature-" + documentInfo.getTransactionId() + extension;
 		FileOutputStream output = new FileOutputStream(outputFileName);
-		IOUtils.copy(signature.getInputStream(), output);
+		output.write(signature);
 		output.close();
 		log.info("Signature saved in file {}", outputFileName);
 	}
@@ -205,7 +205,7 @@ public class SignDocumentsSample {
 		}
 
 		// save signature
-		URL url = new URL(Constants.DOWNLOAD_URL + documentInfo.getTransactionId());
+		URL url = new URL(Constants.REST_URL + "/signed/" + documentInfo.getTransactionId());
 		InputStream inputStream = url.openStream();
 		String outputFileName = "signature-" + documentInfo.getTransactionId() + extension;
 		FileOutputStream outputStream = new FileOutputStream(outputFileName);

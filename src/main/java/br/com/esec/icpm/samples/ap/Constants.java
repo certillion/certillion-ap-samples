@@ -5,7 +5,7 @@ import javax.xml.namespace.QName;
 /**
  * Constants shared by more than one class.
  */
-public class Constants {
+public final class Constants {
 
 	// app name
 	public static final String APP_NAME = "certillion-ap-samples";
@@ -19,12 +19,13 @@ public class Constants {
 	// hidden commands
 	public static final String COMMAND_ONLY_UPLOAD = "only-upload-documents";
 	public static final String COMMAND_ONLY_SIGN = "only-sign-documents";
-	public static final String COMMAND_ONLY_DOWNLOAD = "only-download-documents";
+	public static final String COMMAND_ONLY_DOWNLOAD_ATTACHED = "only-download-attached";
+	public static final String COMMAND_ONLY_DOWNLOAD_DETACHED = "only-download-detached";
 
 	// web service url strings
-	public static final String BASE_URL = "http://localhost:8280";
-	public static final String REST_URL = BASE_URL + "/mss/restAp/document";
-	public static final String WSDL_URL = BASE_URL + "/mss/serviceAp.wsdl";
+	public static final String BASE_URL = "http://labs.certillion.com";
+	public static final String REST_URL = BASE_URL + "/mss/restAp_prod/document";
+	public static final String WSDL_URL = BASE_URL + "/mss/serviceAp_prod.wsdl";
 
 	// web service qualified name
 	public static final QName SERVICE_QNAME = new QName("http://esec.com.br/mss/ap", "SignatureService");
