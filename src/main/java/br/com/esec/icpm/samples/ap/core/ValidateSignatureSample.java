@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-@SuppressWarnings("restriction")
 public class ValidateSignatureSample {
 
 	// private static final String ADRRESS = WebServiceInfo.getBaseUrl();
