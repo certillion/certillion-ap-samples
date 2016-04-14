@@ -42,10 +42,11 @@ public class OnlySignDocumentsSample {
 			Service signatureService = Service.create(new URL(Constants.WSDL_URL), Constants.SERVICE_QNAME);
 			SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-			ListenableFuture<List<FileInfo>> future = CertillionApUtils.signDocuments(uniqueIdentifier, "Certillion Test", config.getFileInfos(), signatureEndpoint, executorService);
+			long transactionId = CertillionApUtils.signDocuments(uniqueIdentifier, "Certillion Test", config.getFileInfos(), signatureEndpoint);
+			ListenableFuture<List<FileInfo>> future = CertillionApUtils.awaitDocumentsSignature(transactionId, signatureEndpoint, executorService);
 
 			// shutdown thread pool
-			future.get();
+			FileInfo.mergeByName(future.get(), config.getFileInfos());
 			executorService.shutdown();
 			executorService.awaitTermination(1, TimeUnit.HOURS);
 

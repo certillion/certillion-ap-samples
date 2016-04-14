@@ -167,7 +167,7 @@ public class SignatureComplexDocumentReqType {
      *     byte[]
      */
     public void setDataToBeSigned(byte[] value) {
-        this.dataToBeSigned = value;
+        this.dataToBeSigned = ((byte[]) value);
     }
 
     /**

@@ -4,6 +4,7 @@ package br.com.esec.mss.ap;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -31,6 +32,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "HashDocumentInfoType")
+@XmlSeeAlso({
+    BatchInfoType.class
+})
 public class HashDocumentInfoType {
 
     @XmlAttribute(name = "ContentType", required = true)

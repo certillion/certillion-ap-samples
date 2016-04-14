@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="MessagingMode" use="required" type="{http://esec.com.br/mss/ap}MessagingModeType" />
  *       &lt;attribute name="TestMode" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       &lt;attribute name="SignaturePolicy" type="{http://esec.com.br/mss/ap}SignaturePolicyType" />
+ *       &lt;attribute name="ApId" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -64,6 +65,8 @@ public class SignatureTemplateReqType {
     protected boolean testMode;
     @XmlAttribute(name = "SignaturePolicy")
     protected SignaturePolicyType signaturePolicy;
+    @XmlAttribute(name = "ApId", required = true)
+    protected long apId;
 
     /**
      * Gets the value of the mobileUser property.
@@ -252,6 +255,22 @@ public class SignatureTemplateReqType {
      */
     public void setSignaturePolicy(SignaturePolicyType value) {
         this.signaturePolicy = value;
+    }
+
+    /**
+     * Gets the value of the apId property.
+     * 
+     */
+    public long getApId() {
+        return apId;
+    }
+
+    /**
+     * Sets the value of the apId property.
+     * 
+     */
+    public void setApId(long value) {
+        this.apId = value;
     }
 
 }

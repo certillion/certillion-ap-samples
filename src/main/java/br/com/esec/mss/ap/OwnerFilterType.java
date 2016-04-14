@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "OwnerFilterType")
 public class OwnerFilterType {
 
-    @XmlAttribute(name = "value", required = true)
+    @XmlAttribute(required = true)
     protected OwnerType value;
 
     /**

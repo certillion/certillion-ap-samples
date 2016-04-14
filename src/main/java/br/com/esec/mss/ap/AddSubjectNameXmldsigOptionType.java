@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AlgorithmFilterType complex type.
+ * <p>Java class for AddSubjectNameXmldsigOptionType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="AlgorithmFilterType">
+ * &lt;complexType name="AddSubjectNameXmldsigOptionType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *       &lt;/sequence>
- *       &lt;attribute name="value" use="required" type="{http://esec.com.br/mss/ap}SignatureModeType" />
+ *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -27,33 +27,25 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AlgorithmFilterType")
-public class AlgorithmFilterType {
+@XmlType(name = "AddSubjectNameXmldsigOptionType")
+public class AddSubjectNameXmldsigOptionType {
 
     @XmlAttribute(required = true)
-    protected SignatureModeType value;
+    protected boolean value;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SignatureModeType }
-     *     
      */
-    public SignatureModeType getValue() {
+    public boolean isValue() {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SignatureModeType }
-     *     
      */
-    public void setValue(SignatureModeType value) {
+    public void setValue(boolean value) {
         this.value = value;
     }
 

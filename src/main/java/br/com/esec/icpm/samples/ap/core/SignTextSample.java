@@ -29,9 +29,9 @@ public class SignTextSample {
 		// validate args length
 		if (args.length < 3) {
 			System.out.println(MessageFormat.format(
-					"usage: {0} {1} <identifier> <message> \n" +
+					"usage: {0} {1} <user> <message> \n" +
 					"\n" +
-					"\t identifier: email of the user \n" +
+					"\t user: email of the target user \n" +
 					"\t message: text to be signed \n",
 					Constants.APP_NAME, Constants.COMMAND_SIGN_TEXT
 			));

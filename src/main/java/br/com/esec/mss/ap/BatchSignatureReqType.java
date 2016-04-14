@@ -13,18 +13,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for BatchSignatureComplexDocumentReqType complex type.
+ * <p>Java class for BatchSignatureReqType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="BatchSignatureComplexDocumentReqType">
+ * &lt;complexType name="BatchSignatureReqType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="MobileUser" type="{http://esec.com.br/mss/ap}MobileUserType"/>
  *         &lt;element name="DataToBeDisplayed" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="DocumentsToBeSigned" type="{http://esec.com.br/mss/ap}HashDocumentInfoType" maxOccurs="unbounded"/>
+ *         &lt;element name="DocumentsToBeSigned" type="{http://esec.com.br/mss/ap}BatchInfoType" maxOccurs="unbounded"/>
  *         &lt;element name="CertificateFilters" type="{http://esec.com.br/mss/ap}CertificateFiltersType" minOccurs="0"/>
  *         &lt;element name="AdditionalServices" type="{http://esec.com.br/mss/ap}AdditionalServiceType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -42,21 +42,21 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BatchSignatureComplexDocumentReqType", propOrder = {
+@XmlType(name = "BatchSignatureReqType", propOrder = {
     "mobileUser",
     "dataToBeDisplayed",
     "documentsToBeSigned",
     "certificateFilters",
     "additionalServices"
 })
-public class BatchSignatureComplexDocumentReqType {
+public class BatchSignatureReqType {
 
     @XmlElement(name = "MobileUser", required = true)
     protected MobileUserType mobileUser;
     @XmlElement(name = "DataToBeDisplayed", required = true)
     protected String dataToBeDisplayed;
     @XmlElement(name = "DocumentsToBeSigned", required = true)
-    protected List<HashDocumentInfoType> documentsToBeSigned;
+    protected List<BatchInfoType> documentsToBeSigned;
     @XmlElement(name = "CertificateFilters")
     protected CertificateFiltersType certificateFilters;
     @XmlElement(name = "AdditionalServices")
@@ -141,13 +141,13 @@ public class BatchSignatureComplexDocumentReqType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link HashDocumentInfoType }
+     * {@link BatchInfoType }
      * 
      * 
      */
-    public List<HashDocumentInfoType> getDocumentsToBeSigned() {
+    public List<BatchInfoType> getDocumentsToBeSigned() {
         if (documentsToBeSigned == null) {
-            documentsToBeSigned = new ArrayList<HashDocumentInfoType>();
+            documentsToBeSigned = new ArrayList<BatchInfoType>();
         }
         return this.documentsToBeSigned;
     }

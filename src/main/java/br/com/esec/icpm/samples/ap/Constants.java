@@ -24,8 +24,8 @@ public final class Constants {
 
 	// web service url strings
 	public static final String BASE_URL = "http://labs.certillion.com";
-	public static final String REST_URL = BASE_URL + "/mss/restAp_prod/document";
-	public static final String WSDL_URL = BASE_URL + "/mss/serviceAp_prod.wsdl";
+	public static final String REST_URL = BASE_URL + "/mss/restful/applicationProvider";
+	public static final String WSDL_URL = BASE_URL + "/mss/SignatureService/SignatureEndpointBean.wsdl";
 
 	// web service qualified name
 	public static final QName SERVICE_QNAME = new QName("http://esec.com.br/mss/ap", "SignatureService");

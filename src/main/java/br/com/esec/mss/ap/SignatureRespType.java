@@ -86,7 +86,7 @@ public class SignatureRespType {
      *     byte[]
      */
     public void setSignature(byte[] value) {
-        this.signature = value;
+        this.signature = ((byte[]) value);
     }
 
     /**

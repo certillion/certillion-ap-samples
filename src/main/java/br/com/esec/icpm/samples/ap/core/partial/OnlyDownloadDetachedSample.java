@@ -4,7 +4,6 @@ import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
 import br.com.esec.mss.ap.SignaturePortType;
-import com.google.common.util.concurrent.ListenableFuture;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +38,7 @@ public class OnlyDownloadDetachedSample {
 			}
 
 			// get args
-			ConfigCsv config = new ConfigCsv(args[1]);
+			final ConfigCsv config = new ConfigCsv(args[1]);
 			config.read();
 
 			// create output stream
@@ -50,12 +49,18 @@ public class OnlyDownloadDetachedSample {
 
 			// download signature
 			Service signatureService = Service.create(new URL(Constants.WSDL_URL), Constants.SERVICE_QNAME);
-			SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
-			ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
-			ListenableFuture<List<FileInfo>> future = CertillionApUtils.downloadDetachedSignatures(config.getFileInfos(), signatureEndpoint, executorService);
+			final SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
+			final ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
+			for (final FileInfo fileInfo : config.getFileInfos()) {
+				executorService.submit(new Callable<Void>() {
+					public Void call() throws Exception {
+						CertillionApUtils.downloadDetachedSignature(fileInfo, signatureEndpoint);
+						return null;
+					}
+				});
+			}
 
 			// shutdown thread pool
-			future.get();
 			executorService.shutdown();
 			executorService.awaitTermination(1, TimeUnit.HOURS);
 

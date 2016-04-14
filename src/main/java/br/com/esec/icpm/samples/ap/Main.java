@@ -16,8 +16,6 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-
-
 		if (args.length < 1) {
 			printUsage();
 			System.exit(1);

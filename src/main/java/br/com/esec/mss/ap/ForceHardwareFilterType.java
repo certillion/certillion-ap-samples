@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ForceHardwareFilterType")
 public class ForceHardwareFilterType {
 
-    @XmlAttribute(name = "value", required = true)
+    @XmlAttribute(required = true)
     protected boolean value;
 
     /**

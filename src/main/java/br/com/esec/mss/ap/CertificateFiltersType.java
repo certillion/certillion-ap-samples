@@ -41,10 +41,10 @@ import javax.xml.bind.annotation.XmlType;
 public class CertificateFiltersType {
 
     @XmlElements({
-        @XmlElement(name = "TrustChain", type = TrustChainFilterType.class),
         @XmlElement(name = "OwnerCertificate", type = OwnerFilterType.class),
+        @XmlElement(name = "ForceHardware", type = ForceHardwareFilterType.class),
         @XmlElement(name = "Algorithm", type = AlgorithmFilterType.class),
-        @XmlElement(name = "ForceHardware", type = ForceHardwareFilterType.class)
+        @XmlElement(name = "TrustChain", type = TrustChainFilterType.class)
     })
     protected List<Object> trustChainOrOwnerCertificateOrAlgorithm;
 
@@ -66,10 +66,10 @@ public class CertificateFiltersType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link TrustChainFilterType }
      * {@link OwnerFilterType }
-     * {@link AlgorithmFilterType }
      * {@link ForceHardwareFilterType }
+     * {@link AlgorithmFilterType }
+     * {@link TrustChainFilterType }
      * 
      * 
      */

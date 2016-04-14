@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="cades"/>
  *     &lt;enumeration value="adobepdf"/>
  *     &lt;enumeration value="xades"/>
+ *     &lt;enumeration value="xmldsig_enveloped"/>
+ *     &lt;enumeration value="xmldsig_enveloping"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -31,7 +33,11 @@ public enum SignatureStandardType {
     @XmlEnumValue("adobepdf")
     ADOBEPDF("adobepdf"),
     @XmlEnumValue("xades")
-    XADES("xades");
+    XADES("xades"),
+    @XmlEnumValue("xmldsig_enveloped")
+    XMLDSIG_ENVELOPED("xmldsig_enveloped"),
+    @XmlEnumValue("xmldsig_enveloping")
+    XMLDSIG_ENVELOPING("xmldsig_enveloping");
     private final String value;
 
     SignatureStandardType(String v) {

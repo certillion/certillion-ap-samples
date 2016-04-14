@@ -3,7 +3,6 @@ package br.com.esec.icpm.samples.ap.core.partial;
 import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
-import com.google.common.util.concurrent.ListenableFuture;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -47,10 +46,16 @@ public class OnlyDownloadAttachedSample {
 
 			// download signatures
 			ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
-			ListenableFuture<List<FileInfo>> future = CertillionApUtils.downloadAttachedSignatures(config.getFileInfos(), Constants.REST_URL, executorService);
+			for (final FileInfo fileInfo : config.getFileInfos()) {
+				executorService.submit(new Callable<Void>() {
+					public Void call() throws Exception {
+						CertillionApUtils.downloadAttachedSignature(fileInfo, Constants.REST_URL);
+						return null;
+					}
+				});
+			}
 
 			// shutdown thread pool
-			future.get();
 			executorService.shutdown();
 			executorService.awaitTermination(1, TimeUnit.HOURS);
 
