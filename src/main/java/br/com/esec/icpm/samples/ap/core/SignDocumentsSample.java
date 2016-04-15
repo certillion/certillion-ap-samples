@@ -1,239 +1,170 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import br.com.esec.icpm.libs.signature.helper.MimeTypeConstants;
-import br.com.esec.icpm.mss.ws.*;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.ICPMException;
-import br.com.esec.icpm.server.ws.MobileUserType;
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
+import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
+import br.com.esec.icpm.samples.ap.core.utils.TryFunction;
+import br.com.esec.mss.ap.SignaturePortType;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.MoreExecutors;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.activation.DataHandler;
-import javax.xml.ws.Service;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * This example shows how to request the signature of a list of documents.
- * <p/>
- * To get the response, this example uses the "polling" method, which periodically check the status of the transaction
- * with the server. In a real application, you should move this "polling" logic to an appropriate mechanism, such as an
- * ExecutorService, TimerService, etc.
+ *
+ * It uses the "polling" method to check the signature status, but with the help of the Guava library to make it
+ * asynchronous and non-blocking. This way, it can be used in a Java SE or Java EE environment. The only difference is
+ * that in a Java EE environment you don't create and don't shutdown a thread pool, but use the ExecutorService provided
+ * by the container instead.
  */
 public class SignDocumentsSample {
 
 	private static final Logger log = LoggerFactory.getLogger(SignDocumentsSample.class);
-	private static SignaturePortType signatureEndpoint = null;
+	private static final String SIGNED_DIR = "signeds";
 
 	public static void main(String[] args) throws Exception {
 
 		// validate args length
 		if (args.length < 4) {
-			System.out.println(
-					"usage: certillion-ap-samples sign-documents [identifier] [message] [files...] \n" +
+			System.out.println(MessageFormat.format(
+					"usage: {0} {1} <user> <message> <files...> \n" +
 					"\n" +
-					"\t identifier: email of the user \n" +
+					"\t user: email of the target user \n" +
 					"\t message: text to be displayed \n" +
-					"\t files: path for one or more files to be signed \n"
-			);
+					"\t files: path for one or more files to be signed \n",
+					Constants.APP_NAME, Constants.COMMAND_SIGN_DOCS
+			));
 			System.exit(1);
 		}
 
 		// get args
-		String uniqueIdentifier = args[1];
-		String dataToBeDisplayed = args[2];
-		String[] filesPath = Arrays.copyOfRange(args, 3, args.length);
-		SignatureStandardType standard = getStandardFromExtension(filesPath[0]);
-		validateArgs(args);
+		String user = args[1];
+		String message = args[2];
+		String[] filePaths = Arrays.copyOfRange(args, 3, args.length);
+		validateArgs(user, message, filePaths);
 
-		List<HashDocumentInfoType> documents = uploadFiles(filesPath);
-
-		// connnect to service
-		log.info("Connecting to service...");
-		URL serviceUrl = new URL(WebServiceInfo.getApServiceUrl());
-		Service signatureService = Service.create(serviceUrl, SignaturePortType.QNAME);
-		signatureEndpoint = signatureService.getPort(SignaturePortType.class);
-
-		// set the target user
-		MobileUserType mobileUser = new MobileUserType();
-		mobileUser.setUniqueIdentifier(uniqueIdentifier);
-
-		// mount the "batch-signature" request
-		BatchSignatureComplexDocumentReqType batchSignatureReq = new BatchSignatureComplexDocumentReqType();
-		batchSignatureReq.setMobileUser(mobileUser);
-		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
-		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);
-		batchSignatureReq.setSignatureStandard(standard);
-		batchSignatureReq.setDocumentsToBeSigned(documents);
-//		batchSignatureComplexDocumentReqType.setSignaturePolicy(SignaturePolicyType.AD_RT);
-
-		try {
-			// send the "batch-signature" request to server
-			log.info("Sending request...");
-			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignatureComplexDocument(batchSignatureReq);
-			Status batchSignatureRespValue = Status.valueOf(batchSignatureResp.getStatus().getStatusMessage());
-
-			// check the "batch-signature" response
-			if (batchSignatureRespValue != Status.REQUEST_OK) {
-				log.error("Error sending request, server returned {}", batchSignatureRespValue);
-				System.exit(1);
-			}
-
-			// mount the "get-status" request
-			SignatureStatusReqType statusReq = new SignatureStatusReqType();
-			statusReq.setTransactionId(batchSignatureResp.getTransactionId());
-
-			// send the "get-status" request to server
-			// server keep returning "TRANSACTION_IN_PROGRESS" until the user responds
-			BatchSignatureTIDsRespType statusResp = null;
-			Status statusRespValue = null;
-			do {
-				log.info("Waiting signature from user...");
-				statusResp = signatureEndpoint.batchSignatureTIDsStatus(statusReq);
-				statusRespValue = Status.valueOf(statusResp.getStatus().getStatusMessage());
-				Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
-			} while (statusResp.getStatus().getStatusCode() == Status.TRANSACTION_IN_PROGRESS.getCode());
-
-			// check the "get-status" response
-			if (statusRespValue != Status.REQUEST_OK) {
-				log.error("Error receiving the response, the status is {}", statusRespValue);
-				System.exit(1);
-			}
-
-			// extract the signatures from the response
-			List<DocumentSignatureStatusInfoType> documentsStatus = statusResp.getDocumentSignatureStatus();
-			log.info("Signature received successfully.");
-
-			// saves signatures
-			for (DocumentSignatureStatusInfoType doc : documentsStatus) {
-				if (standard == SignatureStandardType.CADES) {
-					saveDetached(doc, getExtensionFromStandard(standard));
-				} else {
-					saveAttached(doc, getExtensionFromStandard(standard));
-				}
-			}
-
-		} catch (Exception e) {
-			log.error("Could not complete the example", e);
+		// open an input stream to read each file
+		List<FileInfo> filesToSign = new ArrayList<FileInfo>();
+		for (String path : filePaths) {
+			FileInfo fileInfo = new FileInfo();
+			fileInfo.setName(FilenameUtils.getName(path));
+			fileInfo.setStream(new FileInputStream(path));
+			filesToSign.add(fileInfo);
 		}
+
+		/*
+		Upload files to Certillion server.
+
+		The upload is made via REST for better performance.
+
+		The server returns the hash of the file, which is used as the ID of this file in the server.
+		So, you need to upload each file only once and can request it to be signed many times.
+		 */
+		for (FileInfo toBeUploaded : filesToSign) {
+			CertillionApUtils.uploadDocument(toBeUploaded, Constants.REST_URL);
+		}
+
+		/*
+		Create the endpoint client.
+
+		In a real application, you can hold this instance and reuse it for all requests.
+		 */
+		SignaturePortType endpoint = CertillionApUtils.newEndpoint(Constants.WSDL_URL, Constants.SERVICE_QNAME);
+
+		/*
+		Request the signature of the documents.
+
+		The server returns the ID of the transaction, which can be used to check it's status later.
+		 */
+		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint);
+
+		/*
+		Get a service to schedule the status checking.
+
+		This is useful because you don't need to block your thread using sleep() or similar methods.
+
+		In a real application (running in an application server) you should not create new threads,
+		instead, you use the thread pool managed by the container.
+
+		If you are using Java EE 7, inject the service like this:
+			@Resource private ManagedScheduledExecutorService executorService;
+		If you are using Java EE 6, replace it with TimerService or create your own executor like this:
+			http://stackoverflow.com/a/13945536/1188441
+		If you are porting to other programming language, use an equivalent scheduling mechanism.
+		 */
+		final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+		/*
+		Wait for the signature to be completed.
+
+		This method will schedule a task to periodically check the status of the transaction. This mechanism is efficient
+		only if you don't have too many signature requests running in parallel. If your server's load is of hundreds of
+		signatures per minute, you should migrate to the notification mechanism (see the manual)
+
+		The returned object is a Future that represents the transaction in progress. You can wait it to be completed in
+		a synchronous way, calling the get() method, or in an asynchronous way, calling the addListener() method or one
+		of the helper methods of Guava.
+
+		See:
+		http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html
+		http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/ListenableFuture.html
+		http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/util/concurrent/Futures.html
+		 */
+		ListenableFuture<List<FileInfo>> signatureFuture = CertillionApUtils.awaitDocumentsSignature(transactionId, endpoint, executorService);
+		ListenableFuture<Void> saveFilesFuture = Futures.transform(signatureFuture, new TryFunction<List<FileInfo>, Void>() {
+			public Void tryApply(List<FileInfo> signedFiles) throws Exception {
+
+				// download the attached signature
+				FileUtils.forceMkdir(new File(SIGNED_DIR));
+				for (FileInfo signedFile : signedFiles) {
+
+					// skip if user rejected
+					if (signedFile.getSignatureStatus().isError()) {
+						log.warn("File {} not signed, status is {}", signedFile.getName(), signedFile.getSignatureStatus());
+						continue;
+					}
+
+					// save the signed file
+					FileOutputStream outputStream = new FileOutputStream(new File(SIGNED_DIR, signedFile.getName()));
+					signedFile.setAttachedSignatureStream(outputStream);
+					CertillionApUtils.downloadAttachedSignature(signedFile, Constants.REST_URL);
+					outputStream.close();
+				}
+
+				return null;
+
+			}
+		});
+
+		// shutdown the thread pool
+		saveFilesFuture.addListener(new Runnable() {
+			public void run() {
+				executorService.shutdown();
+			}
+		}, MoreExecutors.directExecutor());
 	}
 
-	private static void validateArgs(String[] args) {
-		String extension = args[3].substring(args[3].lastIndexOf('.'));
-		for (int i = 3; i < args.length; i++) {
-			if (!args[i].endsWith(extension)) {
+	private static void validateArgs(String uniqueIdentifier, String dataToBeDisplayed, String[] filesPath) {
+		String extension = filesPath[0].substring(filesPath[0].lastIndexOf('.'));
+		for (int i = 0; i < filesPath.length; i++) {
+			if (!filesPath[i].endsWith(extension)) {
 				System.out.println("All files must have the same extension");
 				System.exit(1);
 			}
-		}
-	}
-
-	private static List<HashDocumentInfoType> uploadFiles(String[] paths) throws IOException {
-		List<HashDocumentInfoType> result = new ArrayList<HashDocumentInfoType>();
-
-		for (String path : paths) {
-
-			// check if file exists
-			File file = new File(path);
-			URL fileUrl = file.toURI().toURL();
-			if (!file.exists()) {
-				throw new IllegalStateException("The file " + path + " can not be found.");
-			}
-
-			// upload file via REST
-			log.info("Uploading file {} ...", path);
-			URL restUrl = new URL(WebServiceInfo.getUploadDocumentUrl());
-			HttpURLConnection connection = (HttpURLConnection) restUrl.openConnection();
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-type", "application/octet-stream");
-			IOUtils.copy(fileUrl.openStream(), connection.getOutputStream());
-			String response = IOUtils.toString(connection.getInputStream());
-			log.info("File uploaded, hash is {}", response);
-
-			// save the ID of the uploaded document (which is it's hash)
-			HashDocumentInfoType documentInfo = new HashDocumentInfoType();
-			documentInfo.setDocumentName(FilenameUtils.getName(path));
-			documentInfo.setHash(response);
-			documentInfo.setContentType(MimeTypeConstants.getMimeType(FilenameUtils.getExtension(path).toLowerCase()));
-			documentInfo.setUrlToDocument(path);
-			result.add(documentInfo);
-		}
-
-		return result;
-	}
-
-	private static void saveDetached(DocumentSignatureStatusInfoType documentInfo, String extension) throws IOException, ICPMException {
-
-		// check if the user rejected this file
-		Status status = Status.valueOf(documentInfo.getStatus().getStatusMessage());
-		if (status != Status.SIGNATURE_VALID) {
-			log.warn("Not saving signature of document {}, status is {}", documentInfo.getDocumentName(), status);
-			return;
-		}
-
-		// save signature
-		SignatureStatusReqType request = new SignatureStatusReqType();
-		request.setTransactionId(documentInfo.getTransactionId());
-		SignatureStatusRespType response = signatureEndpoint.statusQuery(request);
-		DataHandler signature = response.getSignature();
-		String outputFileName = "signature-" + documentInfo.getTransactionId() + extension;
-		FileOutputStream output = new FileOutputStream(outputFileName);
-		IOUtils.copy(signature.getInputStream(), output);
-		output.close();
-		log.info("Signature saved in file {}", outputFileName);
-	}
-
-	private static void saveAttached(DocumentSignatureStatusInfoType documentInfo, String extension) throws IOException {
-
-		// check if the user rejected this file
-		Status status = Status.valueOf(documentInfo.getStatus().getStatusMessage());
-		if (status != Status.SIGNATURE_VALID) {
-			log.warn("Not saving signature of document {}, status is {}", documentInfo.getDocumentName(), status);
-			return;
-		}
-
-		// save signature
-		URL url = new URL(WebServiceInfo.getDownloadDocumentUrl() + documentInfo.getTransactionId());
-		InputStream inputStream = url.openStream();
-		String outputFileName = "signature-" + documentInfo.getTransactionId() + extension;
-		FileOutputStream outputStream = new FileOutputStream(outputFileName);
-		IOUtils.copy(inputStream, outputStream);
-		IOUtils.closeQuietly(inputStream);
-		IOUtils.closeQuietly(outputStream);
-		log.info("Signature saved in file {}", outputFileName);
-	}
-
-	private static SignatureStandardType getStandardFromExtension(String filePath) {
-		if (filePath.endsWith(".pdf")) {
-			return SignatureStandardType.ADOBEPDF;
-		} else if (filePath.endsWith(".xml")) {
-			return SignatureStandardType.XADES;
-		} else {
-			return SignatureStandardType.CADES;
-		}
-	}
-
-	private static String getExtensionFromStandard(SignatureStandardType standard) {
-		switch (standard) {
-			case CADES:
-				return ".p7s";
-			case XADES:
-				return ".xml";
-			case ADOBEPDF:
-				return ".pdf";
-			default:
-				throw new IllegalStateException("Unknown standard");
 		}
 	}
 

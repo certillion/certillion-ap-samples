@@ -1,5 +1,6 @@
 package br.com.esec.icpm.samples.ap.core;
 
+import br.com.esec.icpm.samples.ap.Constants;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.http.HttpResponse;
@@ -40,7 +41,7 @@ public class AttachSignatureSample {
 		}
 
 		// Get the signaturePort
-		String endpointAddr = WebServiceInfo.getBaseUrl() + "/pdfs/signeds";
+		String endpointAddr = Constants.BASE_URL + "/pdfs/signeds";
 		URL url = new URL(endpointAddr);
 
 		// build http client

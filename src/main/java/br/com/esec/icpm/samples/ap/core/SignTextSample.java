@@ -1,17 +1,17 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import br.com.esec.icpm.mss.ws.*;
-import br.com.esec.icpm.server.factory.Status;
-import br.com.esec.icpm.server.ws.MobileUserType;
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
+import br.com.esec.mss.ap.*;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.activation.DataHandler;
 import javax.xml.ws.Service;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 
 /**
  * This example shows how to request the signature of a simple text message.
@@ -28,12 +28,13 @@ public class SignTextSample {
 
 		// validate args length
 		if (args.length < 3) {
-			System.out.println(
-					"usage: certillion-ap-samples sign-text [identifier] [message] \n" +
+			System.out.println(MessageFormat.format(
+					"usage: {0} {1} <user> <message> \n" +
 					"\n" +
-					"\t identifier: email of the user \n" +
-					"\t message: text to be signed \n"
-			);
+					"\t user: email of the target user \n" +
+					"\t message: text to be signed \n",
+					Constants.APP_NAME, Constants.COMMAND_SIGN_TEXT
+			));
 			System.exit(1);
 		}
 
@@ -43,8 +44,8 @@ public class SignTextSample {
 
 		// connect to service
 		log.info("Connecting to service...");
-		URL serviceUrl = new URL(WebServiceInfo.getApServiceUrl());
-		Service signatureService = Service.create(serviceUrl, SignaturePortType.QNAME);
+		URL serviceUrl = new URL(Constants.WSDL_URL);
+		Service signatureService = Service.create(serviceUrl, Constants.SERVICE_QNAME);
 		SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 
 		// set the target user
@@ -56,17 +57,18 @@ public class SignTextSample {
 		signatureReq.setDataToBeSigned(textToBeSigned);
 		signatureReq.setMobileUser(mobileUser);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
+		signatureReq.setTestMode(false);
 //		signatureSimpleDocumentReq.setSignaturePolicy(SignaturePolicyType.AD_RT);
 
 		try {
 			// send the "signature" request to server
 			log.info("Sending request...");
 			SignatureRespType signatureResp = signatureEndpoint.signatureSimpleDocument(signatureReq);
-			Status signatureRespValue = Status.valueOf(signatureResp.getStatus().getStatusMessage());
+			CertillionStatus signatureRespValue = CertillionStatus.valueOf(signatureResp.getStatus().getStatusMessage());
 			long transactionId = signatureResp.getTransactionId();
 
 			// check the "signature" response
-			if (signatureRespValue != Status.REQUEST_OK) {
+			if (signatureRespValue != CertillionStatus.REQUEST_OK) {
 				log.error("Error sending request, server returned {}", signatureRespValue);
 				System.exit(1);
 			}
@@ -78,28 +80,28 @@ public class SignTextSample {
 			// send the "get-status" request to server
 			// server keep returning "TRANSACTION_IN_PROGRESS" until the user responds
 			SignatureStatusRespType statusResp = null;
-			Status statusRespValue = null;
+			CertillionStatus statusRespValue = null;
 			do {
 				log.info("Waiting signature from user...");
 				statusResp = signatureEndpoint.statusQuery(statusReq);
-				statusRespValue = Status.valueOf(statusResp.getStatus().getStatusMessage());
+				statusRespValue = CertillionStatus.valueOf(statusResp.getStatus().getStatusMessage());
 				Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
-			} while (statusRespValue == Status.TRANSACTION_IN_PROGRESS);
+			} while (statusRespValue == CertillionStatus.TRANSACTION_IN_PROGRESS);
 
 			// check the "get-status" response
-			if (statusRespValue != Status.SIGNATURE_VALID) {
+			if (statusRespValue != CertillionStatus.SIGNATURE_VALID) {
 				log.error("Error receiving the response, the status is {}", statusRespValue);
 				System.exit(1);
 			}
 
 			// extract the signature from the response
-			DataHandler signature = statusResp.getSignature();
+			byte[] signature = statusResp.getSignature();
 			log.info("Signature received successfully.");
 
 			// saves signature
 			String outputFileName = "signature-" + transactionId + ".p7s";
 			FileOutputStream output = new FileOutputStream(outputFileName);
-			IOUtils.copy(signature.getInputStream(), output);
+			IOUtils.write(signature, output);
 			output.close();
 			log.info("Signature saved in file {}", outputFileName);
 
