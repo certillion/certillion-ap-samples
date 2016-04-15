@@ -146,7 +146,6 @@ public class SignDocumentsSample {
 				}
 
 				return null;
-
 			}
 		});
 
