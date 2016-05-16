@@ -13,6 +13,7 @@ public final class Constants {
 	// commands
 	public static final String COMMAND_SIGN_TEXT = "sign-text";
 	public static final String COMMAND_SIGN_DOCS = "sign-documents";
+	public static final String COMMAND_SIGN_HSM = "sign-hsm";
 	public static final String COMMAND_VALIDATE = "validate-signature";
 	public static final String COMMAND_ATTACH = "attach-signature";
 

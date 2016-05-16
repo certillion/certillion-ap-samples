@@ -169,6 +169,21 @@ public interface SignaturePortType {
         BatchSignatureReqType batchSignatureReq)
         throws ICPMException
     ;
+    
+    /**
+     * @param request The request with the list of documents to be signed.
+     * @return returns In asynchronous mode, returns the status of the transaction. In synchronous
+     *         mode, returns the response with the batch of signatures.
+     * @throws br.com.esec.icpm.server.ws.ICPMException If the request could not be processed.
+     */
+    @WebMethod(operationName = "BatchSignatureV2")
+    @WebResult(name = "BatchSignatureComplexDocumentResp", partName = "BatchSignatureComplexDocumentResp")
+    public BatchSignatureComplexDocumentRespType batchSignatureV2(
+    		@WebParam(name = "BatchSignatureReqV2", partName = "BatchSignatureReqV2")
+    		BatchSignatureReqTypeV2 request) throws ICPMException;
+    
+
+    
 
     /**
      * 

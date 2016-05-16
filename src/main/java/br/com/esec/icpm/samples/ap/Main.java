@@ -2,6 +2,7 @@ package br.com.esec.icpm.samples.ap;
 
 import br.com.esec.icpm.samples.ap.core.AttachSignatureSample;
 import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
+import br.com.esec.icpm.samples.ap.core.SignHsmSample;
 import br.com.esec.icpm.samples.ap.core.SignTextSample;
 import br.com.esec.icpm.samples.ap.core.ValidateSignatureSample;
 import br.com.esec.icpm.samples.ap.core.partial.OnlyDownloadAttachedSample;
@@ -25,6 +26,8 @@ public class Main {
 			SignTextSample.main(args);
 		} else if (Constants.COMMAND_SIGN_DOCS.equals(args[0])) {
 			SignDocumentsSample.main(args);
+		} else if (Constants.COMMAND_SIGN_HSM.equals(args[0])) {
+			SignHsmSample.main(args);	
 		} else if (Constants.COMMAND_VALIDATE.equals(args[0])) {
 			ValidateSignatureSample.main(args);
 		} else if (Constants.COMMAND_ATTACH.equals(args[0])) {
