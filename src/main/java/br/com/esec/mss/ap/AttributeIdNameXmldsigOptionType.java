@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AttributeIdNameXmldsigOptionType")
 public class AttributeIdNameXmldsigOptionType {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "value", required = true)
     protected String value;
 
     /**

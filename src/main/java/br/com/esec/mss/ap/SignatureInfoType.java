@@ -49,6 +49,7 @@ public class SignatureInfoType {
     @XmlElement(name = "Valid")
     protected boolean valid;
     @XmlElement(name = "InvalidReason")
+    @XmlSchemaType(name = "string")
     protected List<SignatureErrorType> invalidReason;
     @XmlElement(name = "SigningTime")
     @XmlSchemaType(name = "dateTime")

@@ -20,10 +20,12 @@ import org.slf4j.LoggerFactory;
 import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.mss.ap.BatchInfoType;
-import br.com.esec.mss.ap.BatchSignatureComplexDocumentRespType;
 import br.com.esec.mss.ap.BatchSignatureReqTypeV2;
+import br.com.esec.mss.ap.BatchSignatureRespTypeV2;
 import br.com.esec.mss.ap.BatchSignatureTIDsRespType;
+import br.com.esec.mss.ap.CertificateFiltersType;
 import br.com.esec.mss.ap.DocumentSignatureStatusInfoType;
+import br.com.esec.mss.ap.HsmCertificateFilterType;
 import br.com.esec.mss.ap.MessagingModeType;
 import br.com.esec.mss.ap.MobileUserType;
 import br.com.esec.mss.ap.SignaturePortType;
@@ -31,16 +33,18 @@ import br.com.esec.mss.ap.SignatureStandardType;
 import br.com.esec.mss.ap.SignatureStatusReqType;
 
 public class SignHsmSample {
-	private static final Logger log = LoggerFactory.getLogger(SignXmldsigSample.class);
+	private static final Logger log = LoggerFactory.getLogger(SignHsmSample.class);
 	private static SignaturePortType signatureEndpoint = null;
 	private static SignatureStandardType standard;
+	private static HsmCertificateFilterType hsmFilter;
+	private static CertificateFiltersType filter;
 
 	public static void main(String[] args) throws Exception {
 
 		// validate args length
 		if (args.length < 5) {
 			System.out.println(
-					"usage: certillion-ap-samples sign-xmldsig [identifier] [message] [fingerprint] [standardType] [file] \n"
+					"usage: certillion-ap-samples sign-hsm [identifier] [message] [fingerprint] [standardType] [file] \n"
 							+ "\n" + "\t identifier: email of the user \n" + "\t message: text to be displayed \n"
 							+ "\t fingerprint: user fingerprint for identification \n"
 							+ "\t standardType: [cades] , [xades] or [adobeftp] \n"
@@ -74,14 +78,17 @@ public class SignHsmSample {
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);
 		batchSignatureReq.setSignatureStandard(standard);
-
+		hsmFilter = new HsmCertificateFilterType();
+		hsmFilter.setValue(true);
+		filter = new CertificateFiltersType();
+		filter.getTrustChainOrOwnerCertificateOrAlgorithm().add(hsmFilter);
+		batchSignatureReq.setCertificateFilters(filter);
 		batchSignatureReq.getDocumentsToBeSigned().addAll(documents);
 
 		try {
 			// send the "batch-signature" request to server
 			log.info("Sending request...");
-			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint
-					.batchSignatureV2(batchSignatureReq);
+			BatchSignatureRespTypeV2 batchSignatureResp = signatureEndpoint.batchSignatureV2(batchSignatureReq);
 			CertillionStatus batchSignatureRespValue = CertillionStatus
 					.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 
@@ -128,16 +135,6 @@ public class SignHsmSample {
 		}
 	}
 
-	private static void validateArgs(String[] args) {
-		String extension = args[3].substring(args[3].lastIndexOf('.'));
-		for (int i = 2; i < args.length; i++) {
-			if (!args[i].endsWith(extension)) {
-				System.out.println("All files must have the same extension");
-				System.exit(1);
-			}
-		}
-	}
-
 	private static List<BatchInfoType> uploadFiles(String[] paths) throws IOException {
 		List<BatchInfoType> result = new ArrayList<BatchInfoType>();
 
@@ -168,6 +165,7 @@ public class SignHsmSample {
 			documentInfo.setHash(response);
 			documentInfo.setContentType("application/octet-stream");
 			documentInfo.setUrlToDocument(path);
+
 			result.add(documentInfo);
 		}
 

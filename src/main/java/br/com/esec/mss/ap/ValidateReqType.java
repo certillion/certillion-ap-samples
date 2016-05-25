@@ -85,7 +85,7 @@ public class ValidateReqType {
      *     byte[]
      */
     public void setContent(byte[] value) {
-        this.content = ((byte[]) value);
+        this.content = value;
     }
 
 }

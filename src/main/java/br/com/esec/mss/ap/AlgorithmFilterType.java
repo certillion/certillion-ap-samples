@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AlgorithmFilterType")
 public class AlgorithmFilterType {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "value", required = true)
     protected SignatureModeType value;
 
     /**

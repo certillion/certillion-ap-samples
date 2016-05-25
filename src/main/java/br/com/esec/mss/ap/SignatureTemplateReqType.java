@@ -55,6 +55,7 @@ public class SignatureTemplateReqType {
     @XmlElement(name = "CertificateFilters")
     protected CertificateFiltersType certificateFilters;
     @XmlElement(name = "AdditionalServices")
+    @XmlSchemaType(name = "string")
     protected List<AdditionalServiceType> additionalServices;
     @XmlAttribute(name = "TimeOut")
     @XmlSchemaType(name = "positiveInteger")

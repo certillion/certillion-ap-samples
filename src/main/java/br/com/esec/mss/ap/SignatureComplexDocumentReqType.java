@@ -63,6 +63,7 @@ public class SignatureComplexDocumentReqType {
     @XmlElement(name = "CertificateFilters")
     protected CertificateFiltersType certificateFilters;
     @XmlElement(name = "AdditionalServices")
+    @XmlSchemaType(name = "string")
     protected List<AdditionalServiceType> additionalServices;
     @XmlAttribute(name = "TimeOut")
     @XmlSchemaType(name = "positiveInteger")
@@ -167,7 +168,7 @@ public class SignatureComplexDocumentReqType {
      *     byte[]
      */
     public void setDataToBeSigned(byte[] value) {
-        this.dataToBeSigned = ((byte[]) value);
+        this.dataToBeSigned = value;
     }
 
     /**
