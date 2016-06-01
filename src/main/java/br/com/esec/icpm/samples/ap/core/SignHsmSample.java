@@ -31,6 +31,7 @@ import br.com.esec.mss.ap.MobileUserType;
 import br.com.esec.mss.ap.SignaturePortType;
 import br.com.esec.mss.ap.SignatureStandardType;
 import br.com.esec.mss.ap.SignatureStatusReqType;
+import br.com.esec.mss.ap.UserType;
 
 public class SignHsmSample {
 	private static final Logger log = LoggerFactory.getLogger(SignHsmSample.class);
@@ -68,12 +69,12 @@ public class SignHsmSample {
 		signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 
 		// set the target user
-		MobileUserType mobileUser = new MobileUserType();
-		mobileUser.setUniqueIdentifier(uniqueIdentifier);
+		UserType user = new UserType();
+		user.setIdentifier(uniqueIdentifier);
 
 		// mount the "batch-signature" request
 		BatchSignatureReqTypeV2 batchSignatureReq = new BatchSignatureReqTypeV2();
-		batchSignatureReq.setMobileUser(mobileUser);
+		batchSignatureReq.setUser(user);
 		batchSignatureReq.setFingerprint(fingerprint);
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);

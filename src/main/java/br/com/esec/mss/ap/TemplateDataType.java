@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "templateDataType")
 @XmlSeeAlso({
     IntegerType.class,
-    StringType.class,
     DoubleType.class,
+    StringType.class,
     DateType.class
 })
 public abstract class TemplateDataType {

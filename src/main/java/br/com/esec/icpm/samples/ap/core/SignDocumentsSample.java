@@ -43,7 +43,7 @@ public class SignDocumentsSample {
 			System.out.println(MessageFormat.format(
 					"usage: {0} {1} <user> <message> <files...> \n" +
 					"\n" +
-					"\t user: email of the target user \n" +
+					"\t user: email/cpf of the target user \n" +
 					"\t message: text to be displayed \n" +
 					"\t files: path for one or more files to be signed \n",
 					Constants.APP_NAME, Constants.COMMAND_SIGN_DOCS

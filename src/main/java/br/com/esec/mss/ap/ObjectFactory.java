@@ -24,17 +24,17 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _DateType_QNAME = new QName("http://esec.com.br/mss/ap", "DateType");
-    private final static QName _AlgorithmFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "AlgorithmFilterType");
-    private final static QName _OwnerFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "OwnerFilterType");
-    private final static QName _ForceHardwareFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "ForceHardwareFilterType");
-    private final static QName _CertificateFiltersType_QNAME = new QName("http://esec.com.br/mss/ap", "certificateFiltersType");
-    private final static QName _StringType_QNAME = new QName("http://esec.com.br/mss/ap", "StringType");
-    private final static QName _FaultDetail_QNAME = new QName("http://esec.com.br/mss/ap", "FaultDetail");
     private final static QName _DoubleType_QNAME = new QName("http://esec.com.br/mss/ap", "DoubleType");
-    private final static QName _HsmCertificateFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "HsmCertificateFilterType");
+    private final static QName _CertificateFiltersType_QNAME = new QName("http://esec.com.br/mss/ap", "certificateFiltersType");
     private final static QName _IntegerType_QNAME = new QName("http://esec.com.br/mss/ap", "IntegerType");
+    private final static QName _DateType_QNAME = new QName("http://esec.com.br/mss/ap", "DateType");
+    private final static QName _StringType_QNAME = new QName("http://esec.com.br/mss/ap", "StringType");
+    private final static QName _OwnerFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "OwnerFilterType");
+    private final static QName _AlgorithmFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "AlgorithmFilterType");
     private final static QName _TrustChainFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "TrustChainFilterType");
+    private final static QName _HsmCertificateFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "HsmCertificateFilterType");
+    private final static QName _FaultDetail_QNAME = new QName("http://esec.com.br/mss/ap", "FaultDetail");
+    private final static QName _ForceHardwareFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "ForceHardwareFilterType");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.com.esec.mss.ap
@@ -44,51 +44,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link IntegerType }
-     * 
-     */
-    public IntegerType createIntegerType() {
-        return new IntegerType();
-    }
-
-    /**
      * Create an instance of {@link TrustChainFilterType }
      * 
      */
     public TrustChainFilterType createTrustChainFilterType() {
         return new TrustChainFilterType();
-    }
-
-    /**
-     * Create an instance of {@link StringType }
-     * 
-     */
-    public StringType createStringType() {
-        return new StringType();
-    }
-
-    /**
-     * Create an instance of {@link DoubleType }
-     * 
-     */
-    public DoubleType createDoubleType() {
-        return new DoubleType();
-    }
-
-    /**
-     * Create an instance of {@link HsmCertificateFilterType }
-     * 
-     */
-    public HsmCertificateFilterType createHsmCertificateFilterType() {
-        return new HsmCertificateFilterType();
-    }
-
-    /**
-     * Create an instance of {@link StatusType }
-     * 
-     */
-    public StatusType createStatusType() {
-        return new StatusType();
     }
 
     /**
@@ -108,19 +68,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DateType }
-     * 
-     */
-    public DateType createDateType() {
-        return new DateType();
-    }
-
-    /**
      * Create an instance of {@link ForceHardwareFilterType }
      * 
      */
     public ForceHardwareFilterType createForceHardwareFilterType() {
         return new ForceHardwareFilterType();
+    }
+
+    /**
+     * Create an instance of {@link StatusType }
+     * 
+     */
+    public StatusType createStatusType() {
+        return new StatusType();
+    }
+
+    /**
+     * Create an instance of {@link HsmCertificateFilterType }
+     * 
+     */
+    public HsmCertificateFilterType createHsmCertificateFilterType() {
+        return new HsmCertificateFilterType();
+    }
+
+    /**
+     * Create an instance of {@link IntegerType }
+     * 
+     */
+    public IntegerType createIntegerType() {
+        return new IntegerType();
     }
 
     /**
@@ -132,227 +108,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SignatureTemplateReqType }
+     * Create an instance of {@link DoubleType }
      * 
      */
-    public SignatureTemplateReqType createSignatureTemplateReqType() {
-        return new SignatureTemplateReqType();
+    public DoubleType createDoubleType() {
+        return new DoubleType();
     }
 
     /**
-     * Create an instance of {@link DocumentSignatureInfoType }
+     * Create an instance of {@link StringType }
      * 
      */
-    public DocumentSignatureInfoType createDocumentSignatureInfoType() {
-        return new DocumentSignatureInfoType();
+    public StringType createStringType() {
+        return new StringType();
     }
 
     /**
-     * Create an instance of {@link BatchSignatureComplexDocumentReqType }
+     * Create an instance of {@link DateType }
      * 
      */
-    public BatchSignatureComplexDocumentReqType createBatchSignatureComplexDocumentReqType() {
-        return new BatchSignatureComplexDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link CertificateInfoType }
-     * 
-     */
-    public CertificateInfoType createCertificateInfoType() {
-        return new CertificateInfoType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureComplexDocumentRespType }
-     * 
-     */
-    public BatchSignatureComplexDocumentRespType createBatchSignatureComplexDocumentRespType() {
-        return new BatchSignatureComplexDocumentRespType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureSimpleDocumentReqType }
-     * 
-     */
-    public SignatureSimpleDocumentReqType createSignatureSimpleDocumentReqType() {
-        return new SignatureSimpleDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureInfoType }
-     * 
-     */
-    public SignatureInfoType createSignatureInfoType() {
-        return new SignatureInfoType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureStandardOptionsType }
-     * 
-     */
-    public SignatureStandardOptionsType createSignatureStandardOptionsType() {
-        return new SignatureStandardOptionsType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureStatusRespType }
-     * 
-     */
-    public SignatureStatusRespType createSignatureStatusRespType() {
-        return new SignatureStatusRespType();
-    }
-
-    /**
-     * Create an instance of {@link HashDocumentInfoType }
-     * 
-     */
-    public HashDocumentInfoType createHashDocumentInfoType() {
-        return new HashDocumentInfoType();
-    }
-
-    /**
-     * Create an instance of {@link AttributeIdNameXmldsigOptionType }
-     * 
-     */
-    public AttributeIdNameXmldsigOptionType createAttributeIdNameXmldsigOptionType() {
-        return new AttributeIdNameXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link DocumentSignatureStatusInfoType }
-     * 
-     */
-    public DocumentSignatureStatusInfoType createDocumentSignatureStatusInfoType() {
-        return new DocumentSignatureStatusInfoType();
-    }
-
-    /**
-     * Create an instance of {@link BatchInfoType }
-     * 
-     */
-    public BatchInfoType createBatchInfoType() {
-        return new BatchInfoType();
-    }
-
-    /**
-     * Create an instance of {@link MultipleSignaturesXmldsigOptionType }
-     * 
-     */
-    public MultipleSignaturesXmldsigOptionType createMultipleSignaturesXmldsigOptionType() {
-        return new MultipleSignaturesXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureReqType }
-     * 
-     */
-    public BatchSignatureReqType createBatchSignatureReqType() {
-        return new BatchSignatureReqType();
-    }
-
-    /**
-     * Create an instance of {@link BandwidthInfoType }
-     * 
-     */
-    public BandwidthInfoType createBandwidthInfoType() {
-        return new BandwidthInfoType();
-    }
-
-    /**
-     * Create an instance of {@link AddSubjectNameXmldsigOptionType }
-     * 
-     */
-    public AddSubjectNameXmldsigOptionType createAddSubjectNameXmldsigOptionType() {
-        return new AddSubjectNameXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link ValidatePdfReqType }
-     * 
-     */
-    public ValidatePdfReqType createValidatePdfReqType() {
-        return new ValidatePdfReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureStatusReqType }
-     * 
-     */
-    public SignatureStatusReqType createSignatureStatusReqType() {
-        return new SignatureStatusReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureRespType }
-     * 
-     */
-    public SignatureRespType createSignatureRespType() {
-        return new SignatureRespType();
-    }
-
-    /**
-     * Create an instance of {@link ValidateReqType }
-     * 
-     */
-    public ValidateReqType createValidateReqType() {
-        return new ValidateReqType();
-    }
-
-    /**
-     * Create an instance of {@link AddKeyValXmldsigOptionType }
-     * 
-     */
-    public AddKeyValXmldsigOptionType createAddKeyValXmldsigOptionType() {
-        return new AddKeyValXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureComplexDocumentReqType }
-     * 
-     */
-    public SignatureComplexDocumentReqType createSignatureComplexDocumentReqType() {
-        return new SignatureComplexDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link ValidateRespType }
-     * 
-     */
-    public ValidateRespType createValidateRespType() {
-        return new ValidateRespType();
-    }
-
-    /**
-     * Create an instance of {@link MobileUserType }
-     * 
-     */
-    public MobileUserType createMobileUserType() {
-        return new MobileUserType();
-    }
-
-    /**
-     * Create an instance of {@link FindSignatureReqType }
-     * 
-     */
-    public FindSignatureReqType createFindSignatureReqType() {
-        return new FindSignatureReqType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureTIDsRespType }
-     * 
-     */
-    public BatchSignatureTIDsRespType createBatchSignatureTIDsRespType() {
-        return new BatchSignatureTIDsRespType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureRespTypeV2 }
-     * 
-     */
-    public BatchSignatureRespTypeV2 createBatchSignatureRespTypeV2() {
-        return new BatchSignatureRespTypeV2();
+    public DateType createDateType() {
+        return new DateType();
     }
 
     /**
@@ -364,11 +140,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BatchSignatureReqTypeV2 }
+     * Create an instance of {@link ElementsIdXmldsigOptionType }
      * 
      */
-    public BatchSignatureReqTypeV2 createBatchSignatureReqTypeV2() {
-        return new BatchSignatureReqTypeV2();
+    public ElementsIdXmldsigOptionType createElementsIdXmldsigOptionType() {
+        return new ElementsIdXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureStatusReqType }
+     * 
+     */
+    public SignatureStatusReqType createSignatureStatusReqType() {
+        return new SignatureStatusReqType();
     }
 
     /**
@@ -380,74 +164,251 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ElementsIdXmldsigOptionType }
+     * Create an instance of {@link BatchSignatureComplexDocumentReqType }
      * 
      */
-    public ElementsIdXmldsigOptionType createElementsIdXmldsigOptionType() {
-        return new ElementsIdXmldsigOptionType();
+    public BatchSignatureComplexDocumentReqType createBatchSignatureComplexDocumentReqType() {
+        return new BatchSignatureComplexDocumentReqType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DateType }{@code >}}
+     * Create an instance of {@link SignatureRespType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "DateType")
-    public JAXBElement<DateType> createDateType(DateType value) {
-        return new JAXBElement<DateType>(_DateType_QNAME, DateType.class, null, value);
+    public SignatureRespType createSignatureRespType() {
+        return new SignatureRespType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AlgorithmFilterType }{@code >}}
+     * Create an instance of {@link MobileUserType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "AlgorithmFilterType")
-    public JAXBElement<AlgorithmFilterType> createAlgorithmFilterType(AlgorithmFilterType value) {
-        return new JAXBElement<AlgorithmFilterType>(_AlgorithmFilterType_QNAME, AlgorithmFilterType.class, null, value);
+    public MobileUserType createMobileUserType() {
+        return new MobileUserType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OwnerFilterType }{@code >}}
+     * Create an instance of {@link DocumentSignatureInfoType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "OwnerFilterType")
-    public JAXBElement<OwnerFilterType> createOwnerFilterType(OwnerFilterType value) {
-        return new JAXBElement<OwnerFilterType>(_OwnerFilterType_QNAME, OwnerFilterType.class, null, value);
+    public DocumentSignatureInfoType createDocumentSignatureInfoType() {
+        return new DocumentSignatureInfoType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ForceHardwareFilterType }{@code >}}
+     * Create an instance of {@link UserType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "ForceHardwareFilterType")
-    public JAXBElement<ForceHardwareFilterType> createForceHardwareFilterType(ForceHardwareFilterType value) {
-        return new JAXBElement<ForceHardwareFilterType>(_ForceHardwareFilterType_QNAME, ForceHardwareFilterType.class, null, value);
+    public UserType createUserType() {
+        return new UserType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CertificateFiltersType }{@code >}}
+     * Create an instance of {@link BatchInfoType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "certificateFiltersType")
-    public JAXBElement<CertificateFiltersType> createCertificateFiltersType(CertificateFiltersType value) {
-        return new JAXBElement<CertificateFiltersType>(_CertificateFiltersType_QNAME, CertificateFiltersType.class, null, value);
+    public BatchInfoType createBatchInfoType() {
+        return new BatchInfoType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link StringType }{@code >}}
+     * Create an instance of {@link HashDocumentInfoType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "StringType")
-    public JAXBElement<StringType> createStringType(StringType value) {
-        return new JAXBElement<StringType>(_StringType_QNAME, StringType.class, null, value);
+    public HashDocumentInfoType createHashDocumentInfoType() {
+        return new HashDocumentInfoType();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link StatusType }{@code >}}
+     * Create an instance of {@link ValidatePdfReqType }
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "FaultDetail")
-    public JAXBElement<StatusType> createFaultDetail(StatusType value) {
-        return new JAXBElement<StatusType>(_FaultDetail_QNAME, StatusType.class, null, value);
+    public ValidatePdfReqType createValidatePdfReqType() {
+        return new ValidatePdfReqType();
+    }
+
+    /**
+     * Create an instance of {@link DocumentSignatureStatusInfoType }
+     * 
+     */
+    public DocumentSignatureStatusInfoType createDocumentSignatureStatusInfoType() {
+        return new DocumentSignatureStatusInfoType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureComplexDocumentRespType }
+     * 
+     */
+    public BatchSignatureComplexDocumentRespType createBatchSignatureComplexDocumentRespType() {
+        return new BatchSignatureComplexDocumentRespType();
+    }
+
+    /**
+     * Create an instance of {@link FindSignatureReqType }
+     * 
+     */
+    public FindSignatureReqType createFindSignatureReqType() {
+        return new FindSignatureReqType();
+    }
+
+    /**
+     * Create an instance of {@link CertificateInfoType }
+     * 
+     */
+    public CertificateInfoType createCertificateInfoType() {
+        return new CertificateInfoType();
+    }
+
+    /**
+     * Create an instance of {@link ValidateReqType }
+     * 
+     */
+    public ValidateReqType createValidateReqType() {
+        return new ValidateReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureStatusRespType }
+     * 
+     */
+    public SignatureStatusRespType createSignatureStatusRespType() {
+        return new SignatureStatusRespType();
+    }
+
+    /**
+     * Create an instance of {@link MultipleSignaturesXmldsigOptionType }
+     * 
+     */
+    public MultipleSignaturesXmldsigOptionType createMultipleSignaturesXmldsigOptionType() {
+        return new MultipleSignaturesXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link AttributeIdNameXmldsigOptionType }
+     * 
+     */
+    public AttributeIdNameXmldsigOptionType createAttributeIdNameXmldsigOptionType() {
+        return new AttributeIdNameXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureReqTypeV2 }
+     * 
+     */
+    public BatchSignatureReqTypeV2 createBatchSignatureReqTypeV2() {
+        return new BatchSignatureReqTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureTIDsRespType }
+     * 
+     */
+    public BatchSignatureTIDsRespType createBatchSignatureTIDsRespType() {
+        return new BatchSignatureTIDsRespType();
+    }
+
+    /**
+     * Create an instance of {@link AddKeyValXmldsigOptionType }
+     * 
+     */
+    public AddKeyValXmldsigOptionType createAddKeyValXmldsigOptionType() {
+        return new AddKeyValXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureReqType }
+     * 
+     */
+    public BatchSignatureReqType createBatchSignatureReqType() {
+        return new BatchSignatureReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureSimpleDocumentReqType }
+     * 
+     */
+    public SignatureSimpleDocumentReqType createSignatureSimpleDocumentReqType() {
+        return new SignatureSimpleDocumentReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureComplexDocumentReqType }
+     * 
+     */
+    public SignatureComplexDocumentReqType createSignatureComplexDocumentReqType() {
+        return new SignatureComplexDocumentReqType();
+    }
+
+    /**
+     * Create an instance of {@link BandwidthInfoType }
+     * 
+     */
+    public BandwidthInfoType createBandwidthInfoType() {
+        return new BandwidthInfoType();
+    }
+
+    /**
+     * Create an instance of {@link ValidateRespType }
+     * 
+     */
+    public ValidateRespType createValidateRespType() {
+        return new ValidateRespType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureInfoType }
+     * 
+     */
+    public SignatureInfoType createSignatureInfoType() {
+        return new SignatureInfoType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureRespTypeV2 }
+     * 
+     */
+    public BatchSignatureRespTypeV2 createBatchSignatureRespTypeV2() {
+        return new BatchSignatureRespTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link DocumentSignatureStatusInfoTypeV2 }
+     * 
+     */
+    public DocumentSignatureStatusInfoTypeV2 createDocumentSignatureStatusInfoTypeV2() {
+        return new DocumentSignatureStatusInfoTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link AddSubjectNameXmldsigOptionType }
+     * 
+     */
+    public AddSubjectNameXmldsigOptionType createAddSubjectNameXmldsigOptionType() {
+        return new AddSubjectNameXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureStandardOptionsType }
+     * 
+     */
+    public SignatureStandardOptionsType createSignatureStandardOptionsType() {
+        return new SignatureStandardOptionsType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureStatusRespType }
+     * 
+     */
+    public BatchSignatureStatusRespType createBatchSignatureStatusRespType() {
+        return new BatchSignatureStatusRespType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureTemplateReqType }
+     * 
+     */
+    public SignatureTemplateReqType createSignatureTemplateReqType() {
+        return new SignatureTemplateReqType();
     }
 
     /**
@@ -460,12 +421,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link HsmCertificateFilterType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CertificateFiltersType }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "HsmCertificateFilterType")
-    public JAXBElement<HsmCertificateFilterType> createHsmCertificateFilterType(HsmCertificateFilterType value) {
-        return new JAXBElement<HsmCertificateFilterType>(_HsmCertificateFilterType_QNAME, HsmCertificateFilterType.class, null, value);
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "certificateFiltersType")
+    public JAXBElement<CertificateFiltersType> createCertificateFiltersType(CertificateFiltersType value) {
+        return new JAXBElement<CertificateFiltersType>(_CertificateFiltersType_QNAME, CertificateFiltersType.class, null, value);
     }
 
     /**
@@ -478,12 +439,75 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DateType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "DateType")
+    public JAXBElement<DateType> createDateType(DateType value) {
+        return new JAXBElement<DateType>(_DateType_QNAME, DateType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link StringType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "StringType")
+    public JAXBElement<StringType> createStringType(StringType value) {
+        return new JAXBElement<StringType>(_StringType_QNAME, StringType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link OwnerFilterType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "OwnerFilterType")
+    public JAXBElement<OwnerFilterType> createOwnerFilterType(OwnerFilterType value) {
+        return new JAXBElement<OwnerFilterType>(_OwnerFilterType_QNAME, OwnerFilterType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AlgorithmFilterType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "AlgorithmFilterType")
+    public JAXBElement<AlgorithmFilterType> createAlgorithmFilterType(AlgorithmFilterType value) {
+        return new JAXBElement<AlgorithmFilterType>(_AlgorithmFilterType_QNAME, AlgorithmFilterType.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TrustChainFilterType }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "TrustChainFilterType")
     public JAXBElement<TrustChainFilterType> createTrustChainFilterType(TrustChainFilterType value) {
         return new JAXBElement<TrustChainFilterType>(_TrustChainFilterType_QNAME, TrustChainFilterType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HsmCertificateFilterType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "HsmCertificateFilterType")
+    public JAXBElement<HsmCertificateFilterType> createHsmCertificateFilterType(HsmCertificateFilterType value) {
+        return new JAXBElement<HsmCertificateFilterType>(_HsmCertificateFilterType_QNAME, HsmCertificateFilterType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link StatusType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "FaultDetail")
+    public JAXBElement<StatusType> createFaultDetail(StatusType value) {
+        return new JAXBElement<StatusType>(_FaultDetail_QNAME, StatusType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ForceHardwareFilterType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "ForceHardwareFilterType")
+    public JAXBElement<ForceHardwareFilterType> createForceHardwareFilterType(ForceHardwareFilterType value) {
+        return new JAXBElement<ForceHardwareFilterType>(_ForceHardwareFilterType_QNAME, ForceHardwareFilterType.class, null, value);
     }
 
 }

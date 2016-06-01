@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="MobileUser" type="{http://esec.com.br/mss/ap}MobileUserType"/>
+ *         &lt;element name="User" type="{http://esec.com.br/mss/ap}UserType"/>
  *         &lt;element name="DataToBeDisplayed" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Fingerprint" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="DocumentsToBeSigned" type="{http://esec.com.br/mss/ap}BatchInfoType" maxOccurs="unbounded"/>
@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BatchSignatureReqTypeV2", propOrder = {
-    "mobileUser",
+    "user",
     "dataToBeDisplayed",
     "fingerprint",
     "documentsToBeSigned",
@@ -53,8 +53,8 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class BatchSignatureReqTypeV2 {
 
-    @XmlElement(name = "MobileUser", required = true)
-    protected MobileUserType mobileUser;
+    @XmlElement(name = "User", required = true)
+    protected UserType user;
     @XmlElement(name = "DataToBeDisplayed", required = true)
     protected String dataToBeDisplayed;
     @XmlElement(name = "Fingerprint")
@@ -64,7 +64,6 @@ public class BatchSignatureReqTypeV2 {
     @XmlElement(name = "CertificateFilters")
     protected CertificateFiltersType certificateFilters;
     @XmlElement(name = "AdditionalServices")
-    @XmlSchemaType(name = "string")
     protected List<AdditionalServiceType> additionalServices;
     @XmlAttribute(name = "TimeOut")
     @XmlSchemaType(name = "positiveInteger")
@@ -81,27 +80,27 @@ public class BatchSignatureReqTypeV2 {
     protected long apId;
 
     /**
-     * Gets the value of the mobileUser property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link MobileUserType }
+     *     {@link UserType }
      *     
      */
-    public MobileUserType getMobileUser() {
-        return mobileUser;
+    public UserType getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the mobileUser property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link MobileUserType }
+     *     {@link UserType }
      *     
      */
-    public void setMobileUser(MobileUserType value) {
-        this.mobileUser = value;
+    public void setUser(UserType value) {
+        this.user = value;
     }
 
     /**
