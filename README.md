@@ -28,5 +28,7 @@ Não esqueça de alterar a URL do servidor na classe `Constants`.
 
 ## Como portar os exemplos para outra linguagem de programação?
 
+Nota: os exemplos são disponibilizados em Java, .Net e PHP. Caso não utilize nenhuma destas três linguagens, siga os passos abaixo:
+
 1. Use uma ferramenta que gera código a partir do [WSDL do servidor de teste](http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl).
 1. Reproduza a funcionalidade que se encontra no pacote `utils`.
