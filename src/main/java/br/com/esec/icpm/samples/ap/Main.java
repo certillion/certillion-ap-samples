@@ -1,6 +1,10 @@
 package br.com.esec.icpm.samples.ap;
 
+import java.text.MessageFormat;
+import java.util.Arrays;
+
 import br.com.esec.icpm.samples.ap.core.AttachSignatureSample;
+import br.com.esec.icpm.samples.ap.core.SignDocumentsNotificationSample;
 import br.com.esec.icpm.samples.ap.core.SignDocumentsSample;
 import br.com.esec.icpm.samples.ap.core.SignHsmSample;
 import br.com.esec.icpm.samples.ap.core.SignTextSample;
@@ -10,9 +14,6 @@ import br.com.esec.icpm.samples.ap.core.partial.OnlyDownloadAttachedSample;
 import br.com.esec.icpm.samples.ap.core.partial.OnlyDownloadDetachedSample;
 import br.com.esec.icpm.samples.ap.core.partial.OnlySignDocumentsSample;
 import br.com.esec.icpm.samples.ap.core.partial.OnlyUploadDocumentsSample;
-
-import java.text.MessageFormat;
-import java.util.Arrays;
 
 public class Main {
 
@@ -27,6 +28,8 @@ public class Main {
 			SignTextSample.main(args);
 		} else if (Constants.COMMAND_SIGN_DOCS.equals(args[0])) {
 			SignDocumentsSample.main(args);
+		} else if (Constants.COMMAND_SIGN_DOCS_NOTIFICATION.equals(args[0])) {
+			SignDocumentsNotificationSample.main(args);
 		} else if (Constants.COMMAND_SIGN_HSM.equals(args[0])) {
 			SignHsmSample.main(args);	
 		} else if (Constants.COMMAND_XMLDSIG.equals(args[0])) {

@@ -103,7 +103,7 @@ public final class CertillionApUtils {
 	 * @return The ID of the signature transaction within Certillion server.
 	 * @throws ICPMException If Certillion server rejected the request.
 	 */
-	public static long signDocuments(String user, String message, final List<FileInfo> fileInfos, final SignaturePortType endpoint) throws ICPMException {
+	public static long signDocuments(String user, String message, final List<FileInfo> fileInfos, final SignaturePortType endpoint, MessagingModeType msgModeType) throws ICPMException {
 
 		// read info's
 		SignatureStandardType standard = getStandardFromExtension(fileInfos.get(0).getName());
@@ -112,7 +112,7 @@ public final class CertillionApUtils {
 		// mount the "batch-signature" request
 		log.info("Sending request ...");
 		BatchSignatureReqType batchSignatureReq = new BatchSignatureReqType();
-		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
+		batchSignatureReq.setMessagingMode(msgModeType);
 		batchSignatureReq.setDataToBeDisplayed(message);
 		batchSignatureReq.setSignatureStandard(standard);
 		batchSignatureReq.setTestMode(false);

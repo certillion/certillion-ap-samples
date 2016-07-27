@@ -51,6 +51,19 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.6</version>
 		</dependency>
+		
+		<!-- WS -->
+		<dependency>
+			<groupId>br.com.esec.icpm</groupId>
+			<artifactId>mss-ws-client</artifactId>
+			<version>1.10.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.esec.icpm</groupId>
+			<artifactId>icpm-ws-client-common</artifactId>
+			<version>1.10.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -75,7 +88,8 @@
 				<version>2.4.3</version>
 				<configuration>
 					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>br.com.esec.icpm.samples.ap.Main</mainClass>
 						</transformer>
 					</transformers>

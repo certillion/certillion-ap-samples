@@ -4,6 +4,7 @@ import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
 import br.com.esec.icpm.samples.ap.core.utils.TryFunction;
+import br.com.esec.mss.ap.MessagingModeType;
 import br.com.esec.mss.ap.SignaturePortType;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -90,7 +91,7 @@ public class SignDocumentsSample {
 
 		The server returns the ID of the transaction, which can be used to check it's status later.
 		 */
-		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint);
+		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint, MessagingModeType.ASYNCH_CLIENT_SERVER);
 
 		/*
 		Get a service to schedule the status checking.
