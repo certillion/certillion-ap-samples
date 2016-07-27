@@ -4,6 +4,7 @@ import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
 import br.com.esec.icpm.samples.ap.core.utils.TryFunction;
+import br.com.esec.mss.ap.MessagingModeType;
 import br.com.esec.mss.ap.SignaturePortType;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -43,7 +44,7 @@ public class SignDocumentsSample {
 			System.out.println(MessageFormat.format(
 					"usage: {0} {1} <user> <message> <files...> \n" +
 					"\n" +
-					"\t user: email of the target user \n" +
+					"\t user: email/cpf of the target user \n" +
 					"\t message: text to be displayed \n" +
 					"\t files: path for one or more files to be signed \n",
 					Constants.APP_NAME, Constants.COMMAND_SIGN_DOCS
@@ -90,7 +91,7 @@ public class SignDocumentsSample {
 
 		The server returns the ID of the transaction, which can be used to check it's status later.
 		 */
-		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint);
+		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint, MessagingModeType.ASYNCH_CLIENT_SERVER);
 
 		/*
 		Get a service to schedule the status checking.

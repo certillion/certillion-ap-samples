@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;element name="OwnerCertificate" type="{http://esec.com.br/mss/ap}OwnerFilterType"/>
  *           &lt;element name="Algorithm" type="{http://esec.com.br/mss/ap}AlgorithmFilterType"/>
  *           &lt;element name="ForceHardware" type="{http://esec.com.br/mss/ap}ForceHardwareFilterType"/>
+ *           &lt;element name="HsmCertificate" type="{http://esec.com.br/mss/ap}HsmCertificateFilterType"/>
  *         &lt;/choice>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -41,10 +42,11 @@ import javax.xml.bind.annotation.XmlType;
 public class CertificateFiltersType {
 
     @XmlElements({
+        @XmlElement(name = "TrustChain", type = TrustChainFilterType.class),
         @XmlElement(name = "OwnerCertificate", type = OwnerFilterType.class),
-        @XmlElement(name = "ForceHardware", type = ForceHardwareFilterType.class),
         @XmlElement(name = "Algorithm", type = AlgorithmFilterType.class),
-        @XmlElement(name = "TrustChain", type = TrustChainFilterType.class)
+        @XmlElement(name = "ForceHardware", type = ForceHardwareFilterType.class),
+        @XmlElement(name = "HsmCertificate", type = HsmCertificateFilterType.class)
     })
     protected List<Object> trustChainOrOwnerCertificateOrAlgorithm;
 
@@ -66,10 +68,11 @@ public class CertificateFiltersType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link OwnerFilterType }
-     * {@link ForceHardwareFilterType }
-     * {@link AlgorithmFilterType }
      * {@link TrustChainFilterType }
+     * {@link OwnerFilterType }
+     * {@link AlgorithmFilterType }
+     * {@link ForceHardwareFilterType }
+     * {@link HsmCertificateFilterType }
      * 
      * 
      */

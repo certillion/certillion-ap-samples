@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AddKeyValXmldsigOptionType")
 public class AddKeyValXmldsigOptionType {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "value", required = true)
     protected boolean value;
 
     /**

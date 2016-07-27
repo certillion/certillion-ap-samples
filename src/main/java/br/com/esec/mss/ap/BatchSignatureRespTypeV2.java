@@ -1,6 +1,8 @@
 
 package br.com.esec.mss.ap;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -9,17 +11,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SignatureRespType complex type.
+ * <p>Java class for BatchSignatureRespTypeV2 complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SignatureRespType">
+ * &lt;complexType name="BatchSignatureRespTypeV2">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}StatusType"/>
- *         &lt;element name="Signature" type="{http://www.w3.org/2001/XMLSchema}base64Binary" minOccurs="0"/>
+ *         &lt;element name="Signatures" type="{http://esec.com.br/mss/ap}DocumentSignatureInfoType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="VerificationCode" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="TransactionId" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
@@ -30,16 +33,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SignatureRespType", propOrder = {
+@XmlType(name = "BatchSignatureRespTypeV2", propOrder = {
     "status",
-    "signature"
+    "signatures",
+    "verificationCode"
 })
-public class SignatureRespType {
+public class BatchSignatureRespTypeV2 {
 
     @XmlElement(name = "Status", required = true)
     protected StatusType status;
-    @XmlElement(name = "Signature")
-    protected byte[] signature;
+    @XmlElement(name = "Signatures")
+    protected List<DocumentSignatureInfoType> signatures;
+    @XmlElement(name = "VerificationCode")
+    protected Integer verificationCode;
     @XmlAttribute(name = "TransactionId", required = true)
     protected long transactionId;
 
@@ -68,25 +74,56 @@ public class SignatureRespType {
     }
 
     /**
-     * Gets the value of the signature property.
+     * Gets the value of the signatures property.
      * 
-     * @return
-     *     possible object is
-     *     byte[]
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the signatures property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getSignatures().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DocumentSignatureInfoType }
+     * 
+     * 
      */
-    public byte[] getSignature() {
-        return signature;
+    public List<DocumentSignatureInfoType> getSignatures() {
+        if (signatures == null) {
+            signatures = new ArrayList<DocumentSignatureInfoType>();
+        }
+        return this.signatures;
     }
 
     /**
-     * Sets the value of the signature property.
+     * Gets the value of the verificationCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getVerificationCode() {
+        return verificationCode;
+    }
+
+    /**
+     * Sets the value of the verificationCode property.
      * 
      * @param value
      *     allowed object is
-     *     byte[]
+     *     {@link Integer }
+     *     
      */
-    public void setSignature(byte[] value) {
-        this.signature = value;
+    public void setVerificationCode(Integer value) {
+        this.verificationCode = value;
     }
 
     /**

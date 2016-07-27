@@ -43,10 +43,10 @@ import javax.xml.bind.annotation.XmlType;
 public class TemplateType {
 
     @XmlElements({
-        @XmlElement(name = "DoubleType", namespace = "http://esec.com.br/mss/ap", type = DoubleType.class),
         @XmlElement(name = "DateType", namespace = "http://esec.com.br/mss/ap", type = DateType.class),
-        @XmlElement(name = "StringType", namespace = "http://esec.com.br/mss/ap", type = StringType.class),
-        @XmlElement(name = "IntegerType", namespace = "http://esec.com.br/mss/ap", type = IntegerType.class)
+        @XmlElement(name = "DoubleType", namespace = "http://esec.com.br/mss/ap", type = DoubleType.class),
+        @XmlElement(name = "IntegerType", namespace = "http://esec.com.br/mss/ap", type = IntegerType.class),
+        @XmlElement(name = "StringType", namespace = "http://esec.com.br/mss/ap", type = StringType.class)
     })
     protected List<TemplateDataType> dateTypeOrDoubleTypeOrIntegerType;
     @XmlAttribute(name = "TemplateId", required = true)
@@ -70,10 +70,10 @@ public class TemplateType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DoubleType }
      * {@link DateType }
-     * {@link StringType }
+     * {@link DoubleType }
      * {@link IntegerType }
+     * {@link StringType }
      * 
      * 
      */

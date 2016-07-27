@@ -3,6 +3,7 @@ package br.com.esec.icpm.samples.ap.core.partial;
 import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionApUtils;
 import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
+import br.com.esec.mss.ap.MessagingModeType;
 import br.com.esec.mss.ap.SignaturePortType;
 import com.google.common.util.concurrent.ListenableFuture;
 import org.slf4j.Logger;
@@ -42,7 +43,7 @@ public class OnlySignDocumentsSample {
 			Service signatureService = Service.create(new URL(Constants.WSDL_URL), Constants.SERVICE_QNAME);
 			SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-			long transactionId = CertillionApUtils.signDocuments(uniqueIdentifier, "Certillion Test", config.getFileInfos(), signatureEndpoint);
+			long transactionId = CertillionApUtils.signDocuments(uniqueIdentifier, "Certillion Test", config.getFileInfos(), signatureEndpoint, MessagingModeType.ASYNCH_CLIENT_SERVER);
 			ListenableFuture<List<FileInfo>> future = CertillionApUtils.awaitDocumentsSignature(transactionId, signatureEndpoint, executorService);
 
 			// shutdown thread pool

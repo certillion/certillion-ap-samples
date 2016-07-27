@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TrustChainFilterType")
 public class TrustChainFilterType {
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "value", required = true)
     protected TrustChain value;
 
     /**

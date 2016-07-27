@@ -43,12 +43,12 @@ import javax.xml.bind.annotation.XmlType;
 public class SignatureStandardOptionsType {
 
     @XmlElements({
-        @XmlElement(name = "AddKeyVal", type = AddKeyValXmldsigOptionType.class),
-        @XmlElement(name = "AddSubjectName", type = AddSubjectNameXmldsigOptionType.class),
-        @XmlElement(name = "ElementsName", type = ElementsNameXmldsigOptionType.class),
         @XmlElement(name = "ElementsId", type = ElementsIdXmldsigOptionType.class),
-        @XmlElement(name = "MultipleSignatures", type = MultipleSignaturesXmldsigOptionType.class),
-        @XmlElement(name = "AttributeIdName", type = AttributeIdNameXmldsigOptionType.class)
+        @XmlElement(name = "AttributeIdName", type = AttributeIdNameXmldsigOptionType.class),
+        @XmlElement(name = "ElementsName", type = ElementsNameXmldsigOptionType.class),
+        @XmlElement(name = "AddSubjectName", type = AddSubjectNameXmldsigOptionType.class),
+        @XmlElement(name = "AddKeyVal", type = AddKeyValXmldsigOptionType.class),
+        @XmlElement(name = "MultipleSignatures", type = MultipleSignaturesXmldsigOptionType.class)
     })
     protected List<Object> elementsIdOrAttributeIdNameOrElementsName;
 
@@ -70,12 +70,12 @@ public class SignatureStandardOptionsType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link AddKeyValXmldsigOptionType }
-     * {@link AddSubjectNameXmldsigOptionType }
-     * {@link ElementsNameXmldsigOptionType }
      * {@link ElementsIdXmldsigOptionType }
-     * {@link MultipleSignaturesXmldsigOptionType }
      * {@link AttributeIdNameXmldsigOptionType }
+     * {@link ElementsNameXmldsigOptionType }
+     * {@link AddSubjectNameXmldsigOptionType }
+     * {@link AddKeyValXmldsigOptionType }
+     * {@link MultipleSignaturesXmldsigOptionType }
      * 
      * 
      */

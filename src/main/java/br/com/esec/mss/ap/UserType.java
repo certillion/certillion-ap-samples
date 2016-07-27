@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AttributeIdNameXmldsigOptionType complex type.
+ * <p>Java class for UserType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="AttributeIdNameXmldsigOptionType">
+ * &lt;complexType name="UserType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *       &lt;/sequence>
- *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="Identifier" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -27,34 +27,34 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AttributeIdNameXmldsigOptionType")
-public class AttributeIdNameXmldsigOptionType {
+@XmlType(name = "UserType")
+public class UserType {
 
-    @XmlAttribute(name = "value", required = true)
-    protected String value;
+    @XmlAttribute(name = "Identifier", required = true)
+    protected String identifier;
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the identifier property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getValue() {
-        return value;
+    public String getIdentifier() {
+        return identifier;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the identifier property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setIdentifier(String value) {
+        this.identifier = value;
     }
 
 }

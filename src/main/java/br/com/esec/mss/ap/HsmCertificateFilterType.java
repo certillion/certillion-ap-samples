@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AttributeIdNameXmldsigOptionType complex type.
+ * <p>Java class for HsmCertificateFilterType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="AttributeIdNameXmldsigOptionType">
+ * &lt;complexType name="HsmCertificateFilterType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *       &lt;/sequence>
- *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -27,33 +27,25 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AttributeIdNameXmldsigOptionType")
-public class AttributeIdNameXmldsigOptionType {
+@XmlType(name = "HsmCertificateFilterType")
+public class HsmCertificateFilterType {
 
     @XmlAttribute(name = "value", required = true)
-    protected String value;
+    protected boolean value;
 
     /**
      * Gets the value of the value property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getValue() {
+    public boolean isValue() {
         return value;
     }
 
     /**
      * Sets the value of the value property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setValue(String value) {
+    public void setValue(boolean value) {
         this.value = value;
     }
 

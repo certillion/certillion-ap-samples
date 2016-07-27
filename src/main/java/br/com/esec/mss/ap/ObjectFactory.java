@@ -32,6 +32,7 @@ public class ObjectFactory {
     private final static QName _OwnerFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "OwnerFilterType");
     private final static QName _AlgorithmFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "AlgorithmFilterType");
     private final static QName _TrustChainFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "TrustChainFilterType");
+    private final static QName _HsmCertificateFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "HsmCertificateFilterType");
     private final static QName _FaultDetail_QNAME = new QName("http://esec.com.br/mss/ap", "FaultDetail");
     private final static QName _ForceHardwareFilterType_QNAME = new QName("http://esec.com.br/mss/ap", "ForceHardwareFilterType");
 
@@ -43,67 +44,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ElementsNameXmldsigOptionType }
-     * 
-     */
-    public ElementsNameXmldsigOptionType createElementsNameXmldsigOptionType() {
-        return new ElementsNameXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link StatusType }
-     * 
-     */
-    public StatusType createStatusType() {
-        return new StatusType();
-    }
-
-    /**
-     * Create an instance of {@link AddSubjectNameXmldsigOptionType }
-     * 
-     */
-    public AddSubjectNameXmldsigOptionType createAddSubjectNameXmldsigOptionType() {
-        return new AddSubjectNameXmldsigOptionType();
-    }
-
-    /**
      * Create an instance of {@link TrustChainFilterType }
      * 
      */
     public TrustChainFilterType createTrustChainFilterType() {
         return new TrustChainFilterType();
-    }
-
-    /**
-     * Create an instance of {@link DocumentSignatureStatusInfoType }
-     * 
-     */
-    public DocumentSignatureStatusInfoType createDocumentSignatureStatusInfoType() {
-        return new DocumentSignatureStatusInfoType();
-    }
-
-    /**
-     * Create an instance of {@link FindSignatureReqType }
-     * 
-     */
-    public FindSignatureReqType createFindSignatureReqType() {
-        return new FindSignatureReqType();
-    }
-
-    /**
-     * Create an instance of {@link MultipleSignaturesXmldsigOptionType }
-     * 
-     */
-    public MultipleSignaturesXmldsigOptionType createMultipleSignaturesXmldsigOptionType() {
-        return new MultipleSignaturesXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureTIDsRespType }
-     * 
-     */
-    public BatchSignatureTIDsRespType createBatchSignatureTIDsRespType() {
-        return new BatchSignatureTIDsRespType();
     }
 
     /**
@@ -115,59 +60,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AttributeIdNameXmldsigOptionType }
+     * Create an instance of {@link OwnerFilterType }
      * 
      */
-    public AttributeIdNameXmldsigOptionType createAttributeIdNameXmldsigOptionType() {
-        return new AttributeIdNameXmldsigOptionType();
+    public OwnerFilterType createOwnerFilterType() {
+        return new OwnerFilterType();
     }
 
     /**
-     * Create an instance of {@link DateType }
+     * Create an instance of {@link ForceHardwareFilterType }
      * 
      */
-    public DateType createDateType() {
-        return new DateType();
+    public ForceHardwareFilterType createForceHardwareFilterType() {
+        return new ForceHardwareFilterType();
     }
 
     /**
-     * Create an instance of {@link SignatureTemplateReqType }
+     * Create an instance of {@link StatusType }
      * 
      */
-    public SignatureTemplateReqType createSignatureTemplateReqType() {
-        return new SignatureTemplateReqType();
+    public StatusType createStatusType() {
+        return new StatusType();
     }
 
     /**
-     * Create an instance of {@link TemplateType }
+     * Create an instance of {@link HsmCertificateFilterType }
      * 
      */
-    public TemplateType createTemplateType() {
-        return new TemplateType();
-    }
-
-    /**
-     * Create an instance of {@link HashDocumentInfoType }
-     * 
-     */
-    public HashDocumentInfoType createHashDocumentInfoType() {
-        return new HashDocumentInfoType();
-    }
-
-    /**
-     * Create an instance of {@link MobileUserType }
-     * 
-     */
-    public MobileUserType createMobileUserType() {
-        return new MobileUserType();
-    }
-
-    /**
-     * Create an instance of {@link ElementsIdXmldsigOptionType }
-     * 
-     */
-    public ElementsIdXmldsigOptionType createElementsIdXmldsigOptionType() {
-        return new ElementsIdXmldsigOptionType();
+    public HsmCertificateFilterType createHsmCertificateFilterType() {
+        return new HsmCertificateFilterType();
     }
 
     /**
@@ -179,115 +100,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ValidateReqType }
-     * 
-     */
-    public ValidateReqType createValidateReqType() {
-        return new ValidateReqType();
-    }
-
-    /**
-     * Create an instance of {@link CertificateInfoType }
-     * 
-     */
-    public CertificateInfoType createCertificateInfoType() {
-        return new CertificateInfoType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureComplexDocumentRespType }
-     * 
-     */
-    public BatchSignatureComplexDocumentRespType createBatchSignatureComplexDocumentRespType() {
-        return new BatchSignatureComplexDocumentRespType();
-    }
-
-    /**
      * Create an instance of {@link CertificateFiltersType }
      * 
      */
     public CertificateFiltersType createCertificateFiltersType() {
         return new CertificateFiltersType();
-    }
-
-    /**
-     * Create an instance of {@link BandwidthInfoType }
-     * 
-     */
-    public BandwidthInfoType createBandwidthInfoType() {
-        return new BandwidthInfoType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureComplexDocumentReqType }
-     * 
-     */
-    public BatchSignatureComplexDocumentReqType createBatchSignatureComplexDocumentReqType() {
-        return new BatchSignatureComplexDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureStandardOptionsType }
-     * 
-     */
-    public SignatureStandardOptionsType createSignatureStandardOptionsType() {
-        return new SignatureStandardOptionsType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureSimpleDocumentReqType }
-     * 
-     */
-    public SignatureSimpleDocumentReqType createSignatureSimpleDocumentReqType() {
-        return new SignatureSimpleDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link OwnerFilterType }
-     * 
-     */
-    public OwnerFilterType createOwnerFilterType() {
-        return new OwnerFilterType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureReqType }
-     * 
-     */
-    public BatchSignatureReqType createBatchSignatureReqType() {
-        return new BatchSignatureReqType();
-    }
-
-    /**
-     * Create an instance of {@link AddKeyValXmldsigOptionType }
-     * 
-     */
-    public AddKeyValXmldsigOptionType createAddKeyValXmldsigOptionType() {
-        return new AddKeyValXmldsigOptionType();
-    }
-
-    /**
-     * Create an instance of {@link ValidatePdfReqType }
-     * 
-     */
-    public ValidatePdfReqType createValidatePdfReqType() {
-        return new ValidatePdfReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureRespType }
-     * 
-     */
-    public SignatureRespType createSignatureRespType() {
-        return new SignatureRespType();
-    }
-
-    /**
-     * Create an instance of {@link BatchInfoType }
-     * 
-     */
-    public BatchInfoType createBatchInfoType() {
-        return new BatchInfoType();
     }
 
     /**
@@ -299,43 +116,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SignatureInfoType }
-     * 
-     */
-    public SignatureInfoType createSignatureInfoType() {
-        return new SignatureInfoType();
-    }
-
-    /**
-     * Create an instance of {@link DocumentSignatureInfoType }
-     * 
-     */
-    public DocumentSignatureInfoType createDocumentSignatureInfoType() {
-        return new DocumentSignatureInfoType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureComplexDocumentReqType }
-     * 
-     */
-    public SignatureComplexDocumentReqType createSignatureComplexDocumentReqType() {
-        return new SignatureComplexDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureStatusRespType }
-     * 
-     */
-    public SignatureStatusRespType createSignatureStatusRespType() {
-        return new SignatureStatusRespType();
-    }
-
-    /**
      * Create an instance of {@link StringType }
      * 
      */
     public StringType createStringType() {
         return new StringType();
+    }
+
+    /**
+     * Create an instance of {@link DateType }
+     * 
+     */
+    public DateType createDateType() {
+        return new DateType();
+    }
+
+    /**
+     * Create an instance of {@link TemplateType }
+     * 
+     */
+    public TemplateType createTemplateType() {
+        return new TemplateType();
+    }
+
+    /**
+     * Create an instance of {@link ElementsIdXmldsigOptionType }
+     * 
+     */
+    public ElementsIdXmldsigOptionType createElementsIdXmldsigOptionType() {
+        return new ElementsIdXmldsigOptionType();
     }
 
     /**
@@ -347,6 +156,198 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ElementsNameXmldsigOptionType }
+     * 
+     */
+    public ElementsNameXmldsigOptionType createElementsNameXmldsigOptionType() {
+        return new ElementsNameXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureComplexDocumentReqType }
+     * 
+     */
+    public BatchSignatureComplexDocumentReqType createBatchSignatureComplexDocumentReqType() {
+        return new BatchSignatureComplexDocumentReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureRespType }
+     * 
+     */
+    public SignatureRespType createSignatureRespType() {
+        return new SignatureRespType();
+    }
+
+    /**
+     * Create an instance of {@link MobileUserType }
+     * 
+     */
+    public MobileUserType createMobileUserType() {
+        return new MobileUserType();
+    }
+
+    /**
+     * Create an instance of {@link DocumentSignatureInfoType }
+     * 
+     */
+    public DocumentSignatureInfoType createDocumentSignatureInfoType() {
+        return new DocumentSignatureInfoType();
+    }
+
+    /**
+     * Create an instance of {@link UserType }
+     * 
+     */
+    public UserType createUserType() {
+        return new UserType();
+    }
+
+    /**
+     * Create an instance of {@link BatchInfoType }
+     * 
+     */
+    public BatchInfoType createBatchInfoType() {
+        return new BatchInfoType();
+    }
+
+    /**
+     * Create an instance of {@link HashDocumentInfoType }
+     * 
+     */
+    public HashDocumentInfoType createHashDocumentInfoType() {
+        return new HashDocumentInfoType();
+    }
+
+    /**
+     * Create an instance of {@link ValidatePdfReqType }
+     * 
+     */
+    public ValidatePdfReqType createValidatePdfReqType() {
+        return new ValidatePdfReqType();
+    }
+
+    /**
+     * Create an instance of {@link DocumentSignatureStatusInfoType }
+     * 
+     */
+    public DocumentSignatureStatusInfoType createDocumentSignatureStatusInfoType() {
+        return new DocumentSignatureStatusInfoType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureComplexDocumentRespType }
+     * 
+     */
+    public BatchSignatureComplexDocumentRespType createBatchSignatureComplexDocumentRespType() {
+        return new BatchSignatureComplexDocumentRespType();
+    }
+
+    /**
+     * Create an instance of {@link FindSignatureReqType }
+     * 
+     */
+    public FindSignatureReqType createFindSignatureReqType() {
+        return new FindSignatureReqType();
+    }
+
+    /**
+     * Create an instance of {@link CertificateInfoType }
+     * 
+     */
+    public CertificateInfoType createCertificateInfoType() {
+        return new CertificateInfoType();
+    }
+
+    /**
+     * Create an instance of {@link ValidateReqType }
+     * 
+     */
+    public ValidateReqType createValidateReqType() {
+        return new ValidateReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureStatusRespType }
+     * 
+     */
+    public SignatureStatusRespType createSignatureStatusRespType() {
+        return new SignatureStatusRespType();
+    }
+
+    /**
+     * Create an instance of {@link MultipleSignaturesXmldsigOptionType }
+     * 
+     */
+    public MultipleSignaturesXmldsigOptionType createMultipleSignaturesXmldsigOptionType() {
+        return new MultipleSignaturesXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link AttributeIdNameXmldsigOptionType }
+     * 
+     */
+    public AttributeIdNameXmldsigOptionType createAttributeIdNameXmldsigOptionType() {
+        return new AttributeIdNameXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureReqTypeV2 }
+     * 
+     */
+    public BatchSignatureReqTypeV2 createBatchSignatureReqTypeV2() {
+        return new BatchSignatureReqTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureTIDsRespType }
+     * 
+     */
+    public BatchSignatureTIDsRespType createBatchSignatureTIDsRespType() {
+        return new BatchSignatureTIDsRespType();
+    }
+
+    /**
+     * Create an instance of {@link AddKeyValXmldsigOptionType }
+     * 
+     */
+    public AddKeyValXmldsigOptionType createAddKeyValXmldsigOptionType() {
+        return new AddKeyValXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureReqType }
+     * 
+     */
+    public BatchSignatureReqType createBatchSignatureReqType() {
+        return new BatchSignatureReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureSimpleDocumentReqType }
+     * 
+     */
+    public SignatureSimpleDocumentReqType createSignatureSimpleDocumentReqType() {
+        return new SignatureSimpleDocumentReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureComplexDocumentReqType }
+     * 
+     */
+    public SignatureComplexDocumentReqType createSignatureComplexDocumentReqType() {
+        return new SignatureComplexDocumentReqType();
+    }
+
+    /**
+     * Create an instance of {@link BandwidthInfoType }
+     * 
+     */
+    public BandwidthInfoType createBandwidthInfoType() {
+        return new BandwidthInfoType();
+    }
+
+    /**
      * Create an instance of {@link ValidateRespType }
      * 
      */
@@ -355,11 +356,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ForceHardwareFilterType }
+     * Create an instance of {@link SignatureInfoType }
      * 
      */
-    public ForceHardwareFilterType createForceHardwareFilterType() {
-        return new ForceHardwareFilterType();
+    public SignatureInfoType createSignatureInfoType() {
+        return new SignatureInfoType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureRespTypeV2 }
+     * 
+     */
+    public BatchSignatureRespTypeV2 createBatchSignatureRespTypeV2() {
+        return new BatchSignatureRespTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link DocumentSignatureStatusInfoTypeV2 }
+     * 
+     */
+    public DocumentSignatureStatusInfoTypeV2 createDocumentSignatureStatusInfoTypeV2() {
+        return new DocumentSignatureStatusInfoTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link AddSubjectNameXmldsigOptionType }
+     * 
+     */
+    public AddSubjectNameXmldsigOptionType createAddSubjectNameXmldsigOptionType() {
+        return new AddSubjectNameXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureStandardOptionsType }
+     * 
+     */
+    public SignatureStandardOptionsType createSignatureStandardOptionsType() {
+        return new SignatureStandardOptionsType();
+    }
+
+    /**
+     * Create an instance of {@link BatchSignatureStatusRespType }
+     * 
+     */
+    public BatchSignatureStatusRespType createBatchSignatureStatusRespType() {
+        return new BatchSignatureStatusRespType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureTemplateReqType }
+     * 
+     */
+    public SignatureTemplateReqType createSignatureTemplateReqType() {
+        return new SignatureTemplateReqType();
     }
 
     /**
@@ -432,6 +481,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "TrustChainFilterType")
     public JAXBElement<TrustChainFilterType> createTrustChainFilterType(TrustChainFilterType value) {
         return new JAXBElement<TrustChainFilterType>(_TrustChainFilterType_QNAME, TrustChainFilterType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HsmCertificateFilterType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://esec.com.br/mss/ap", name = "HsmCertificateFilterType")
+    public JAXBElement<HsmCertificateFilterType> createHsmCertificateFilterType(HsmCertificateFilterType value) {
+        return new JAXBElement<HsmCertificateFilterType>(_HsmCertificateFilterType_QNAME, HsmCertificateFilterType.class, null, value);
     }
 
     /**

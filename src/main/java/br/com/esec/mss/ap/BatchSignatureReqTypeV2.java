@@ -13,27 +13,28 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SignatureComplexDocumentReqType complex type.
+ * <p>Java class for BatchSignatureReqTypeV2 complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SignatureComplexDocumentReqType">
+ * &lt;complexType name="BatchSignatureReqTypeV2">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="MobileUser" type="{http://esec.com.br/mss/ap}MobileUserType"/>
- *         &lt;element name="ContentType" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="User" type="{http://esec.com.br/mss/ap}UserType"/>
  *         &lt;element name="DataToBeDisplayed" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="DataToBeSigned" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
+ *         &lt;element name="Fingerprint" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="DocumentsToBeSigned" type="{http://esec.com.br/mss/ap}BatchInfoType" maxOccurs="unbounded"/>
  *         &lt;element name="CertificateFilters" type="{http://esec.com.br/mss/ap}CertificateFiltersType" minOccurs="0"/>
  *         &lt;element name="AdditionalServices" type="{http://esec.com.br/mss/ap}AdditionalServiceType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="TimeOut" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
  *       &lt;attribute name="MessagingMode" use="required" type="{http://esec.com.br/mss/ap}MessagingModeType" />
+ *       &lt;attribute name="TestMode" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       &lt;attribute name="SignatureStandard" type="{http://esec.com.br/mss/ap}SignatureStandardType" />
  *       &lt;attribute name="SignaturePolicy" type="{http://esec.com.br/mss/ap}SignaturePolicyType" />
- *       &lt;attribute name="TestMode" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="ApId" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -42,24 +43,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SignatureComplexDocumentReqType", propOrder = {
-    "mobileUser",
-    "contentType",
+@XmlType(name = "BatchSignatureReqTypeV2", propOrder = {
+    "user",
     "dataToBeDisplayed",
-    "dataToBeSigned",
+    "fingerprint",
+    "documentsToBeSigned",
     "certificateFilters",
     "additionalServices"
 })
-public class SignatureComplexDocumentReqType {
+public class BatchSignatureReqTypeV2 {
 
-    @XmlElement(name = "MobileUser", required = true)
-    protected MobileUserType mobileUser;
-    @XmlElement(name = "ContentType", required = true)
-    protected String contentType;
+    @XmlElement(name = "User", required = true)
+    protected UserType user;
     @XmlElement(name = "DataToBeDisplayed", required = true)
     protected String dataToBeDisplayed;
-    @XmlElement(name = "DataToBeSigned", required = true)
-    protected byte[] dataToBeSigned;
+    @XmlElement(name = "Fingerprint")
+    protected String fingerprint;
+    @XmlElement(name = "DocumentsToBeSigned", required = true)
+    protected List<BatchInfoType> documentsToBeSigned;
     @XmlElement(name = "CertificateFilters")
     protected CertificateFiltersType certificateFilters;
     @XmlElement(name = "AdditionalServices")
@@ -69,59 +70,37 @@ public class SignatureComplexDocumentReqType {
     protected BigInteger timeOut;
     @XmlAttribute(name = "MessagingMode", required = true)
     protected MessagingModeType messagingMode;
+    @XmlAttribute(name = "TestMode", required = true)
+    protected boolean testMode;
     @XmlAttribute(name = "SignatureStandard")
     protected SignatureStandardType signatureStandard;
     @XmlAttribute(name = "SignaturePolicy")
     protected SignaturePolicyType signaturePolicy;
-    @XmlAttribute(name = "TestMode", required = true)
-    protected boolean testMode;
+    @XmlAttribute(name = "ApId", required = true)
+    protected long apId;
 
     /**
-     * Gets the value of the mobileUser property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link MobileUserType }
+     *     {@link UserType }
      *     
      */
-    public MobileUserType getMobileUser() {
-        return mobileUser;
+    public UserType getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the mobileUser property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link MobileUserType }
+     *     {@link UserType }
      *     
      */
-    public void setMobileUser(MobileUserType value) {
-        this.mobileUser = value;
-    }
-
-    /**
-     * Gets the value of the contentType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getContentType() {
-        return contentType;
-    }
-
-    /**
-     * Sets the value of the contentType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setContentType(String value) {
-        this.contentType = value;
+    public void setUser(UserType value) {
+        this.user = value;
     }
 
     /**
@@ -149,25 +128,56 @@ public class SignatureComplexDocumentReqType {
     }
 
     /**
-     * Gets the value of the dataToBeSigned property.
+     * Gets the value of the fingerprint property.
      * 
      * @return
      *     possible object is
-     *     byte[]
+     *     {@link String }
+     *     
      */
-    public byte[] getDataToBeSigned() {
-        return dataToBeSigned;
+    public String getFingerprint() {
+        return fingerprint;
     }
 
     /**
-     * Sets the value of the dataToBeSigned property.
+     * Sets the value of the fingerprint property.
      * 
      * @param value
      *     allowed object is
-     *     byte[]
+     *     {@link String }
+     *     
      */
-    public void setDataToBeSigned(byte[] value) {
-        this.dataToBeSigned = value;
+    public void setFingerprint(String value) {
+        this.fingerprint = value;
+    }
+
+    /**
+     * Gets the value of the documentsToBeSigned property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the documentsToBeSigned property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDocumentsToBeSigned().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link BatchInfoType }
+     * 
+     * 
+     */
+    public List<BatchInfoType> getDocumentsToBeSigned() {
+        if (documentsToBeSigned == null) {
+            documentsToBeSigned = new ArrayList<BatchInfoType>();
+        }
+        return this.documentsToBeSigned;
     }
 
     /**
@@ -272,6 +282,22 @@ public class SignatureComplexDocumentReqType {
     }
 
     /**
+     * Gets the value of the testMode property.
+     * 
+     */
+    public boolean isTestMode() {
+        return testMode;
+    }
+
+    /**
+     * Sets the value of the testMode property.
+     * 
+     */
+    public void setTestMode(boolean value) {
+        this.testMode = value;
+    }
+
+    /**
      * Gets the value of the signatureStandard property.
      * 
      * @return
@@ -320,19 +346,19 @@ public class SignatureComplexDocumentReqType {
     }
 
     /**
-     * Gets the value of the testMode property.
+     * Gets the value of the apId property.
      * 
      */
-    public boolean isTestMode() {
-        return testMode;
+    public long getApId() {
+        return apId;
     }
 
     /**
-     * Sets the value of the testMode property.
+     * Sets the value of the apId property.
      * 
      */
-    public void setTestMode(boolean value) {
-        this.testMode = value;
+    public void setApId(long value) {
+        this.apId = value;
     }
 
 }

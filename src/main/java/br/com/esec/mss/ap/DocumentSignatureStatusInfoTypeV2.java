@@ -9,15 +9,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SignatureRespType complex type.
+ * <p>Java class for DocumentSignatureStatusInfoTypeV2 complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SignatureRespType">
+ * &lt;complexType name="DocumentSignatureStatusInfoTypeV2">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="DocumentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}StatusType"/>
  *         &lt;element name="Signature" type="{http://www.w3.org/2001/XMLSchema}base64Binary" minOccurs="0"/>
  *       &lt;/sequence>
@@ -30,18 +31,45 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SignatureRespType", propOrder = {
+@XmlType(name = "DocumentSignatureStatusInfoTypeV2", propOrder = {
+    "documentName",
     "status",
     "signature"
 })
-public class SignatureRespType {
+public class DocumentSignatureStatusInfoTypeV2 {
 
+    @XmlElement(name = "DocumentName", required = true)
+    protected String documentName;
     @XmlElement(name = "Status", required = true)
     protected StatusType status;
     @XmlElement(name = "Signature")
     protected byte[] signature;
     @XmlAttribute(name = "TransactionId", required = true)
     protected long transactionId;
+
+    /**
+     * Gets the value of the documentName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    /**
+     * Sets the value of the documentName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDocumentName(String value) {
+        this.documentName = value;
+    }
 
     /**
      * Gets the value of the status property.
