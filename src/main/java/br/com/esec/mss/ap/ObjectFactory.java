@@ -164,6 +164,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SignaturePosYPadesOptionType }
+     * 
+     */
+    public SignaturePosYPadesOptionType createSignaturePosYPadesOptionType() {
+        return new SignaturePosYPadesOptionType();
+    }
+
+    /**
      * Create an instance of {@link BatchSignatureComplexDocumentReqType }
      * 
      */
@@ -188,11 +196,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SignaturePosXPadesOptionType }
+     * 
+     */
+    public SignaturePosXPadesOptionType createSignaturePosXPadesOptionType() {
+        return new SignaturePosXPadesOptionType();
+    }
+
+    /**
      * Create an instance of {@link DocumentSignatureInfoType }
      * 
      */
     public DocumentSignatureInfoType createDocumentSignatureInfoType() {
         return new DocumentSignatureInfoType();
+    }
+
+    /**
+     * Create an instance of {@link SimpleSignatureReqTypeV3 }
+     * 
+     */
+    public SimpleSignatureReqTypeV3 createSimpleSignatureReqTypeV3() {
+        return new SimpleSignatureReqTypeV3();
+    }
+
+    /**
+     * Create an instance of {@link SimpleSignatureReqTypeV2 }
+     * 
+     */
+    public SimpleSignatureReqTypeV2 createSimpleSignatureReqTypeV2() {
+        return new SimpleSignatureReqTypeV2();
     }
 
     /**
@@ -252,6 +284,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SignaturePagePadesOptionType }
+     * 
+     */
+    public SignaturePagePadesOptionType createSignaturePagePadesOptionType() {
+        return new SignaturePagePadesOptionType();
+    }
+
+    /**
      * Create an instance of {@link CertificateInfoType }
      * 
      */
@@ -265,6 +305,14 @@ public class ObjectFactory {
      */
     public ValidateReqType createValidateReqType() {
         return new ValidateReqType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureTextPadesOptionType }
+     * 
+     */
+    public SignatureTextPadesOptionType createSignatureTextPadesOptionType() {
+        return new SignatureTextPadesOptionType();
     }
 
     /**
@@ -321,6 +369,22 @@ public class ObjectFactory {
      */
     public BatchSignatureReqType createBatchSignatureReqType() {
         return new BatchSignatureReqType();
+    }
+
+    /**
+     * Create an instance of {@link SimpleSignatureRespTypeV2 }
+     * 
+     */
+    public SimpleSignatureRespTypeV2 createSimpleSignatureRespTypeV2() {
+        return new SimpleSignatureRespTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link SimpleSignatureRespTypeV3 }
+     * 
+     */
+    public SimpleSignatureRespTypeV3 createSimpleSignatureRespTypeV3() {
+        return new SimpleSignatureRespTypeV3();
     }
 
     /**

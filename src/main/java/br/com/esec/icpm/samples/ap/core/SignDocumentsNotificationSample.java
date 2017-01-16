@@ -1,6 +1,7 @@
 package br.com.esec.icpm.samples.ap.core;
 
 import java.io.FileInputStream;
+import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +32,9 @@ public class SignDocumentsNotificationSample {
 		// validate args length
 		if (args.length < 4) {
 			System.out.println(MessageFormat.format(
-					"usage: {0} {1} <user> <message> <files...> \n" + "\n" + "\t user: email/cpf of the target user \n"
+					"usage: {0} {1} <user> <message> <timeout> <files...> \n" + "\n" + "\t user: email/cpf of the target user \n"
 							+ "\t message: text to be displayed \n"
+							+ "\t timeout: message expiration in minutes \n"
 							+ "\t files: path for one or more files to be signed \n",
 					Constants.APP_NAME, Constants.COMMAND_SIGN_DOCS_NOTIFICATION));
 			System.exit(1);
@@ -41,6 +43,7 @@ public class SignDocumentsNotificationSample {
 		// get args
 		String user = args[1];
 		String message = args[2];
+		BigInteger timeout = new BigInteger(args[3]);
 		String[] filePaths = Arrays.copyOfRange(args, 3, args.length);
 		validateArgs(user, message, filePaths);
 
@@ -80,7 +83,7 @@ public class SignDocumentsNotificationSample {
 		 * The server returns the ID of the transaction, which can be used to
 		 * check it's status later.
 		 */
-		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint,
+		long transactionId = CertillionApUtils.signDocuments(user, message, timeout, filesToSign, endpoint,
 				MessagingModeType.ASYNCH_SERVER_SERVER);
 		
 		/*

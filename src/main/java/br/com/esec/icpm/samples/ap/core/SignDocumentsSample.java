@@ -6,9 +6,11 @@ import br.com.esec.icpm.samples.ap.core.utils.FileInfo;
 import br.com.esec.icpm.samples.ap.core.utils.TryFunction;
 import br.com.esec.mss.ap.MessagingModeType;
 import br.com.esec.mss.ap.SignaturePortType;
+
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,12 +43,13 @@ public class SignDocumentsSample {
 	public static void main(String[] args) throws Exception {
 
 		// validate args length
-		if (args.length < 4) {
+		if (args.length < 5) {
 			System.out.println(MessageFormat.format(
-					"usage: {0} {1} <user> <message> <files...> \n" +
+					"usage: {0} {1} <user> <message> <timeout> <files...> \n" +
 					"\n" +
 					"\t user: email/cpf of the target user \n" +
 					"\t message: text to be displayed \n" +
+					"\t timeout: message expiration in minutes \n" +
 					"\t files: path for one or more files to be signed \n",
 					Constants.APP_NAME, Constants.COMMAND_SIGN_DOCS
 			));
@@ -55,7 +59,8 @@ public class SignDocumentsSample {
 		// get args
 		String user = args[1];
 		String message = args[2];
-		String[] filePaths = Arrays.copyOfRange(args, 3, args.length);
+		BigInteger timeout = new BigInteger(args[3]);
+		String[] filePaths = Arrays.copyOfRange(args, 4, args.length);
 		validateArgs(user, message, filePaths);
 
 		// open an input stream to read each file
@@ -91,7 +96,7 @@ public class SignDocumentsSample {
 
 		The server returns the ID of the transaction, which can be used to check it's status later.
 		 */
-		long transactionId = CertillionApUtils.signDocuments(user, message, filesToSign, endpoint, MessagingModeType.ASYNCH_CLIENT_SERVER);
+		long transactionId = CertillionApUtils.signDocuments(user, message, timeout, filesToSign, endpoint, MessagingModeType.ASYNCH_CLIENT_SERVER);
 
 		/*
 		Get a service to schedule the status checking.

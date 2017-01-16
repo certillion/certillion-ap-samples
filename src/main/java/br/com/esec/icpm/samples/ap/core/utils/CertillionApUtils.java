@@ -1,19 +1,8 @@
 package br.com.esec.icpm.samples.ap.core.utils;
 
-import br.com.esec.mss.ap.*;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningScheduledExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
-import com.google.common.util.concurrent.SettableFuture;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,6 +11,32 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import br.com.esec.mss.ap.BatchInfoType;
+import br.com.esec.mss.ap.BatchSignatureReqTypeV2;
+import br.com.esec.mss.ap.BatchSignatureRespTypeV2;
+import br.com.esec.mss.ap.BatchSignatureStatusRespType;
+import br.com.esec.mss.ap.DocumentSignatureStatusInfoTypeV2;
+import br.com.esec.mss.ap.ICPMException;
+import br.com.esec.mss.ap.MessagingModeType;
+import br.com.esec.mss.ap.SignaturePortType;
+import br.com.esec.mss.ap.SignatureStandardType;
+import br.com.esec.mss.ap.SignatureStatusReqType;
+import br.com.esec.mss.ap.SignatureStatusRespType;
+import br.com.esec.mss.ap.UserType;
+
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningScheduledExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+import com.google.common.util.concurrent.SettableFuture;
 
 /**
  * Utilitarian methods to integrate with Certillion.
@@ -103,7 +118,7 @@ public final class CertillionApUtils {
 	 * @return The ID of the signature transaction within Certillion server.
 	 * @throws ICPMException If Certillion server rejected the request.
 	 */
-	public static long signDocuments(String user, String message, final List<FileInfo> fileInfos, final SignaturePortType endpoint, MessagingModeType msgModeType) throws ICPMException {
+	public static long signDocuments(String user, String message, BigInteger timeout, final List<FileInfo> fileInfos, final SignaturePortType endpoint, MessagingModeType msgModeType) throws ICPMException {
 
 		// read info's
 		SignatureStandardType standard = getStandardFromExtension(fileInfos.get(0).getName());
@@ -111,17 +126,18 @@ public final class CertillionApUtils {
 
 		// mount the "batch-signature" request
 		log.info("Sending request ...");
-		BatchSignatureReqType batchSignatureReq = new BatchSignatureReqType();
+		BatchSignatureReqTypeV2 batchSignatureReq = new BatchSignatureReqTypeV2();
 		batchSignatureReq.setMessagingMode(msgModeType);
 		batchSignatureReq.setDataToBeDisplayed(message);
 		batchSignatureReq.setSignatureStandard(standard);
 		batchSignatureReq.setTestMode(false);
+		batchSignatureReq.setTimeOut(timeout);
 //		batchSignatureComplexDocumentReqType.setSignaturePolicy(SignaturePolicyType.AD_RT);
 
 		// set the target user
-		MobileUserType mobileUser = new MobileUserType();
-		mobileUser.setUniqueIdentifier(user);
-		batchSignatureReq.setMobileUser(mobileUser);
+		UserType mobileUser = new UserType();
+		mobileUser.setIdentifier(user);
+		batchSignatureReq.setUser(mobileUser);
 
 		// set documents to be signed
 		List<BatchInfoType> documents = batchSignatureReq.getDocumentsToBeSigned();
@@ -134,7 +150,7 @@ public final class CertillionApUtils {
 		}
 
 		// send the "batch-signature" request
-		final BatchSignatureComplexDocumentRespType batchSignatureResp = endpoint.batchSignature(batchSignatureReq);
+		final BatchSignatureRespTypeV2 batchSignatureResp = endpoint.batchSignatureV2(batchSignatureReq);
 		CertillionStatus batchSignatureStatus = CertillionStatus.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 		if (batchSignatureStatus != CertillionStatus.REQUEST_OK) {
 			throw new ICPMException("Certillion rejected the signature request", batchSignatureResp.getStatus());
@@ -176,7 +192,7 @@ public final class CertillionApUtils {
 					checkTransactionReq.setTransactionId(transactionId);
 
 					// send the "check-transaction" request
-					BatchSignatureTIDsRespType checkTransactionResp = endpoint.batchSignatureTIDsStatus(checkTransactionReq);
+					BatchSignatureStatusRespType checkTransactionResp = endpoint.batchSignatureStatusV2(checkTransactionReq);
 					CertillionStatus checkTransactionStatus = CertillionStatus.valueOf(checkTransactionResp.getStatus().getStatusMessage());
 					if (checkTransactionStatus.isError()) {
 						throw new ICPMException("User didn't signed the files", checkTransactionResp.getStatus());
@@ -185,13 +201,14 @@ public final class CertillionApUtils {
 					// if still in progress, re-schedule this task
 					if (checkTransactionStatus == CertillionStatus.TRANSACTION_IN_PROGRESS) {
 						log.info("Transaction {} still in progress", transactionId);
+						log.info("Mobile Status is: " + checkTransactionResp.getStatus().getMobileStatus());
 						scheduleTask(superExecutor, this);
 						return;
 					}
 
 					// parse the "check-transaction" response
 					List<FileInfo> fileInfos = new ArrayList<FileInfo>();
-					for (DocumentSignatureStatusInfoType document : checkTransactionResp.getDocumentSignatureStatus()) {
+					for (DocumentSignatureStatusInfoTypeV2 document : checkTransactionResp.getDocumentSignatureStatus()) {
 						long documentId = document.getTransactionId();
 						String documentName = document.getDocumentName();
 						CertillionStatus documentStatus = CertillionStatus.from(document.getStatus());

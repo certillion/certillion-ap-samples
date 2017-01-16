@@ -27,6 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;element name="AddSubjectName" type="{http://esec.com.br/mss/ap}AddSubjectNameXmldsigOptionType"/>
  *           &lt;element name="AddKeyVal" type="{http://esec.com.br/mss/ap}AddKeyValXmldsigOptionType"/>
  *           &lt;element name="MultipleSignatures" type="{http://esec.com.br/mss/ap}MultipleSignaturesXmldsigOptionType"/>
+ *           &lt;element name="TextOfPadesSignature" type="{http://esec.com.br/mss/ap}SignatureTextPadesOptionType"/>
+ *           &lt;element name="PageOfPadesSignature" type="{http://esec.com.br/mss/ap}SignaturePagePadesOptionType"/>
+ *           &lt;element name="PosXOfPadesSignature" type="{http://esec.com.br/mss/ap}SignaturePosXPadesOptionType"/>
+ *           &lt;element name="PosYOfPadesSignature" type="{http://esec.com.br/mss/ap}SignaturePosYPadesOptionType"/>
  *         &lt;/choice>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -48,7 +52,11 @@ public class SignatureStandardOptionsType {
         @XmlElement(name = "ElementsName", type = ElementsNameXmldsigOptionType.class),
         @XmlElement(name = "AddSubjectName", type = AddSubjectNameXmldsigOptionType.class),
         @XmlElement(name = "AddKeyVal", type = AddKeyValXmldsigOptionType.class),
-        @XmlElement(name = "MultipleSignatures", type = MultipleSignaturesXmldsigOptionType.class)
+        @XmlElement(name = "MultipleSignatures", type = MultipleSignaturesXmldsigOptionType.class),
+        @XmlElement(name = "TextOfPadesSignature", type = SignatureTextPadesOptionType.class),
+        @XmlElement(name = "PageOfPadesSignature", type = SignaturePagePadesOptionType.class),
+        @XmlElement(name = "PosXOfPadesSignature", type = SignaturePosXPadesOptionType.class),
+        @XmlElement(name = "PosYOfPadesSignature", type = SignaturePosYPadesOptionType.class)
     })
     protected List<Object> elementsIdOrAttributeIdNameOrElementsName;
 
@@ -76,6 +84,10 @@ public class SignatureStandardOptionsType {
      * {@link AddSubjectNameXmldsigOptionType }
      * {@link AddKeyValXmldsigOptionType }
      * {@link MultipleSignaturesXmldsigOptionType }
+     * {@link SignatureTextPadesOptionType }
+     * {@link SignaturePagePadesOptionType }
+     * {@link SignaturePosXPadesOptionType }
+     * {@link SignaturePosYPadesOptionType }
      * 
      * 
      */

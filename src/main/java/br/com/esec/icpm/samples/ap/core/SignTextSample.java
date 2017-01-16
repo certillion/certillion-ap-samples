@@ -3,12 +3,15 @@ package br.com.esec.icpm.samples.ap.core;
 import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.mss.ap.*;
+
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.ws.Service;
+
 import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -27,12 +30,13 @@ public class SignTextSample {
 	public static void main(String[] args) throws MalformedURLException, InterruptedException {
 
 		// validate args length
-		if (args.length < 3) {
+		if (args.length < 4) {
 			System.out.println(MessageFormat.format(
-					"usage: {0} {1} <user> <message> \n" +
+					"usage: {0} {1} <user> <message> <timeout> \n" +
 					"\n" +
 					"\t user: email of the target user \n" +
-					"\t message: text to be signed \n",
+					"\t message: text to be signed \n" +
+					"\t timeout: message expiration (minutes) \n",
 					Constants.APP_NAME, Constants.COMMAND_SIGN_TEXT
 			));
 			System.exit(1);
@@ -41,6 +45,7 @@ public class SignTextSample {
 		// get args
 		String uniqueIdentifier = args[1];
 		String textToBeSigned = args[2];
+		BigInteger timeout = new BigInteger(args[3]);
 
 		// connect to service
 		log.info("Connecting to service...");
@@ -58,6 +63,7 @@ public class SignTextSample {
 		signatureReq.setMobileUser(mobileUser);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		signatureReq.setTestMode(false);
+		signatureReq.setTimeOut(timeout);
 //		signatureSimpleDocumentReq.setSignaturePolicy(SignaturePolicyType.AD_RT);
 
 		try {
@@ -84,6 +90,7 @@ public class SignTextSample {
 			do {
 				log.info("Waiting signature from user...");
 				statusResp = signatureEndpoint.statusQuery(statusReq);
+				log.info("Mobile Status is: " + statusResp.getStatus().getMobileStatus());
 				statusRespValue = CertillionStatus.valueOf(statusResp.getStatus().getStatusMessage());
 				Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
 			} while (statusRespValue == CertillionStatus.TRANSACTION_IN_PROGRESS);

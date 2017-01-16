@@ -40,16 +40,16 @@ public interface SignaturePortType {
 
     /**
      * 
-     * @param batchSignatureStatusReq
+     * @param simpleSignatureReqTypeV2
      * @return
-     *     returns br.com.esec.mss.ap.BatchSignatureTIDsRespType
+     *     returns br.com.esec.mss.ap.SimpleSignatureRespTypeV2
      * @throws ICPMException
      */
-    @WebMethod(operationName = "BatchSignatureTIDsStatus")
-    @WebResult(name = "BatchSignatureResp", partName = "BatchSignatureResp")
-    public BatchSignatureTIDsRespType batchSignatureTIDsStatus(
-        @WebParam(name = "BatchSignatureStatusReq", partName = "BatchSignatureStatusReq")
-        SignatureStatusReqType batchSignatureStatusReq)
+    @WebMethod(operationName = "SimpleSignatureV2")
+    @WebResult(name = "SimpleSignatureRespTypeV2", partName = "SimpleSignatureRespTypeV2")
+    public SimpleSignatureRespTypeV2 simpleSignatureV2(
+        @WebParam(name = "SimpleSignatureReqTypeV2", partName = "SimpleSignatureReqTypeV2")
+        SimpleSignatureReqTypeV2 simpleSignatureReqTypeV2)
         throws ICPMException
     ;
 
@@ -62,6 +62,36 @@ public interface SignaturePortType {
     @WebMethod(operationName = "FindBandwidthInfo")
     @WebResult(name = "BandwidthInfoType", partName = "BandwidthInfoType")
     public BandwidthInfoType findBandwidthInfo()
+        throws ICPMException
+    ;
+
+    /**
+     * 
+     * @param simpleSignatureReqTypeV3
+     * @return
+     *     returns br.com.esec.mss.ap.SimpleSignatureRespTypeV3
+     * @throws ICPMException
+     */
+    @WebMethod(operationName = "SimpleSignatureV3")
+    @WebResult(name = "SimpleSignatureRespTypeV3", partName = "SimpleSignatureRespTypeV3")
+    public SimpleSignatureRespTypeV3 simpleSignatureV3(
+        @WebParam(name = "SimpleSignatureReqTypeV3", partName = "SimpleSignatureReqTypeV3")
+        SimpleSignatureReqTypeV3 simpleSignatureReqTypeV3)
+        throws ICPMException
+    ;
+
+    /**
+     * 
+     * @param batchSignatureStatusReq
+     * @return
+     *     returns br.com.esec.mss.ap.BatchSignatureTIDsRespType
+     * @throws ICPMException
+     */
+    @WebMethod(operationName = "BatchSignatureTIDsStatus")
+    @WebResult(name = "BatchSignatureResp", partName = "BatchSignatureResp")
+    public BatchSignatureTIDsRespType batchSignatureTIDsStatus(
+        @WebParam(name = "BatchSignatureStatusReq", partName = "BatchSignatureStatusReq")
+        SignatureStatusReqType batchSignatureStatusReq)
         throws ICPMException
     ;
 
@@ -112,16 +142,16 @@ public interface SignaturePortType {
 
     /**
      * 
-     * @param batchSignatureStatusReq
+     * @param signatureStatusReqType
      * @return
      *     returns br.com.esec.mss.ap.BatchSignatureStatusRespType
      * @throws ICPMException
      */
     @WebMethod(operationName = "BatchSignatureStatusV2")
-    @WebResult(name = "BatchSignatureStatusResp", partName = "BatchSignatureStatusResp")
+    @WebResult(name = "BatchSignatureStatusRespType", partName = "BatchSignatureStatusRespType")
     public BatchSignatureStatusRespType batchSignatureStatusV2(
-        @WebParam(name = "BatchSignatureStatusReq", partName = "BatchSignatureStatusReq")
-        SignatureStatusReqType batchSignatureStatusReq)
+        @WebParam(name = "SignatureStatusReqType", partName = "SignatureStatusReqType")
+        SignatureStatusReqType signatureStatusReqType)
         throws ICPMException
     ;
 

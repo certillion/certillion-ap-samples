@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="StatusCode" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="StatusMessage" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="StatusDetail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="MobileStatus" type="{http://esec.com.br/mss/ap}mobileStatus" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +33,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StatusType", propOrder = {
     "statusCode",
     "statusMessage",
-    "statusDetail"
+    "statusDetail",
+    "mobileStatus"
 })
 public class StatusType {
 
@@ -42,6 +44,8 @@ public class StatusType {
     protected String statusMessage;
     @XmlElement(name = "StatusDetail")
     protected String statusDetail;
+    @XmlElement(name = "MobileStatus")
+    protected MobileStatus mobileStatus;
 
     /**
      * Gets the value of the statusCode property.
@@ -105,6 +109,30 @@ public class StatusType {
      */
     public void setStatusDetail(String value) {
         this.statusDetail = value;
+    }
+
+    /**
+     * Gets the value of the mobileStatus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link MobileStatus }
+     *     
+     */
+    public MobileStatus getMobileStatus() {
+        return mobileStatus;
+    }
+
+    /**
+     * Sets the value of the mobileStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link MobileStatus }
+     *     
+     */
+    public void setMobileStatus(MobileStatus value) {
+        this.mobileStatus = value;
     }
 
 }

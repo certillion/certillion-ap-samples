@@ -4,7 +4,7 @@
 
 	<groupId>br.com.esec.icpm</groupId>
 	<artifactId>certillion-ap-samples</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 
 	<packaging>jar</packaging>
 
@@ -56,13 +56,13 @@
 		<dependency>
 			<groupId>br.com.esec.icpm</groupId>
 			<artifactId>mss-ws-client</artifactId>
-			<version>1.10.0</version>
+			<version>1.13.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>br.com.esec.icpm</groupId>
 			<artifactId>icpm-ws-client-common</artifactId>
-			<version>1.10.0</version>
+			<version>1.13.0</version>
 		</dependency>
 
 	</dependencies>

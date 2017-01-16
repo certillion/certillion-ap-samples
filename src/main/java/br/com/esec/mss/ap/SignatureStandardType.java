@@ -19,6 +19,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="xades"/>
  *     &lt;enumeration value="xmldsig_enveloped"/>
  *     &lt;enumeration value="xmldsig_enveloping"/>
+ *     &lt;enumeration value="pades"/>
+ *     &lt;enumeration value="raw"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -37,7 +39,11 @@ public enum SignatureStandardType {
     @XmlEnumValue("xmldsig_enveloped")
     XMLDSIG_ENVELOPED("xmldsig_enveloped"),
     @XmlEnumValue("xmldsig_enveloping")
-    XMLDSIG_ENVELOPING("xmldsig_enveloping");
+    XMLDSIG_ENVELOPING("xmldsig_enveloping"),
+    @XmlEnumValue("pades")
+    PADES("pades"),
+    @XmlEnumValue("raw")
+    RAW("raw");
     private final String value;
 
     SignatureStandardType(String v) {

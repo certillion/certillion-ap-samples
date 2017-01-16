@@ -3,12 +3,14 @@ package br.com.esec.icpm.samples.ap.core;
 import br.com.esec.icpm.samples.ap.Constants;
 import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
 import br.com.esec.mss.ap.*;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.ws.Service;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -72,12 +74,12 @@ public class SignXmldsigSample {
 		signatureEndpoint = signatureService.getPort(SignaturePortType.class);
 
 		// set the target user
-		MobileUserType mobileUser = new MobileUserType();
-		mobileUser.setUniqueIdentifier(uniqueIdentifier);
+		UserType mobileUser = new UserType();
+		mobileUser.setIdentifier(uniqueIdentifier);
 
 		// mount the "batch-signature" request
-		BatchSignatureReqType batchSignatureReq = new BatchSignatureReqType();
-		batchSignatureReq.setMobileUser(mobileUser);
+		BatchSignatureReqTypeV2 batchSignatureReq = new BatchSignatureReqTypeV2();
+		batchSignatureReq.setUser(mobileUser);
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		batchSignatureReq.setDataToBeDisplayed(dataToBeDisplayed);
 		batchSignatureReq.setSignatureStandard(standard);
@@ -88,7 +90,7 @@ public class SignXmldsigSample {
 		try {
 			// send the "batch-signature" request to server
 			log.info("Sending request...");
-			BatchSignatureComplexDocumentRespType batchSignatureResp = signatureEndpoint.batchSignature(batchSignatureReq);
+			BatchSignatureRespTypeV2 batchSignatureResp = signatureEndpoint.batchSignatureV2(batchSignatureReq);
 			CertillionStatus batchSignatureRespValue = CertillionStatus.valueOf(batchSignatureResp.getStatus().getStatusMessage());
 
 			// check the "batch-signature" response
@@ -108,6 +110,7 @@ public class SignXmldsigSample {
 			do {
 				log.info("Waiting signature from user...");
 				statusResp = signatureEndpoint.batchSignatureTIDsStatus(statusReq);
+				log.info("Mobile Status is: "+ statusResp.getStatus().getMobileStatus());
 				statusRespValue = CertillionStatus.valueOf(statusResp.getStatus().getStatusMessage());
 				Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
 			} while (statusResp.getStatus().getStatusCode() == CertillionStatus.TRANSACTION_IN_PROGRESS.getCode());
