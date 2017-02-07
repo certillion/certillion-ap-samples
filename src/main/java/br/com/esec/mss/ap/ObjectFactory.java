@@ -132,6 +132,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SimpleSignatureReqTypeV4 }
+     * 
+     */
+    public SimpleSignatureReqTypeV4 createSimpleSignatureReqTypeV4() {
+        return new SimpleSignatureReqTypeV4();
+    }
+
+    /**
      * Create an instance of {@link TemplateType }
      * 
      */
@@ -172,14 +180,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BatchSignatureComplexDocumentReqType }
-     * 
-     */
-    public BatchSignatureComplexDocumentReqType createBatchSignatureComplexDocumentReqType() {
-        return new BatchSignatureComplexDocumentReqType();
-    }
-
-    /**
      * Create an instance of {@link SignatureRespType }
      * 
      */
@@ -212,22 +212,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SimpleSignatureReqTypeV3 }
-     * 
-     */
-    public SimpleSignatureReqTypeV3 createSimpleSignatureReqTypeV3() {
-        return new SimpleSignatureReqTypeV3();
-    }
-
-    /**
-     * Create an instance of {@link SimpleSignatureReqTypeV2 }
-     * 
-     */
-    public SimpleSignatureReqTypeV2 createSimpleSignatureReqTypeV2() {
-        return new SimpleSignatureReqTypeV2();
-    }
-
-    /**
      * Create an instance of {@link UserType }
      * 
      */
@@ -257,22 +241,6 @@ public class ObjectFactory {
      */
     public ValidatePdfReqType createValidatePdfReqType() {
         return new ValidatePdfReqType();
-    }
-
-    /**
-     * Create an instance of {@link DocumentSignatureStatusInfoType }
-     * 
-     */
-    public DocumentSignatureStatusInfoType createDocumentSignatureStatusInfoType() {
-        return new DocumentSignatureStatusInfoType();
-    }
-
-    /**
-     * Create an instance of {@link BatchSignatureComplexDocumentRespType }
-     * 
-     */
-    public BatchSignatureComplexDocumentRespType createBatchSignatureComplexDocumentRespType() {
-        return new BatchSignatureComplexDocumentRespType();
     }
 
     /**
@@ -348,14 +316,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BatchSignatureTIDsRespType }
-     * 
-     */
-    public BatchSignatureTIDsRespType createBatchSignatureTIDsRespType() {
-        return new BatchSignatureTIDsRespType();
-    }
-
-    /**
      * Create an instance of {@link AddKeyValXmldsigOptionType }
      * 
      */
@@ -364,43 +324,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BatchSignatureReqType }
+     * Create an instance of {@link SimpleSignatureRespTypeV4 }
      * 
      */
-    public BatchSignatureReqType createBatchSignatureReqType() {
-        return new BatchSignatureReqType();
-    }
-
-    /**
-     * Create an instance of {@link SimpleSignatureRespTypeV2 }
-     * 
-     */
-    public SimpleSignatureRespTypeV2 createSimpleSignatureRespTypeV2() {
-        return new SimpleSignatureRespTypeV2();
-    }
-
-    /**
-     * Create an instance of {@link SimpleSignatureRespTypeV3 }
-     * 
-     */
-    public SimpleSignatureRespTypeV3 createSimpleSignatureRespTypeV3() {
-        return new SimpleSignatureRespTypeV3();
-    }
-
-    /**
-     * Create an instance of {@link SignatureSimpleDocumentReqType }
-     * 
-     */
-    public SignatureSimpleDocumentReqType createSignatureSimpleDocumentReqType() {
-        return new SignatureSimpleDocumentReqType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureComplexDocumentReqType }
-     * 
-     */
-    public SignatureComplexDocumentReqType createSignatureComplexDocumentReqType() {
-        return new SignatureComplexDocumentReqType();
+    public SimpleSignatureRespTypeV4 createSimpleSignatureRespTypeV4() {
+        return new SimpleSignatureRespTypeV4();
     }
 
     /**
@@ -452,19 +380,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SignatureStandardOptionsType }
-     * 
-     */
-    public SignatureStandardOptionsType createSignatureStandardOptionsType() {
-        return new SignatureStandardOptionsType();
-    }
-
-    /**
      * Create an instance of {@link BatchSignatureStatusRespType }
      * 
      */
     public BatchSignatureStatusRespType createBatchSignatureStatusRespType() {
         return new BatchSignatureStatusRespType();
+    }
+
+    /**
+     * Create an instance of {@link SignatureStandardOptionsType }
+     * 
+     */
+    public SignatureStandardOptionsType createSignatureStandardOptionsType() {
+        return new SignatureStandardOptionsType();
     }
 
     /**

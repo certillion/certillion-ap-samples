@@ -3,24 +3,25 @@ package br.com.esec.mss.ap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SignatureStatusRespType complex type.
+ * <p>Java class for SimpleSignatureRespTypeV4 complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SignatureStatusRespType">
+ * &lt;complexType name="SimpleSignatureRespTypeV4">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}StatusType"/>
- *         &lt;element name="Signature" type="{http://www.w3.org/2001/XMLSchema}base64Binary" minOccurs="0"/>
- *         &lt;element name="SignatureInfo" type="{http://esec.com.br/mss/ap}SignatureInfoType" minOccurs="0"/>
+ *         &lt;element name="VerificationCode" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="TransactionId" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -29,19 +30,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SignatureStatusRespType", propOrder = {
+@XmlType(name = "SimpleSignatureRespTypeV4", propOrder = {
     "status",
-    "signature",
-    "signatureInfo"
+    "verificationCode"
 })
-public class SignatureStatusRespType {
+public class SimpleSignatureRespTypeV4 {
 
     @XmlElement(name = "Status", required = true)
     protected StatusType status;
-    @XmlElement(name = "Signature")
-    protected byte[] signature;
-    @XmlElement(name = "SignatureInfo")
-    protected SignatureInfoType signatureInfo;
+    @XmlElement(name = "VerificationCode")
+    protected Integer verificationCode;
+    @XmlAttribute(name = "TransactionId", required = true)
+    protected long transactionId;
 
     /**
      * Gets the value of the status property.
@@ -68,49 +68,43 @@ public class SignatureStatusRespType {
     }
 
     /**
-     * Gets the value of the signature property.
+     * Gets the value of the verificationCode property.
      * 
      * @return
      *     possible object is
-     *     byte[]
+     *     {@link Integer }
+     *     
      */
-    public byte[] getSignature() {
-        return signature;
+    public Integer getVerificationCode() {
+        return verificationCode;
     }
 
     /**
-     * Sets the value of the signature property.
+     * Sets the value of the verificationCode property.
      * 
      * @param value
      *     allowed object is
-     *     byte[]
+     *     {@link Integer }
+     *     
      */
-    public void setSignature(byte[] value) {
-        this.signature = value;
+    public void setVerificationCode(Integer value) {
+        this.verificationCode = value;
     }
 
     /**
-     * Gets the value of the signatureInfo property.
+     * Gets the value of the transactionId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link SignatureInfoType }
-     *     
      */
-    public SignatureInfoType getSignatureInfo() {
-        return signatureInfo;
+    public long getTransactionId() {
+        return transactionId;
     }
 
     /**
-     * Sets the value of the signatureInfo property.
+     * Sets the value of the transactionId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SignatureInfoType }
-     *     
      */
-    public void setSignatureInfo(SignatureInfoType value) {
-        this.signatureInfo = value;
+    public void setTransactionId(long value) {
+        this.transactionId = value;
     }
 
 }

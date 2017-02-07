@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="DocumentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}StatusType"/>
  *         &lt;element name="Signature" type="{http://www.w3.org/2001/XMLSchema}base64Binary" minOccurs="0"/>
+ *         &lt;element name="SignatureInfo" type="{http://esec.com.br/mss/ap}SignatureInfoType" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="TransactionId" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "DocumentSignatureStatusInfoTypeV2", propOrder = {
     "documentName",
     "status",
-    "signature"
+    "signature",
+    "signatureInfo"
 })
 public class DocumentSignatureStatusInfoTypeV2 {
 
@@ -44,6 +46,8 @@ public class DocumentSignatureStatusInfoTypeV2 {
     protected StatusType status;
     @XmlElement(name = "Signature")
     protected byte[] signature;
+    @XmlElement(name = "SignatureInfo")
+    protected SignatureInfoType signatureInfo;
     @XmlAttribute(name = "TransactionId", required = true)
     protected long transactionId;
 
@@ -115,6 +119,30 @@ public class DocumentSignatureStatusInfoTypeV2 {
      */
     public void setSignature(byte[] value) {
         this.signature = value;
+    }
+
+    /**
+     * Gets the value of the signatureInfo property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link SignatureInfoType }
+     *     
+     */
+    public SignatureInfoType getSignatureInfo() {
+        return signatureInfo;
+    }
+
+    /**
+     * Sets the value of the signatureInfo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SignatureInfoType }
+     *     
+     */
+    public void setSignatureInfo(SignatureInfoType value) {
+        this.signatureInfo = value;
     }
 
     /**

@@ -1,20 +1,27 @@
 package br.com.esec.icpm.samples.ap.core;
 
-import br.com.esec.icpm.samples.ap.Constants;
-import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
-import br.com.esec.mss.ap.*;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.ws.Service;
-
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
+
+import javax.xml.ws.Service;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import br.com.esec.icpm.samples.ap.Constants;
+import br.com.esec.icpm.samples.ap.core.utils.CertillionStatus;
+import br.com.esec.mss.ap.MessagingModeType;
+import br.com.esec.mss.ap.SignaturePortTypeV2;
+import br.com.esec.mss.ap.SignatureRespType;
+import br.com.esec.mss.ap.SignatureStatusReqType;
+import br.com.esec.mss.ap.SignatureStatusRespType;
+import br.com.esec.mss.ap.SimpleSignatureReqTypeV4;
+import br.com.esec.mss.ap.SimpleSignatureRespTypeV4;
+import br.com.esec.mss.ap.UserType;
 
 /**
  * This example shows how to request the signature of a simple text message.
@@ -51,16 +58,16 @@ public class SignTextSample {
 		log.info("Connecting to service...");
 		URL serviceUrl = new URL(Constants.WSDL_URL);
 		Service signatureService = Service.create(serviceUrl, Constants.SERVICE_QNAME);
-		SignaturePortType signatureEndpoint = signatureService.getPort(SignaturePortType.class);
+		SignaturePortTypeV2 signatureEndpoint = signatureService.getPort(SignaturePortTypeV2.class);
 
 		// set the target user
-		MobileUserType mobileUser = new MobileUserType();
-		mobileUser.setUniqueIdentifier(uniqueIdentifier);
+		UserType mobileUser = new UserType();
+		mobileUser.setIdentifier(uniqueIdentifier);
 
 		// mount the "signature" request
-		SignatureSimpleDocumentReqType signatureReq = new SignatureSimpleDocumentReqType();
+		SimpleSignatureReqTypeV4 signatureReq = new SimpleSignatureReqTypeV4();
 		signatureReq.setDataToBeSigned(textToBeSigned);
-		signatureReq.setMobileUser(mobileUser);
+		signatureReq.setUser(mobileUser);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		signatureReq.setTestMode(false);
 		signatureReq.setTimeOut(timeout);
@@ -69,7 +76,7 @@ public class SignTextSample {
 		try {
 			// send the "signature" request to server
 			log.info("Sending request...");
-			SignatureRespType signatureResp = signatureEndpoint.signatureSimpleDocument(signatureReq);
+			SimpleSignatureRespTypeV4 signatureResp = signatureEndpoint.simpleSignature(signatureReq);
 			CertillionStatus signatureRespValue = CertillionStatus.valueOf(signatureResp.getStatus().getStatusMessage());
 			long transactionId = signatureResp.getTransactionId();
 

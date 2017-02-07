@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "SignatureService", targetNamespace = "http://esec.com.br/mss/ap", wsdlLocation = "http://192.168.2.22:8280/mss/serviceAp_dev.wsdl")
+@WebServiceClient(name = "SignatureService", targetNamespace = "http://esec.com.br/mss/ap", wsdlLocation = "http://192.168.2.22:8280/mss/serviceAp_dev2.wsdl")
 public class SignatureService
     extends Service
 {
@@ -30,7 +30,7 @@ public class SignatureService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://192.168.2.22:8280/mss/serviceAp_dev.wsdl");
+            url = new URL("http://192.168.2.22:8280/mss/serviceAp_dev2.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -65,11 +65,11 @@ public class SignatureService
     /**
      * 
      * @return
-     *     returns SignaturePortType
+     *     returns SignaturePortTypeV2
      */
-    @WebEndpoint(name = "SignaturePortType")
-    public SignaturePortType getSignaturePortType() {
-        return super.getPort(new QName("http://esec.com.br/mss/ap", "SignaturePortType"), SignaturePortType.class);
+    @WebEndpoint(name = "SignaturePortTypeV2")
+    public SignaturePortTypeV2 getSignaturePortTypeV2() {
+        return super.getPort(new QName("http://esec.com.br/mss/ap", "SignaturePortTypeV2"), SignaturePortTypeV2.class);
     }
 
     /**
@@ -77,11 +77,11 @@ public class SignatureService
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns SignaturePortType
+     *     returns SignaturePortTypeV2
      */
-    @WebEndpoint(name = "SignaturePortType")
-    public SignaturePortType getSignaturePortType(WebServiceFeature... features) {
-        return super.getPort(new QName("http://esec.com.br/mss/ap", "SignaturePortType"), SignaturePortType.class, features);
+    @WebEndpoint(name = "SignaturePortTypeV2")
+    public SignaturePortTypeV2 getSignaturePortTypeV2(WebServiceFeature... features) {
+        return super.getPort(new QName("http://esec.com.br/mss/ap", "SignaturePortTypeV2"), SignaturePortTypeV2.class, features);
     }
 
     private static URL __getWsdlLocation() {

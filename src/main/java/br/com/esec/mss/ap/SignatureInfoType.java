@@ -27,6 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="SignerCertificate" type="{http://esec.com.br/mss/ap}CertificateInfoType" minOccurs="0"/>
  *         &lt;element name="PolicyId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="PolicyUrl" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="LegalIdentifier" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +43,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "signingTime",
     "signerCertificate",
     "policyId",
-    "policyUrl"
+    "policyUrl",
+    "legalIdentifier"
 })
 public class SignatureInfoType {
 
@@ -59,6 +61,8 @@ public class SignatureInfoType {
     protected String policyId;
     @XmlElement(name = "PolicyUrl")
     protected String policyUrl;
+    @XmlElement(name = "LegalIdentifier")
+    protected String legalIdentifier;
 
     /**
      * Gets the value of the valid property.
@@ -199,6 +203,30 @@ public class SignatureInfoType {
      */
     public void setPolicyUrl(String value) {
         this.policyUrl = value;
+    }
+
+    /**
+     * Gets the value of the legalIdentifier property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLegalIdentifier() {
+        return legalIdentifier;
+    }
+
+    /**
+     * Sets the value of the legalIdentifier property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLegalIdentifier(String value) {
+        this.legalIdentifier = value;
     }
 
 }
