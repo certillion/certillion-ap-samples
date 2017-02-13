@@ -26,9 +26,9 @@ public final class Constants {
 	public static final String COMMAND_ONLY_DOWNLOAD_DETACHED = "only-download-detached";
 
 	// web service url strings
-	public static final String BASE_URL = "http://192.168.2.22:8280";
-	public static final String REST_URL = BASE_URL + "/mss/restAp_dev";
-	public static final String WSDL_URL = BASE_URL + "/mss/serviceAp_dev.wsdl";
+	public static final String BASE_URL = "http://labs.certillion.com";
+	public static final String REST_URL = BASE_URL + "/mss/restAp_prod";
+	public static final String WSDL_URL = BASE_URL + "/mss/serviceAp_prod.wsdl";
 
 	// web service qualified name
 	public static final QName SERVICE_QNAME = new QName("http://esec.com.br/mss/ap", "SignatureService");

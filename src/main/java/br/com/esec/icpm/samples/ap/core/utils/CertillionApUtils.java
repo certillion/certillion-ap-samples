@@ -130,7 +130,7 @@ public final class CertillionApUtils {
 		batchSignatureReq.setMessagingMode(msgModeType);
 		batchSignatureReq.setDataToBeDisplayed(message);
 		batchSignatureReq.setSignatureStandard(standard);
-		batchSignatureReq.setTestMode(false);
+		batchSignatureReq.setTestMode(true);
 		batchSignatureReq.setTimeOut(timeout);
 //		batchSignatureComplexDocumentReqType.setSignaturePolicy(SignaturePolicyType.AD_RT);
 
