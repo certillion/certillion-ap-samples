@@ -60,7 +60,7 @@ public class ValidateTextSignatureSample {
 		FileDataSource file = new FileDataSource(new File(signatureFile));
 		DataHandler signature = new DataHandler(file);
 
-		// Request to MSS the signature of text mode synchronous
+		// Request to MSS the signature of text mode
 		try {
 			System.out.println("Requesting validation...");
 	

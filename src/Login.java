@@ -6,7 +6,9 @@ import java.util.Random;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+import com.certillion.api.CertificateFiltersType;
 import com.certillion.api.CertificateInfoType;
+import com.certillion.api.HsmCertificateFilterType;
 import com.certillion.api.ICPMException;
 import com.certillion.api.MessagingModeType;
 import com.certillion.api.MobileUserType;
@@ -37,14 +39,29 @@ import com.certillion.utils.CertillionStatus;
 public class Login {
 
 	public static void main(String[] args) throws MalformedURLException, ICPMException, UnsupportedEncodingException {
-		if (args.length != 2) {
-			System.out.println("uso: java SimpleSignatureV2Sample email-id domain");
+		if (args.length < 2 || args.length > 3) {
+			System.out.println("uso: java SimpleSignatureV2Sample [-hsm|-hsmAuth] email-id domain");
 			System.out.println("ex:  java SimpleSignatureV2Sample user@gmail.com www.domain.com");
 			System.exit(1);
 		}
 
-		String userId = args[0];
-		String domain = args[1];
+		// reading command-line parameters
+		int shift = 1;
+		boolean useHSM = false;
+		boolean useAuthentic = false;		
+		
+		if (args[0].toLowerCase().trim().equals("-hsm")) {
+			useHSM = true;
+		}
+		else if (args[0].toLowerCase().trim().equals("-hsmauth")) {
+			useHSM = useAuthentic = true;
+		}
+		else {
+			shift = 0;
+		}
+
+		String userId = args[0 + shift];
+		String domain = args[1 + shift];
 		
 		// To use e-Sec's development server (must require access)
 		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
@@ -56,7 +73,7 @@ public class Login {
 		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		// connect to service
-		System.out.println("Conectando ao servico...");
+		System.out.println("Connecting to service...");
 		URL serviceUrl = new URL(WSDL_URL);
 		QName qname = new QName("http://esec.com.br/mss/ap", "SignatureService");
 		Service signatureService = Service.create(serviceUrl, qname);
@@ -71,16 +88,35 @@ public class Login {
 		SimpleSignatureReqTypeV3 signatureReq = new SimpleSignatureReqTypeV3();
 		int random = Math.abs((new Random().nextInt() % 100000));
 		
+		// "I've verified the code" + random + " to login at " + domain; 
 		String dataToBeSigned = "Confirmo o codigo " + random
 									+ " para fazer login em \"" + domain + "\"";
 		
 		signatureReq.setDataToBeSigned(dataToBeSigned);
 		signatureReq.setMobileUser(mobileUser);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
-		signatureReq.setTestMode(true);
 
+		boolean usingICPBRASILCertificates = true;
+		
+		signatureReq.setTestMode(!usingICPBRASILCertificates);
+
+		if (useHSM) {
+			System.out.println("Request to sign in HSM mode");
+			HsmCertificateFilterType hsmFilter = new HsmCertificateFilterType();
+			CertificateFiltersType filter = new CertificateFiltersType();
+			
+			hsmFilter.setValue(true);
+			filter.getTrustChainOrOwnerCertificateOrAlgorithm().add(hsmFilter);
+			signatureReq.setCertificateFilters(filter);
+		}
+		
+		if (useAuthentic) {
+			System.out.println("Requesting authorization for automatic signature");
+			signatureReq.setFingerprint("AUTH");
+		}
+		
 		// send the "signature" request to server
-		System.out.println("Enviando solicitacao...");
+		System.out.println("Sending request to " + userId);
 		SimpleSignatureRespTypeV3 signatureResp = null;
 		
 		try {
@@ -89,7 +125,7 @@ public class Login {
 		catch (ICPMException e) {
 			StatusType exception = e.getFaultInfo();
 			
-			System.out.println("Falha de login: CODE[" 
+			System.out.println("Exception in login: CODE[" 
 							+ exception.getStatusCode() + "], DETAIL: " 
 							+ exception.getStatusDetail() + ", MESSAGE: "
 							+ exception.getStatusMessage());
@@ -102,9 +138,14 @@ public class Login {
 		
 		// check the "signature" response
 		if (signatureRespValue != CertillionStatus.REQUEST_OK) {
-			System.out.println("Falha ao enviar assinatura, o servidor retornou: " + signatureRespValue);
+			System.out.println("Error sending request, server returned: " + signatureRespValue);
 		}
 		else {
+			System.out.println("Request sent, transaction ID is: " + transactionId);
+			
+			if (useHSM && !useAuthentic)
+				System.out.println("\tverification code: " + signatureResp.getVerificationCode());
+			
 			// mount the "get-status" request
 			SignatureStatusReqType statusReq = new SignatureStatusReqType();
 			
@@ -116,10 +157,11 @@ public class Login {
 			CertillionStatus statusRespValue = null;
 			
 			do {
-				System.out.println("Aguardando assinatura do usuario...");
+				System.out.println("Waiting signature from user...");
 				
 				try {
-					Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
+					// TODO REVIEW: DON'T USE THIS ON PRODUCTION OR YOU'LL HAVE PERFORMANCE ISSUES!!!
+					Thread.sleep(10000); // wait for at least 10 seconds or the server will mark you as flood
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
@@ -131,13 +173,13 @@ public class Login {
 
 			// check the "get-status" response
 			if (statusRespValue == CertillionStatus.USER_CANCELED) {
-				System.out.println("Falha de login: usuario cancelou");
+				System.out.println("Login failure: user cancelled");
 			}
 			else if (statusRespValue != CertillionStatus.SIGNATURE_VALID) {
-				System.out.println("Falha na resposta, status: " + statusRespValue);
+				System.out.println("Login failure, status: " + statusRespValue);
 			}
 			else {
-				System.out.println("Login efetuado com sucesso");
+				System.out.println("Login success");
 				
 				SignatureInfoTypeV2 signatureInfo = statusResp.getSignatureInfo();
 				
@@ -145,8 +187,8 @@ public class Login {
 					CertificateInfoType certificateInfo = signatureInfo.getSignerCertificate();
 					String subjectDN = certificateInfo.getSubjectDn();
 					
-					System.out.println("\tUsuario: " + subjectDN.substring(subjectDN.indexOf("CN=") + 3));
-					System.out.println("\tHora do login: " + signatureInfo.getSigningTime());
+					System.out.println("\tUser: " + subjectDN.substring(subjectDN.indexOf("CN=") + 3));
+					System.out.println("\tLogin time: " + signatureInfo.getSigningTime());
 				}
 			}
 		}

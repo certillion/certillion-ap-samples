@@ -117,7 +117,10 @@ public class BatchSignatureV2Sample {
 		batchSignatureReq.setDataToBeDisplayed(note);
 		batchSignatureReq.setSignatureStandard(standard);
 		//batchSignatureReq.setSignatureStandard(SignatureStandardType.PADES);
-		batchSignatureReq.setTestMode(true);
+		
+		boolean usingICPBRASILCertificates = true;
+		
+		batchSignatureReq.setTestMode(!usingICPBRASILCertificates);
 		
 		if (useHSM) {
 			System.out.println("Request to sign in HSM mode");
@@ -203,6 +206,9 @@ public class BatchSignatureV2Sample {
 			
 			System.out.println("Request sent, transaction ID is: " + transactionId);
 			
+			if (useHSM && !useAuthentic)
+				System.out.println("\tverification code: " + batchSignatureResp.getVerificationCode());
+			
 			// mount the "check-transaction" request
 			SignatureStatusReqType signatureStatusReqType = new SignatureStatusReqType();
 			
@@ -216,7 +222,8 @@ public class BatchSignatureV2Sample {
 			System.out.println("Waiting signature from user");
 			do {
 				try {
-					Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
+					// TODO REVIEW: DON'T USE THIS ON PRODUCTION OR YOU'LL HAVE PERFORMANCE ISSUES!!!
+					Thread.sleep(10000); // wait for at least 10 seconds or the server will mark you as flood
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
