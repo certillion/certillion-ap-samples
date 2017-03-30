@@ -52,7 +52,7 @@ public class ValidateSignatureSample {
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
 		//Do you want to see the generated soap messages?
-		com.certillion.utils.WSUtils.dumpToConsole(true);
+		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		// Get the signaturePort
 		System.out.println("Connecting to Signature Service... ");

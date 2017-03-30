@@ -69,7 +69,7 @@ public class BatchSignatureV2Sample {
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
 		//Do you want to see the generated soap messages?
-		com.certillion.utils.WSUtils.dumpToConsole(true);
+		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		// reading command-line parameters
 		int shift = 1;
