@@ -70,7 +70,7 @@ public class SimpleSignatureV3Sample {
 		
 		// To use e-Sec's development server (must require access)
 		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
-		
+
 		// To use your own ws-signer
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		

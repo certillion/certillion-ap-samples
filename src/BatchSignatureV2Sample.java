@@ -68,6 +68,9 @@ public class BatchSignatureV2Sample {
 		//final String REST_URL = "http://localhost:8280/mss/restful/applicationProvider";
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
+		//Do you want to see the generated soap messages?
+		com.certillion.utils.WSUtils.dumpToConsole(true);
+		
 		// reading command-line parameters
 		int shift = 1;
 		boolean useHSM = false;
@@ -90,9 +93,6 @@ public class BatchSignatureV2Sample {
 		
 		File files[] = new File[args.length - shift];
 		String hashes[] = new String[files.length];
-		
-		//Do you want to see the generated soap messages?
-		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		for (int i = shift; i < args.length; i++)
 			files[i-shift] = new File(args[i]);
