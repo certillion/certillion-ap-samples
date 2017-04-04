@@ -1,3 +1,0 @@
-BASE_URL=http://labs.certillion.com
-REST_URL=/mss/restAp_prod
-WSDL_URL=/mss/serviceAp_prod.wsdl

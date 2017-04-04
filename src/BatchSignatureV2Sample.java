@@ -68,6 +68,9 @@ public class BatchSignatureV2Sample {
 		//final String REST_URL = "http://localhost:8280/mss/restful/applicationProvider";
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
+		//Do you want to see the generated soap messages?
+		//com.certillion.utils.WSUtils.dumpToConsole(true);
+		
 		// reading command-line parameters
 		int shift = 1;
 		boolean useHSM = false;
@@ -90,9 +93,6 @@ public class BatchSignatureV2Sample {
 		
 		File files[] = new File[args.length - shift];
 		String hashes[] = new String[files.length];
-		
-		//Do you want to see the generated soap messages?
-		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		for (int i = shift; i < args.length; i++)
 			files[i-shift] = new File(args[i]);
@@ -117,7 +117,10 @@ public class BatchSignatureV2Sample {
 		batchSignatureReq.setDataToBeDisplayed(note);
 		batchSignatureReq.setSignatureStandard(standard);
 		//batchSignatureReq.setSignatureStandard(SignatureStandardType.PADES);
-		batchSignatureReq.setTestMode(true);
+		
+		boolean usingICPBRASILCertificates = true;
+		
+		batchSignatureReq.setTestMode(!usingICPBRASILCertificates);
 		
 		if (useHSM) {
 			System.out.println("Request to sign in HSM mode");
@@ -203,6 +206,9 @@ public class BatchSignatureV2Sample {
 			
 			System.out.println("Request sent, transaction ID is: " + transactionId);
 			
+			if (useHSM && !useAuthentic)
+				System.out.println("\tverification code: " + batchSignatureResp.getVerificationCode());
+			
 			// mount the "check-transaction" request
 			SignatureStatusReqType signatureStatusReqType = new SignatureStatusReqType();
 			
@@ -216,7 +222,8 @@ public class BatchSignatureV2Sample {
 			System.out.println("Waiting signature from user");
 			do {
 				try {
-					Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
+					// TODO REVIEW: DON'T USE THIS ON PRODUCTION OR YOU'LL HAVE PERFORMANCE ISSUES!!!
+					Thread.sleep(10000); // wait for at least 10 seconds or the server will mark you as flood
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();

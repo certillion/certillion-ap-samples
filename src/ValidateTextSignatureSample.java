@@ -32,8 +32,8 @@ public class ValidateTextSignatureSample {
 	public static void main(String[] args) throws MalformedURLException, UnsupportedEncodingException {
 
 		if (args.length != 2) {
-			System.out.println("usage:   java ValidateSignatureSample message signature-filename");
-			System.out.println("example: java ValidateSignatureSample \"hello world\" signature.p7m");
+			System.out.println("usage:   java ValidateTextSignatureSample message signature-filename");
+			System.out.println("example: java ValidateTextSignatureSample \"hello world\" signature.p7m");
 			System.exit(1);
 		}
 		
@@ -60,7 +60,7 @@ public class ValidateTextSignatureSample {
 		FileDataSource file = new FileDataSource(new File(signatureFile));
 		DataHandler signature = new DataHandler(file);
 
-		// Request to MSS the signature of text mode synchronous
+		// Request to MSS the signature of text mode
 		try {
 			System.out.println("Requesting validation...");
 	

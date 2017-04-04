@@ -8,6 +8,6 @@ public class WSUtils {
 		System.setProperty("com.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump", dumpStr);
 		System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", dumpStr);
 		System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", dumpStr);
-		System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dumpTreshold", "10000");
+		System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dumpTreshold", "" + (100 * 1024));
 	}
 }

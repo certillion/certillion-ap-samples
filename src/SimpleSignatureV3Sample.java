@@ -13,6 +13,7 @@ import com.certillion.api.MessagingModeType;
 import com.certillion.api.MobileStatus;
 import com.certillion.api.MobileUserType;
 import com.certillion.api.SignatureInfoTypeV2;
+import com.certillion.api.SignaturePolicyType;
 import com.certillion.api.SignaturePortType;
 import com.certillion.api.SignatureStatusReqType;
 import com.certillion.api.SignatureStatusRespTypeV2;
@@ -69,7 +70,7 @@ public class SimpleSignatureV3Sample {
 		
 		// To use e-Sec's development server (must require access)
 		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
-		
+
 		// To use your own ws-signer
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
@@ -93,7 +94,11 @@ public class SimpleSignatureV3Sample {
 		signatureReq.setDataToBeSigned(message + "\n\n" + "Enviado por " + sender);
 		signatureReq.setMobileUser(mobileUser);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
-		signatureReq.setTestMode(true);
+		signatureReq.setSignaturePolicy(SignaturePolicyType.AD_RB);
+		
+		boolean usingICPBRASILCertificates = true;
+		
+		signatureReq.setTestMode(!usingICPBRASILCertificates);
 
 		if (useHSM) {
 			System.out.println("Request to sign in HSM mode");
@@ -136,6 +141,11 @@ public class SimpleSignatureV3Sample {
 			System.out.println("Error sending request, server returned: " + signatureRespValue);
 		}
 		else {
+			System.out.println("Request sent, transaction ID is: " + transactionId);
+			
+			if (useHSM && !useAuthentic)
+				System.out.println("\tverification code: " + signatureResp.getVerificationCode());
+
 			// mount the "get-status" request
 			SignatureStatusReqType statusReq = new SignatureStatusReqType();
 			
@@ -150,7 +160,8 @@ public class SimpleSignatureV3Sample {
 				System.out.println("Waiting signature from user...");
 				
 				try {
-					Thread.sleep(10000); // sleep for 10 seconds or the server will mark you as flood
+					// TODO REVIEW: DON'T USE THIS ON PRODUCTION OR YOU'LL HAVE PERFORMANCE ISSUES!!!
+					Thread.sleep(10000); // wait for at least 10 seconds or the server will mark you as flood
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
