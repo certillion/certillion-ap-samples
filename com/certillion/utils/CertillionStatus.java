@@ -41,18 +41,18 @@ public enum CertillionStatus {
 	// 210 to 219: account problems
 	ACCOUNT_NO_BANDWIDTH(210),
 	ACCOUNT_MAX_TRIES(211),
+	ACCOUNT_NO_CREDIT(212),
 
 	// 220 to 229: authentication or access problem
 	ACCESS_NOT_AUTHORIZED(220),
 	ACCESS_NO_HANDSHAKE(221),
-	ACCESS_NO_SPECIFIED(221),
+	ACCESS_NO_SPECIFIED(222),
 
 	
 	/* Codes from 300 to 399 are for errors that can happen in any transaction, this errors are returned only by the server. */
 
 	// 300 to 309: network problems
-	NETWORK_ERROR(300),
-	TRANSACTION_EXPIRED(301),
+	NETWORK_ERROR(300),	
 
 	// 310 to 319: not found
 	TRANSACTION_NOT_FOUND(310),
@@ -74,6 +74,7 @@ public enum CertillionStatus {
 	MESSAGE_BAD_AUTHENTICATION(411),
 	MESSAGE_BAD_ENCRYPTION(412),
 	MESSAGE_BAD_ENCODING(413),
+	MESSAGE_EXPIRED(414),
 
 	// 420 to 429: out of sync
 	MESSAGE_WRONG_VERSION(420),
@@ -118,6 +119,7 @@ public enum CertillionStatus {
 	CERTIFICATE_BLOCKED(607),
 	CERTIFICATE_NOT_TRUSTED(608),
 	KEY_SIZE_INVALID(609),
+	CRL_UNAVAILABLE (610),
 
 	// 620 to 629: not found
 	CERTIFICATE_NOT_FOUND(620),
@@ -131,7 +133,7 @@ public enum CertillionStatus {
 	CARD_NOT_PRESENT(633),
 
 	// 640 to 649: errors during certificate generation or renewal
-	PIN_WRONG(640),
+	WRONG_PIN(640),
 
 	// 650 to 659: errors during certificate revocation
 	CERTIFICATE_CANT_REVOKE(650),
@@ -151,7 +153,13 @@ public enum CertillionStatus {
 	TEMPLATE_NOT_FOUND(710),
 	DOCUMENT_NOT_FOUND(711),
 	WRONG_DOCUMENT_HASH(712),
-	WRONG_DOCUMENT_TYPE(713);
+	WRONG_DOCUMENT_TYPE(713),
+	
+	// 720 to 729: errors in XMLDsig signatures
+	XMLDSIG_EMPTY_ELEMENT_LIST(720),
+	XMLDSIG_ELEMENTS_WITHOUT_ATRIBUTE_ID(721),
+	XMLDSIG_SAME_ID_FOR_MULTIPLE_ELEMENTS(722),
+	XMLDSIG_NO_ELEMENT_FOUND(723);
 
 
 	private int code;
