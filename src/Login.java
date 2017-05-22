@@ -64,16 +64,16 @@ public class Login {
 		String domain = args[1 + shift];
 		
 		// To use e-Sec's development server (must require access)
-		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
+		//final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
 		// To use your own ws-signer
-		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
+		final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
 		//Do you want to see the generated soap messages?
 		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		// connect to service
-		System.out.println("Connecting to service...");
+		System.out.println("Connecting to service at " + WSDL_URL);
 		URL serviceUrl = new URL(WSDL_URL);
 		QName qname = new QName("http://esec.com.br/mss/ap", "SignatureService");
 		Service signatureService = Service.create(serviceUrl, qname);
@@ -89,8 +89,8 @@ public class Login {
 		int random = Math.abs((new Random().nextInt() % 100000));
 		
 		// "I've verified the code" + random + " to login at " + domain; 
-		String dataToBeSigned = "Confirmo o codigo " + random
-									+ " para fazer login em \"" + domain + "\"";
+		String dataToBeSigned = "Login em \"" + domain + "\". Apos digitar a senha, copie o código ["
+									+ random + "] na tela do sistema.";
 		
 		signatureReq.setDataToBeSigned(dataToBeSigned);
 		signatureReq.setMobileUser(mobileUser);

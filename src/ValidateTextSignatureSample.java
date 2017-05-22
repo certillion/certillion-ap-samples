@@ -41,10 +41,10 @@ public class ValidateTextSignatureSample {
 		String signatureFile = args[1];
 		
 		// To use e-Sec's development server (must require access)
-		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
+		//final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
 		// To use your own ws-signer
-		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
+		final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
 		
 		//Do you want to see the generated soap messages?
 		//com.certillion.utils.WSUtils.dumpToConsole(true);

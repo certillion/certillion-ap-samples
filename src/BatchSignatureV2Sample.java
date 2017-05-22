@@ -61,13 +61,13 @@ public class BatchSignatureV2Sample {
 		}
 
 		// To use e-Sec's development server (must require access)
-		final String REST_URL = "http://labs.certillion.com/mss/restful/applicationProvider";
-		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
+		//final String REST_URL = "http://labs.certillion.com/mss/restful/applicationProvider";
+		//final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl";
 
 		//To use your own ws-signer
-		//final String REST_URL = "http://localhost:8280/mss/restful/applicationProvider";
-		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
-		
+		final String REST_URL = "http://localhost:8280/mss/restful/applicationProvider";
+		final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBean.wsdl";
+
 		//Do you want to see the generated soap messages?
 		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
