@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Body>
+		<ns2:BatchSignature xmlns:ns2="http://esec.com.br/mss/ap">
+			<BatchSignatureReqType MessagingMode="asynchClientServer"
+				TestMode="false" SignatureStandard="adobepdf" ApId="0">
+				<User Identifier="66617162153"></User>
+				<DataToBeDisplayed>Teste de assinatura</DataToBeDisplayed>
+				<DocumentsToBeSigned ContentType="application/pdf"
+					DocumentName="teste.pdf"
+					Hash="65E22L6FC3U7GXCO7DX7M3GN3WQWRPATRNARZZTEYSVXOVH2IKJQ===="></DocumentsToBeSigned>
+			</BatchSignatureReqType>
+		</ns2:BatchSignature>
+	</S:Body>
+</S:Envelope>
+--------------------
