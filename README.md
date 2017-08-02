@@ -29,5 +29,5 @@ Versão curta: não reutilize, apenas use como referência para entender e imple
 Os exemplos são disponibilizados em Java. Caso não utilize esta linguagem, siga os passos abaixo:
 
 1. Estude o [Manual de Integração](https://docs.certillion.com/manual-integracao)
-1. Use uma ferramenta que gera código a partir do [WSDL do servidor de teste](http://labs.certillion.com/mss/SignatureService/SignatureEndpointBean.wsdl).
+1. Use uma ferramenta que gera código a partir do [WSDL do servidor de teste](http://labs.certillion.com/mss/SignatureService/SignatureEndpointBeanV2.wsdl).
 1. Reproduza a funcionalidade da versão Java.
