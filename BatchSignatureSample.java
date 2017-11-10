@@ -4,27 +4,39 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+import com.certillion.api.AddKeyValXmldsigOptionType;
+import com.certillion.api.AddSubjectNameXmldsigOptionType;
+import com.certillion.api.AttributeIdNameXmldsigOptionType;
 import com.certillion.api.BatchInfoType;
 import com.certillion.api.BatchSignatureReqTypeV2;
 import com.certillion.api.BatchSignatureRespTypeV2;
 import com.certillion.api.CertificateFiltersType;
 import com.certillion.api.CertificateInfoType;
 import com.certillion.api.DocumentSignatureStatusInfoTypeV3;
+import com.certillion.api.ElementsIdXmldsigOptionType;
+import com.certillion.api.ElementsNameXmldsigOptionType;
 import com.certillion.api.HsmCertificateFilterType;
 import com.certillion.api.ICPMException;
 import com.certillion.api.MessagingModeType;
 import com.certillion.api.MobileStatus;
 import com.certillion.api.SignatureInfoTypeV2;
+import com.certillion.api.SignaturePagePadesOptionType;
 import com.certillion.api.SignaturePortTypeV2;
+import com.certillion.api.SignaturePosXPadesOptionType;
+import com.certillion.api.SignaturePosYPadesOptionType;
+import com.certillion.api.SignatureStandardOptionsType;
 import com.certillion.api.SignatureStandardType;
 import com.certillion.api.SignatureStatusReqType;
+import com.certillion.api.SignatureTextPadesOptionType;
 import com.certillion.api.StatusRespType;
 import com.certillion.api.StatusType;
 import com.certillion.api.StatusTypeV2;
@@ -100,7 +112,7 @@ public class BatchSignatureSample {
 		SignaturePortTypeV2 endpoint = signatureService.getPort(SignaturePortTypeV2.class);
 		
 		SignatureStandardType standard = getStandardFromExtension(files[0].getAbsolutePath());
-
+		
 		System.out.println("Standard = \"" + standard + "\"");
 		
 		// mount the "batch-signature" request
@@ -108,6 +120,7 @@ public class BatchSignatureSample {
 		BatchSignatureReqTypeV2 batchSignatureReq = new BatchSignatureReqTypeV2();
 		
 		batchSignatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
+		batchSignatureReq.setTimeOut(new BigInteger("120"));
 		batchSignatureReq.setDataToBeDisplayed(note);
 		batchSignatureReq.setSignatureStandard(standard);
 		//batchSignatureReq.setSignatureStandard(SignatureStandardType.PADES);
@@ -128,7 +141,7 @@ public class BatchSignatureSample {
 		
 		if (useAuthentic) {
 			System.out.println("Requesting authorization for automatic signature");
-			batchSignatureReq.setFingerprint("AUTH");
+			batchSignatureReq.setFingerprint("UseToken=false;OtpValue=600785");
 		}
 		
 		// set the target user
@@ -147,11 +160,12 @@ public class BatchSignatureSample {
 				document.setContentType(getContentTypeFromExtension(files[i].getName()));
 				document.setHash(hashes[i]);
 				
-				// how to set a visible signature on PAdES standard
 				/*
 				SignatureStandardOptionsType signatureStandardOptions = new SignatureStandardOptionsType();
 				List<Object> options = signatureStandardOptions.getElementsIdOrAttributeIdNameOrElementsName();
 				
+				// ---------- BEGIN ADOBEPDF/PADES ----------
+				// how to set a visible signature on PAdES standard
 				SignatureTextPadesOptionType text = new SignatureTextPadesOptionType();
 				SignaturePagePadesOptionType page = new SignaturePagePadesOptionType();
 				SignaturePosXPadesOptionType posX = new SignaturePosXPadesOptionType();
@@ -166,13 +180,31 @@ public class BatchSignatureSample {
 				options.add(page);
 				options.add(posX);
 				options.add(posY);
+				// ---------- END ADOBEPDF/PADES ----------
+				
+				// ---------- BEGIN XMLDSIG (NFe -> ENVELOPED) ----------
+				AttributeIdNameXmldsigOptionType attributeIdName = new AttributeIdNameXmldsigOptionType();
+		        ElementsNameXmldsigOptionType elementsName = new ElementsNameXmldsigOptionType();
+		        AddSubjectNameXmldsigOptionType addSubjectName = new AddSubjectNameXmldsigOptionType();
+		        AddKeyValXmldsigOptionType addKeyVal = new AddKeyValXmldsigOptionType();
+			
+		        elementsName.getValue().add("infNFe");
+		        attributeIdName.setValue("Id");
+		        addSubjectName.setValue(false);
+		        addKeyVal.setValue(true);
+		        
+		        options.add(elementsName);
+		        options.add(attributeIdName);
+		        options.add(addSubjectName);
+		        options.add(addKeyVal);
+				// ---------- END XMLDSIG ----------
 				
 				document.setSignatureStandardOptions(signatureStandardOptions);
 				*/
+				
 				documents.add(document);
 			}
 		}
-		
 		BatchSignatureRespTypeV2 batchSignatureResp = null;
 		
 		try {
@@ -247,6 +279,7 @@ public class BatchSignatureSample {
 				System.out.println("Error receiving the response, the status is " + statusRespValue);
 			}
 			else {
+				
 				System.out.println("Signature received, the status is " + statusRespValue);
 				
 				List<DocumentSignatureStatusInfoTypeV3> documentInfos = statusResp.getDocumentSignatureStatus();
