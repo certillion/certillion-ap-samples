@@ -11,11 +11,10 @@ import javax.xml.ws.Service;
 
 import com.certillion.api.CertificateInfoType;
 import com.certillion.api.ICPMException;
-import com.certillion.api.SignatureInfoType;
 import com.certillion.api.SignatureInfoTypeV2;
 import com.certillion.api.SignaturePortTypeV2;
 import com.certillion.api.ValidateReqType;
-import com.certillion.api.ValidateRespType;
+import com.certillion.api.ValidateRespTypeV2;
 
 /**
  * Exemplo de verificação de assinatura, versão 2.
@@ -72,18 +71,18 @@ public class ValidateTextSignatureSample {
 			validateReq.setSignature(signature);
 			
 			// get the validation response
-			ValidateRespType validateResp = signaturePortType.validate(validateReq);
+			ValidateRespTypeV2 validateResp = signaturePortType.validate(validateReq);
 	
 			if (validateResp.getError() != null) {
 				System.out.println("Error verifying signature: " + validateResp.getError());
 			}
 	
 			// print results
-			List<SignatureInfoType> list = validateResp.getSignatures();
+			List<SignatureInfoTypeV2> list = validateResp.getSignatures();
 			if (list.size() > 0) {
 				System.out.println("Number of Signatures: " + list.size());
 				int count = 0;
-				for (SignatureInfoType signatureInfoType : list) {
+				for (SignatureInfoTypeV2 signatureInfoType : list) {
 					System.out.println("\t\t--------------- Signature " + (++count) + " ---------------\n");
 					
 					System.out.println("Status: " + (signatureInfoType.isValid() ? "VALID" : "INVALID"));
