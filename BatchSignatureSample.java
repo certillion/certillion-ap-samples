@@ -24,6 +24,8 @@ import com.certillion.api.CertificateInfoType;
 import com.certillion.api.DocumentSignatureStatusInfoTypeV3;
 import com.certillion.api.ElementsIdXmldsigOptionType;
 import com.certillion.api.ElementsNameXmldsigOptionType;
+import com.certillion.api.FontSizePadesOptionType;
+import com.certillion.api.HeightPadesOptionType;
 import com.certillion.api.HsmCertificateFilterType;
 import com.certillion.api.ICPMException;
 import com.certillion.api.MessagingModeType;
@@ -41,6 +43,7 @@ import com.certillion.api.StatusRespType;
 import com.certillion.api.StatusType;
 import com.certillion.api.StatusTypeV2;
 import com.certillion.api.UserType;
+import com.certillion.api.WidthPadesOptionType;
 import com.certillion.utils.CertillionStatus;
 
 /**
@@ -69,7 +72,7 @@ public class BatchSignatureSample {
 		// To use e-Sec's development server (must require access)
 		final String REST_URL = "http://labs.certillion.com/mss/restful/applicationProvider";
 		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
-
+		
 		//To use your own ws-signer
 		//final String REST_URL = "http://localhost:8280/mss/restful/applicationProvider";
 		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
@@ -141,7 +144,7 @@ public class BatchSignatureSample {
 		
 		if (useAuthentic) {
 			System.out.println("Requesting authorization for automatic signature");
-			batchSignatureReq.setFingerprint("UseToken=false;OtpValue=600785");
+			batchSignatureReq.setFingerprint("UseToken=false;OtpValue=814098");
 		}
 		
 		// set the target user
@@ -171,15 +174,27 @@ public class BatchSignatureSample {
 				SignaturePosXPadesOptionType posX = new SignaturePosXPadesOptionType();
 				SignaturePosYPadesOptionType posY = new SignaturePosYPadesOptionType();
 				
+				HeightPadesOptionType height = new HeightPadesOptionType();
+				WidthPadesOptionType width = new WidthPadesOptionType();
+				FontSizePadesOptionType size = new FontSizePadesOptionType();
+				
 				text.setValue("Signed by John Smith");
 				page.setValue(1);
 				posX.setValue(100);
 				posY.setValue(100);
 				
+				width.setValue(480);
+				height.setValue(80);
+				size.setValue(24);
+				
 				options.add(text);
 				options.add(page);
 				options.add(posX);
 				options.add(posY);
+				
+				options.add(height);
+				options.add(width);
+				options.add(size);
 				// ---------- END ADOBEPDF/PADES ----------
 				
 				// ---------- BEGIN XMLDSIG (NFe -> ENVELOPED) ----------
@@ -201,7 +216,6 @@ public class BatchSignatureSample {
 				
 				document.setSignatureStandardOptions(signatureStandardOptions);
 				*/
-				
 				documents.add(document);
 			}
 		}
@@ -478,7 +492,7 @@ public class BatchSignatureSample {
 		if (lc.endsWith(".pdf")) {
 			return SignatureStandardType.ADOBEPDF;
 		} else if (lc.endsWith(".xml")) {
-			return SignatureStandardType.XADES;
+			return SignatureStandardType.XMLDSIG_ENVELOPED;
 		} else {
 			return SignatureStandardType.CADES;
 		}
