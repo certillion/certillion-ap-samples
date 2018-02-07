@@ -1,7 +1,10 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
@@ -38,6 +41,10 @@ import com.certillion.utils.CertillionStatus;
  */
 public class SimpleSignatureSample {
 
+	private static String WSDL_URL;
+	
+	private static boolean DUMP_XML;
+
 	/**
 	 * @param args
 	 * @throws Exception 
@@ -70,13 +77,10 @@ public class SimpleSignatureSample {
 		String sender = args[2 + shift];
 		String filename = args[3 + shift];
 		
-		// To use e-Sec's development server (must require access)
-		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
+		loadURLs();
 
-		// To use your own ws-signer
-		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
-		
 		//Do you want to see the generated soap messages?
+		if (DUMP_XML)
 		//com.certillion.utils.WSUtils.dumpToConsole(true);
 		
 		// connect to service
@@ -93,7 +97,7 @@ public class SimpleSignatureSample {
 		// mount the "signature" request
 		SimpleSignatureReqTypeV4 signatureReq = new SimpleSignatureReqTypeV4();
 		
-		signatureReq.setDataToBeSigned(message + "\n\n" + "Enviado por " + sender);
+		signatureReq.setDataToBeSigned(message /*+ "\n\n"*/ + ". Enviado por " + sender);
 		signatureReq.setUser(user);
 		signatureReq.setMessagingMode(MessagingModeType.ASYNCH_CLIENT_SERVER);
 		signatureReq.setSignaturePolicy(SignaturePolicyType.AD_RB);
@@ -114,7 +118,7 @@ public class SimpleSignatureSample {
 		
 		if (useAuthentic) {
 			System.out.println("Requesting authorization for automatic signature");
-			signatureReq.setFingerprint("AUTH");
+			signatureReq.setFingerprint("UseToken=false;OtpValue=307496");
 		}
 
 		// send the "signature" request to server
@@ -227,5 +231,76 @@ public class SimpleSignatureSample {
 				}
 			}
 		}
+	}
+
+	private static void loadURLs() {
+		Properties prop = new Properties();
+		File file = new File("certillion-urls.txt");
+		boolean loaded = false;
+		
+		try {
+			if (!file.exists())
+				System.out.println(file.getAbsolutePath() + " does not exist. Using default urls.");
+			else if (!file.isFile())
+				System.out.println(file.getAbsolutePath() + " is not a file. Using default urls.");
+			else {
+				// load a properties file
+				prop.load(new FileInputStream(file));
+				loaded = true;
+			}
+		}
+		catch (IOException ex) {
+			System.out.println("Error loading urls from " + file.getName() + ". Using default urls.");
+		}
+		
+		//To use your own ws-signer
+		String BASE_DEFAULT = "http://localhost:8280";
+		
+		// To use e-Sec's development server (must require access)
+		//String BASE_DEFAULT = "http://labs.certillion.com";
+		
+		String WSDL_DEFAULT = "/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
+		
+		boolean DUMP_DEFAULT = false;
+		
+		String base = null;
+		String wsdl = null;
+		boolean dump = false;
+
+		String BASE_PROPERTY_NAME = "BASE";
+		String WSDL_PROPERTY_NAME = "WSDL";
+		String DUMP_PROPERTY_NAME = "DUMP";
+		
+		if (loaded) {
+			base = prop.getProperty(BASE_PROPERTY_NAME);
+			if (base == null) {
+				System.out.println("\"" + BASE_PROPERTY_NAME + "\" property not found. Using default \"" + BASE_DEFAULT + "\".");
+				base = BASE_DEFAULT;
+			}
+			
+			wsdl = prop.getProperty(WSDL_PROPERTY_NAME);
+			if (wsdl == null) {
+				System.out.println("\"" + WSDL_PROPERTY_NAME + "\" property not found. Using default \"" + WSDL_DEFAULT + "\".");
+				wsdl = WSDL_DEFAULT;
+			}
+			
+			String dumpStr = prop.getProperty(DUMP_PROPERTY_NAME);
+			if (dumpStr == null) {
+				System.out.println("\"" + DUMP_PROPERTY_NAME + "\" property not found. Using default \"" + DUMP_DEFAULT + "\".");
+				dump = DUMP_DEFAULT;
+			}
+		}
+		else {
+			base = BASE_DEFAULT;
+			wsdl = WSDL_DEFAULT;
+			dump = DUMP_DEFAULT;
+		}
+		
+		System.out.println("\t" + BASE_PROPERTY_NAME + " = \"" + base + "\"");
+		System.out.println("\t" + WSDL_PROPERTY_NAME + " = \"" + wsdl + "\"");
+		System.out.println("\t" + DUMP_PROPERTY_NAME + " = \"" + dump + "\"");
+		
+		WSDL_URL = base + wsdl;
+		DUMP_XML = dump;
 	}
 }

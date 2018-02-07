@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de StatusTypeV2 complex type.
+ * <p>Java class for StatusTypeV2 complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="StatusTypeV2">
@@ -50,7 +50,7 @@ public class StatusTypeV2 {
     protected MobileStatus mobileStatus;
 
     /**
-     * Obtém o valor da propriedade statusCode.
+     * Gets the value of the statusCode property.
      * 
      */
     public int getStatusCode() {
@@ -58,7 +58,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade statusCode.
+     * Sets the value of the statusCode property.
      * 
      */
     public void setStatusCode(int value) {
@@ -66,7 +66,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade statusMessage.
+     * Gets the value of the statusMessage property.
      * 
      * @return
      *     possible object is
@@ -78,7 +78,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade statusMessage.
+     * Sets the value of the statusMessage property.
      * 
      * @param value
      *     allowed object is
@@ -90,7 +90,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade statusDetail.
+     * Gets the value of the statusDetail property.
      * 
      * @return
      *     possible object is
@@ -102,7 +102,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade statusDetail.
+     * Sets the value of the statusDetail property.
      * 
      * @param value
      *     allowed object is
@@ -114,7 +114,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade mobileStatus.
+     * Gets the value of the mobileStatus property.
      * 
      * @return
      *     possible object is
@@ -126,7 +126,7 @@ public class StatusTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade mobileStatus.
+     * Sets the value of the mobileStatus property.
      * 
      * @param value
      *     allowed object is

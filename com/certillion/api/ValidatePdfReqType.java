@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de ValidatePdfReqType complex type.
+ * <p>Java class for ValidatePdfReqType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="ValidatePdfReqType">
@@ -39,7 +39,7 @@ public class ValidatePdfReqType {
     protected DataHandler signature;
 
     /**
-     * Obtém o valor da propriedade signature.
+     * Gets the value of the signature property.
      * 
      * @return
      *     possible object is
@@ -51,7 +51,7 @@ public class ValidatePdfReqType {
     }
 
     /**
-     * Define o valor da propriedade signature.
+     * Sets the value of the signature property.
      * 
      * @param value
      *     allowed object is

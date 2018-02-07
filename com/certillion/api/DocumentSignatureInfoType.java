@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de DocumentSignatureInfoType complex type.
+ * <p>Java class for DocumentSignatureInfoType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="DocumentSignatureInfoType">
@@ -47,7 +47,7 @@ public class DocumentSignatureInfoType {
     protected DataHandler signature;
 
     /**
-     * Obtém o valor da propriedade status.
+     * Gets the value of the status property.
      * 
      * @return
      *     possible object is
@@ -59,7 +59,7 @@ public class DocumentSignatureInfoType {
     }
 
     /**
-     * Define o valor da propriedade status.
+     * Sets the value of the status property.
      * 
      * @param value
      *     allowed object is
@@ -71,7 +71,7 @@ public class DocumentSignatureInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade documentName.
+     * Gets the value of the documentName property.
      * 
      * @return
      *     possible object is
@@ -83,7 +83,7 @@ public class DocumentSignatureInfoType {
     }
 
     /**
-     * Define o valor da propriedade documentName.
+     * Sets the value of the documentName property.
      * 
      * @param value
      *     allowed object is
@@ -95,7 +95,7 @@ public class DocumentSignatureInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade signature.
+     * Gets the value of the signature property.
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class DocumentSignatureInfoType {
     }
 
     /**
-     * Define o valor da propriedade signature.
+     * Sets the value of the signature property.
      * 
      * @param value
      *     allowed object is

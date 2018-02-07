@@ -148,6 +148,7 @@ public class ValidateSignatureSample {
 		byte buffer[] = new byte[is.available()];
 		
 		is.read(buffer); // only works because it's a FileInputStream
+		is.close();
 		
 		return buffer;
 	}

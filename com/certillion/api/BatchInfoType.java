@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de BatchInfoType complex type.
+ * <p>Java class for BatchInfoType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="BatchInfoType">
@@ -38,7 +38,7 @@ public class BatchInfoType
     protected SignatureStandardOptionsType signatureStandardOptions;
 
     /**
-     * Obtém o valor da propriedade signatureStandardOptions.
+     * Gets the value of the signatureStandardOptions property.
      * 
      * @return
      *     possible object is
@@ -50,7 +50,7 @@ public class BatchInfoType
     }
 
     /**
-     * Define o valor da propriedade signatureStandardOptions.
+     * Sets the value of the signatureStandardOptions property.
      * 
      * @param value
      *     allowed object is

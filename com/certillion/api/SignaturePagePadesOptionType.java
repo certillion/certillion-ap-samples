@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de SignaturePagePadesOptionType complex type.
+ * <p>Java class for SignaturePagePadesOptionType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="SignaturePagePadesOptionType">
@@ -34,7 +34,7 @@ public class SignaturePagePadesOptionType {
     protected int value;
 
     /**
-     * Obtém o valor da propriedade value.
+     * Gets the value of the value property.
      * 
      */
     public int getValue() {
@@ -42,7 +42,7 @@ public class SignaturePagePadesOptionType {
     }
 
     /**
-     * Define o valor da propriedade value.
+     * Sets the value of the value property.
      * 
      */
     public void setValue(int value) {

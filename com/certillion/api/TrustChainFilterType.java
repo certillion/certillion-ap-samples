@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de TrustChainFilterType complex type.
+ * <p>Java class for TrustChainFilterType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="TrustChainFilterType">
@@ -34,7 +34,7 @@ public class TrustChainFilterType {
     protected TrustChain value;
 
     /**
-     * Obtém o valor da propriedade value.
+     * Gets the value of the value property.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class TrustChainFilterType {
     }
 
     /**
-     * Define o valor da propriedade value.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is

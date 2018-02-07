@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de DocumentSignatureStatusInfoTypeV3 complex type.
+ * <p>Java class for DocumentSignatureStatusInfoTypeV3 complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="DocumentSignatureStatusInfoTypeV3">
@@ -52,7 +52,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     protected long transactionId;
 
     /**
-     * Obtém o valor da propriedade documentName.
+     * Gets the value of the documentName property.
      * 
      * @return
      *     possible object is
@@ -64,7 +64,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Define o valor da propriedade documentName.
+     * Sets the value of the documentName property.
      * 
      * @param value
      *     allowed object is
@@ -76,7 +76,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Obtém o valor da propriedade status.
+     * Gets the value of the status property.
      * 
      * @return
      *     possible object is
@@ -88,7 +88,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Define o valor da propriedade status.
+     * Sets the value of the status property.
      * 
      * @param value
      *     allowed object is
@@ -100,7 +100,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Obtém o valor da propriedade signature.
+     * Gets the value of the signature property.
      * 
      * @return
      *     possible object is
@@ -111,7 +111,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Define o valor da propriedade signature.
+     * Sets the value of the signature property.
      * 
      * @param value
      *     allowed object is
@@ -122,7 +122,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Obtém o valor da propriedade signatureInfo.
+     * Gets the value of the signatureInfo property.
      * 
      * @return
      *     possible object is
@@ -134,7 +134,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Define o valor da propriedade signatureInfo.
+     * Sets the value of the signatureInfo property.
      * 
      * @param value
      *     allowed object is
@@ -146,7 +146,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Obtém o valor da propriedade transactionId.
+     * Gets the value of the transactionId property.
      * 
      */
     public long getTransactionId() {
@@ -154,7 +154,7 @@ public class DocumentSignatureStatusInfoTypeV3 {
     }
 
     /**
-     * Define o valor da propriedade transactionId.
+     * Sets the value of the transactionId property.
      * 
      */
     public void setTransactionId(long value) {

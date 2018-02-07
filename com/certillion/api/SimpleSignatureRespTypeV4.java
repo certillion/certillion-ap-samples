@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de SimpleSignatureRespTypeV4 complex type.
+ * <p>Java class for SimpleSignatureRespTypeV4 complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="SimpleSignatureRespTypeV4">
@@ -44,7 +44,7 @@ public class SimpleSignatureRespTypeV4 {
     protected long transactionId;
 
     /**
-     * Obtém o valor da propriedade status.
+     * Gets the value of the status property.
      * 
      * @return
      *     possible object is
@@ -56,7 +56,7 @@ public class SimpleSignatureRespTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade status.
+     * Sets the value of the status property.
      * 
      * @param value
      *     allowed object is
@@ -68,7 +68,7 @@ public class SimpleSignatureRespTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade verificationCode.
+     * Gets the value of the verificationCode property.
      * 
      * @return
      *     possible object is
@@ -80,7 +80,7 @@ public class SimpleSignatureRespTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade verificationCode.
+     * Sets the value of the verificationCode property.
      * 
      * @param value
      *     allowed object is
@@ -92,7 +92,7 @@ public class SimpleSignatureRespTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade transactionId.
+     * Gets the value of the transactionId property.
      * 
      */
     public long getTransactionId() {
@@ -100,7 +100,7 @@ public class SimpleSignatureRespTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade transactionId.
+     * Sets the value of the transactionId property.
      * 
      */
     public void setTransactionId(long value) {

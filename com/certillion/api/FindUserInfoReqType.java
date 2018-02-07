@@ -3,22 +3,22 @@ package com.certillion.api;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for UserType complex type.
+ * <p>Java class for FindUserInfoReqType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="UserType">
+ * &lt;complexType name="FindUserInfoReqType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="User" type="{http://esec.com.br/mss/ap}UserType"/>
  *       &lt;/sequence>
- *       &lt;attribute name="Identifier" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -27,34 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UserType")
-public class UserType {
+@XmlType(name = "FindUserInfoReqType", propOrder = {
+    "user"
+})
+public class FindUserInfoReqType {
 
-    @XmlAttribute(name = "Identifier", required = true)
-    protected String identifier;
+    @XmlElement(name = "User", required = true)
+    protected UserType user;
 
     /**
-     * Gets the value of the identifier property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link UserType }
      *     
      */
-    public String getIdentifier() {
-        return identifier;
+    public UserType getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the identifier property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link UserType }
      *     
      */
-    public void setIdentifier(String value) {
-        this.identifier = value;
+    public void setUser(UserType value) {
+        this.user = value;
     }
 
 }

@@ -27,14 +27,29 @@ public interface SignaturePortTypeV2 {
      * 
      * @param validatePdfReq
      * @return
-     *     returns com.certillion.api.ValidateRespType
+     *     returns com.certillion.api.ValidateRespTypeV2
      * @throws ICPMException
      */
     @WebMethod(operationName = "ValidatePdf")
     @WebResult(name = "ValidateResp", partName = "ValidateResp")
-    public ValidateRespType validatePdf(
+    public ValidateRespTypeV2 validatePdf(
         @WebParam(name = "ValidatePdfReq", partName = "ValidatePdfReq")
         ValidatePdfReqType validatePdfReq)
+        throws ICPMException
+    ;
+
+    /**
+     * 
+     * @param tokenCmdReq
+     * @return
+     *     returns com.certillion.api.ExecuteTokenCmdRespType
+     * @throws ICPMException
+     */
+    @WebMethod(operationName = "ExecuteTokenCmd")
+    @WebResult(name = "TokenCmdResp", partName = "TokenCmdResp")
+    public ExecuteTokenCmdRespType executeTokenCmd(
+        @WebParam(name = "TokenCmdReq", partName = "TokenCmdReq")
+        ExecuteTokenCmdReqType tokenCmdReq)
         throws ICPMException
     ;
 
@@ -47,6 +62,21 @@ public interface SignaturePortTypeV2 {
     @WebMethod(operationName = "FindBandwidthInfo")
     @WebResult(name = "BandwidthInfoType", partName = "BandwidthInfoType")
     public BandwidthInfoType findBandwidthInfo()
+        throws ICPMException
+    ;
+
+    /**
+     * 
+     * @param hsmSyncSignatureReq
+     * @return
+     *     returns com.certillion.api.StatusRespType
+     * @throws ICPMException
+     */
+    @WebMethod(operationName = "HsmSyncSignature")
+    @WebResult(name = "HsmSyncSignatureResp", partName = "HsmSyncSignatureResp")
+    public StatusRespType hsmSyncSignature(
+        @WebParam(name = "HsmSyncSignatureReq", partName = "HsmSyncSignatureReq")
+        HsmSyncSignatureReqType hsmSyncSignatureReq)
         throws ICPMException
     ;
 
@@ -114,14 +144,29 @@ public interface SignaturePortTypeV2 {
      * 
      * @param validateReq
      * @return
-     *     returns com.certillion.api.ValidateRespType
+     *     returns com.certillion.api.ValidateRespTypeV2
      * @throws ICPMException
      */
     @WebMethod(operationName = "Validate")
     @WebResult(name = "ValidateResp", partName = "ValidateResp")
-    public ValidateRespType validate(
+    public ValidateRespTypeV2 validate(
         @WebParam(name = "ValidateReq", partName = "ValidateReq")
         ValidateReqType validateReq)
+        throws ICPMException
+    ;
+
+    /**
+     * 
+     * @param findUserInfoReq
+     * @return
+     *     returns com.certillion.api.FindUserInfoRespType
+     * @throws ICPMException
+     */
+    @WebMethod(operationName = "FindUserInfo")
+    @WebResult(name = "FindUserInfoResp", partName = "FindUserInfoResp")
+    public FindUserInfoRespType findUserInfo(
+        @WebParam(name = "FindUserInfoReq", partName = "FindUserInfoReq")
+        FindUserInfoReqType findUserInfoReq)
         throws ICPMException
     ;
 

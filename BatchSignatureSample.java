@@ -2,48 +2,36 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import com.certillion.api.AddKeyValXmldsigOptionType;
-import com.certillion.api.AddSubjectNameXmldsigOptionType;
-import com.certillion.api.AttributeIdNameXmldsigOptionType;
 import com.certillion.api.BatchInfoType;
 import com.certillion.api.BatchSignatureReqTypeV2;
 import com.certillion.api.BatchSignatureRespTypeV2;
 import com.certillion.api.CertificateFiltersType;
 import com.certillion.api.CertificateInfoType;
 import com.certillion.api.DocumentSignatureStatusInfoTypeV3;
-import com.certillion.api.ElementsIdXmldsigOptionType;
-import com.certillion.api.ElementsNameXmldsigOptionType;
-import com.certillion.api.FontSizePadesOptionType;
-import com.certillion.api.HeightPadesOptionType;
 import com.certillion.api.HsmCertificateFilterType;
 import com.certillion.api.ICPMException;
 import com.certillion.api.MessagingModeType;
 import com.certillion.api.MobileStatus;
 import com.certillion.api.SignatureInfoTypeV2;
-import com.certillion.api.SignaturePagePadesOptionType;
 import com.certillion.api.SignaturePortTypeV2;
-import com.certillion.api.SignaturePosXPadesOptionType;
-import com.certillion.api.SignaturePosYPadesOptionType;
-import com.certillion.api.SignatureStandardOptionsType;
 import com.certillion.api.SignatureStandardType;
 import com.certillion.api.SignatureStatusReqType;
-import com.certillion.api.SignatureTextPadesOptionType;
 import com.certillion.api.StatusRespType;
 import com.certillion.api.StatusType;
 import com.certillion.api.StatusTypeV2;
 import com.certillion.api.UserType;
-import com.certillion.api.WidthPadesOptionType;
 import com.certillion.utils.CertillionStatus;
 
 /**
@@ -59,9 +47,14 @@ import com.certillion.utils.CertillionStatus;
  */
 public class BatchSignatureSample {
 
+	private static String REST_URL;
+	private static String WSDL_URL;
+	
+	private static boolean DUMP_XML;
+	
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
-			System.out.println("use: java BatchSignatureV2Sample [-hsm|-hsmAuth] mail-id textnote file1 [file2] ... [fileN]");
+			System.out.println("use: java BatchSignatureSample [-hsm|-hsmAuth] mail-id textnote file1 [file2] ... [fileN]");
 			System.out.println("where:");
 			System.out.println("\t-hsm: use key stored in hsm");
 			System.out.println("\t-hsmAuth: use key stored in hsm with automatic signature (no pin required) - must be authorized at 1st use");
@@ -69,16 +62,10 @@ public class BatchSignatureSample {
 			System.exit(1);
 		}
 
-		// To use e-Sec's development server (must require access)
-		final String REST_URL = "http://labs.certillion.com/mss/restful/applicationProvider";
-		final String WSDL_URL = "http://labs.certillion.com/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
-		
-		//To use your own ws-signer
-		//final String REST_URL = "http://localhost:8280/mss/restful/applicationProvider";
-		//final String WSDL_URL = "http://localhost:8280/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
+		loadURLs();
 
 		//Do you want to see the generated soap messages?
-		//com.certillion.utils.WSUtils.dumpToConsole(true);
+		com.certillion.utils.WSUtils.dumpToConsole(DUMP_XML);
 		
 		// reading command-line parameters
 		int shift = 1;
@@ -105,10 +92,13 @@ public class BatchSignatureSample {
 		
 		for (int i = shift; i < args.length; i++)
 			files[i-shift] = new File(args[i]);
+//long t1, t2, t3, t4, t5, t6;
+//t1 = System.currentTimeMillis();
 		
 		// uploading documents through Rest protocol
 		for (int i = 0; i < files.length; i++)
 			hashes[i] = uploadFile(files[i], REST_URL + "/uploadDocument");
+//t3 = System.currentTimeMillis();
 			
 		// connecting to endpoint
 		Service signatureService = Service.create(new URL(WSDL_URL), new QName("http://esec.com.br/mss/ap", "SignatureService"));
@@ -221,6 +211,7 @@ public class BatchSignatureSample {
 		}
 		BatchSignatureRespTypeV2 batchSignatureResp = null;
 		
+//t5 = System.currentTimeMillis();
 		try {
 			batchSignatureResp = endpoint.batchSignature(batchSignatureReq);
 		}
@@ -293,6 +284,7 @@ public class BatchSignatureSample {
 				System.out.println("Error receiving the response, the status is " + statusRespValue);
 			}
 			else {
+//t6 = System.currentTimeMillis();
 				
 				System.out.println("Signature received, the status is " + statusRespValue);
 				
@@ -315,6 +307,7 @@ public class BatchSignatureSample {
 						System.out.println("\t- Transaction [" + documentId + "], document \"" + documentName + "\", status: " + documentStatus);
 						
 						if (documentStatus == CertillionStatus.SIGNATURE_VALID) {
+//t4 = System.currentTimeMillis();
 							SignatureInfoTypeV2 signatureInfo = document.getSignatureInfo();
 							
 							if (signatureInfo != null) {
@@ -340,6 +333,10 @@ public class BatchSignatureSample {
 							
 							// [OPTIONAL] requesting, downloading and writing signature with original file attached 
 							downloadFile(documentName + ".p7m", documentId, path, REST_URL + "/document/signed/");
+//t2 = System.currentTimeMillis();
+//System.out.println("req-resp = " + (t6 - t5) + " ms");
+//System.out.println("req-resp + soap = " + (t4 - t3) + " ms");
+//System.out.println("TOTAL = " + (t2 - t1) + " ms");
 						}
 					}
 				}
@@ -506,5 +503,88 @@ public class BatchSignatureSample {
 		} else {
 			return "application/octet-stream";
 		}
+	}
+	
+	private static void loadURLs() {
+		Properties prop = new Properties();
+		File file = new File("certillion-urls.txt");
+		boolean loaded = false;
+		
+		try {
+			if (!file.exists())
+				System.out.println(file.getAbsolutePath() + " does not exist. Using default urls.");
+			else if (!file.isFile())
+				System.out.println(file.getAbsolutePath() + " is not a file. Using default urls.");
+			else {
+				// load a properties file
+				prop.load(new FileInputStream(file));
+				loaded = true;
+			}
+		}
+		catch (IOException ex) {
+			System.out.println("Error loading urls from " + file.getName() + ". Using default urls.");
+		}
+		
+		//To use your own ws-signer
+		String BASE_DEFAULT = "http://localhost:8280";
+		
+		// To use e-Sec's development server (must require access)
+		//String BASE_DEFAULT = "http://labs.certillion.com";
+		
+		String REST_DEFAULT = "/mss/restful/applicationProvider";
+		String WSDL_DEFAULT = "/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
+		
+		boolean DUMP_DEFAULT = false;
+		
+		String base = null;
+		String rest = null;
+		String wsdl = null;
+		boolean dump = false;
+
+		String BASE_PROPERTY_NAME = "BASE";
+		String REST_PROPERTY_NAME = "REST";
+		String WSDL_PROPERTY_NAME = "WSDL";
+		String DUMP_PROPERTY_NAME = "DUMP";
+		
+		if (loaded) {
+			base = prop.getProperty(BASE_PROPERTY_NAME);
+			if (base == null) {
+				System.out.println("\"" + BASE_PROPERTY_NAME + "\" property not found. Using default \"" + BASE_DEFAULT + "\".");
+				base = BASE_DEFAULT;
+			}
+			
+			rest = prop.getProperty(REST_PROPERTY_NAME);
+			if (rest == null) {
+				System.out.println("\"" + REST_PROPERTY_NAME + "\" property not found. Using default \"" + REST_DEFAULT + "\".");
+				rest = REST_DEFAULT;
+			}
+			
+			wsdl = prop.getProperty(WSDL_PROPERTY_NAME);
+			if (wsdl == null) {
+				System.out.println("\"" + WSDL_PROPERTY_NAME + "\" property not found. Using default \"" + WSDL_DEFAULT + "\".");
+				wsdl = WSDL_DEFAULT;
+			}
+			
+			String dumpStr = prop.getProperty(DUMP_PROPERTY_NAME);
+			if (dumpStr == null) {
+				System.out.println("\"" + DUMP_PROPERTY_NAME + "\" property not found. Using default \"" + DUMP_DEFAULT + "\".");
+				dump = DUMP_DEFAULT;
+			}
+		}
+		else {
+			base = BASE_DEFAULT;
+			rest = REST_DEFAULT;
+			wsdl = WSDL_DEFAULT;
+			dump = DUMP_DEFAULT;
+		}
+		
+		System.out.println("\t" + BASE_PROPERTY_NAME + " = \"" + base + "\"");
+		System.out.println("\t" + REST_PROPERTY_NAME + " = \"" + rest + "\"");
+		System.out.println("\t" + WSDL_PROPERTY_NAME + " = \"" + wsdl + "\"");
+		System.out.println("\t" + DUMP_PROPERTY_NAME + " = \"" + dump + "\"");
+		
+		REST_URL = base + rest;
+		WSDL_URL = base + wsdl;
+		DUMP_XML = dump;
 	}
 }

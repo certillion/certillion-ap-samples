@@ -10,17 +10,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for StatusRespType complex type.
+ * <p>Java class for MobileUserInfoTypeV2 complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="StatusRespType">
+ * &lt;complexType name="MobileUserInfoTypeV2">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}StatusTypeV2"/>
- *         &lt;element name="DocumentSignatureStatus" type="{http://esec.com.br/mss/ap}DocumentSignatureStatusInfoTypeV3" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="Email" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="Certificates" type="{http://esec.com.br/mss/ap}CertificateResumedInfoType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,16 +31,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StatusRespType", propOrder = {
+@XmlType(name = "MobileUserInfoTypeV2", propOrder = {
     "status",
-    "documentSignatureStatus"
+    "email",
+    "certificates"
 })
-public class StatusRespType {
+public class MobileUserInfoTypeV2 {
 
     @XmlElement(name = "Status", required = true)
     protected StatusTypeV2 status;
-    @XmlElement(name = "DocumentSignatureStatus")
-    protected List<DocumentSignatureStatusInfoTypeV3> documentSignatureStatus;
+    @XmlElement(name = "Email")
+    protected String email;
+    @XmlElement(name = "Certificates")
+    protected List<CertificateResumedInfoType> certificates;
 
     /**
      * Gets the value of the status property.
@@ -66,32 +70,56 @@ public class StatusRespType {
     }
 
     /**
-     * Gets the value of the documentSignatureStatus property.
+     * Gets the value of the email property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the value of the email property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEmail(String value) {
+        this.email = value;
+    }
+
+    /**
+     * Gets the value of the certificates property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the documentSignatureStatus property.
+     * This is why there is not a <CODE>set</CODE> method for the certificates property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getDocumentSignatureStatus().add(newItem);
+     *    getCertificates().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DocumentSignatureStatusInfoTypeV3 }
+     * {@link CertificateResumedInfoType }
      * 
      * 
      */
-    public List<DocumentSignatureStatusInfoTypeV3> getDocumentSignatureStatus() {
-        if (documentSignatureStatus == null) {
-            documentSignatureStatus = new ArrayList<DocumentSignatureStatusInfoTypeV3>();
+    public List<CertificateResumedInfoType> getCertificates() {
+        if (certificates == null) {
+            certificates = new ArrayList<CertificateResumedInfoType>();
         }
-        return this.documentSignatureStatus;
+        return this.certificates;
     }
 
 }

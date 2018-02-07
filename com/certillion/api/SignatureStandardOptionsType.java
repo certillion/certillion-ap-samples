@@ -11,9 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de SignatureStandardOptionsType complex type.
+ * <p>Java class for SignatureStandardOptionsType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="SignatureStandardOptionsType">
@@ -27,10 +27,15 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;element name="AddSubjectName" type="{http://esec.com.br/mss/ap}AddSubjectNameXmldsigOptionType"/>
  *           &lt;element name="AddKeyVal" type="{http://esec.com.br/mss/ap}AddKeyValXmldsigOptionType"/>
  *           &lt;element name="MultipleSignatures" type="{http://esec.com.br/mss/ap}MultipleSignaturesXmldsigOptionType"/>
+ *           &lt;element name="DigestMethod" type="{http://esec.com.br/mss/ap}DigestMethodXmldsigOptionType"/>
+ *           &lt;element name="RemoveSignatureId" type="{http://esec.com.br/mss/ap}RemoveSignatureIdXmldsigOptionType"/>
  *           &lt;element name="TextOfPadesSignature" type="{http://esec.com.br/mss/ap}SignatureTextPadesOptionType"/>
  *           &lt;element name="PageOfPadesSignature" type="{http://esec.com.br/mss/ap}SignaturePagePadesOptionType"/>
  *           &lt;element name="PosXOfPadesSignature" type="{http://esec.com.br/mss/ap}SignaturePosXPadesOptionType"/>
  *           &lt;element name="PosYOfPadesSignature" type="{http://esec.com.br/mss/ap}SignaturePosYPadesOptionType"/>
+ *           &lt;element name="HeightOfPadesSignature" type="{http://esec.com.br/mss/ap}HeightPadesOptionType"/>
+ *           &lt;element name="WidthOfPadesSignature" type="{http://esec.com.br/mss/ap}WidthPadesOptionType"/>
+ *           &lt;element name="FontSizeOfPadesSignature" type="{http://esec.com.br/mss/ap}FontSizePadesOptionType"/>
  *         &lt;/choice>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -53,10 +58,15 @@ public class SignatureStandardOptionsType {
         @XmlElement(name = "AddSubjectName", type = AddSubjectNameXmldsigOptionType.class),
         @XmlElement(name = "AddKeyVal", type = AddKeyValXmldsigOptionType.class),
         @XmlElement(name = "MultipleSignatures", type = MultipleSignaturesXmldsigOptionType.class),
+        @XmlElement(name = "DigestMethod", type = DigestMethodXmldsigOptionType.class),
+        @XmlElement(name = "RemoveSignatureId", type = RemoveSignatureIdXmldsigOptionType.class),
         @XmlElement(name = "TextOfPadesSignature", type = SignatureTextPadesOptionType.class),
         @XmlElement(name = "PageOfPadesSignature", type = SignaturePagePadesOptionType.class),
         @XmlElement(name = "PosXOfPadesSignature", type = SignaturePosXPadesOptionType.class),
-        @XmlElement(name = "PosYOfPadesSignature", type = SignaturePosYPadesOptionType.class)
+        @XmlElement(name = "PosYOfPadesSignature", type = SignaturePosYPadesOptionType.class),
+        @XmlElement(name = "HeightOfPadesSignature", type = HeightPadesOptionType.class),
+        @XmlElement(name = "WidthOfPadesSignature", type = WidthPadesOptionType.class),
+        @XmlElement(name = "FontSizeOfPadesSignature", type = FontSizePadesOptionType.class)
     })
     protected List<Object> elementsIdOrAttributeIdNameOrElementsName;
 
@@ -84,10 +94,15 @@ public class SignatureStandardOptionsType {
      * {@link AddSubjectNameXmldsigOptionType }
      * {@link AddKeyValXmldsigOptionType }
      * {@link MultipleSignaturesXmldsigOptionType }
+     * {@link DigestMethodXmldsigOptionType }
+     * {@link RemoveSignatureIdXmldsigOptionType }
      * {@link SignatureTextPadesOptionType }
      * {@link SignaturePagePadesOptionType }
      * {@link SignaturePosXPadesOptionType }
      * {@link SignaturePosYPadesOptionType }
+     * {@link HeightPadesOptionType }
+     * {@link WidthPadesOptionType }
+     * {@link FontSizePadesOptionType }
      * 
      * 
      */

@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de FindSignatureReqType complex type.
+ * <p>Java class for FindSignatureReqType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="FindSignatureReqType">
@@ -37,7 +37,7 @@ public class FindSignatureReqType {
     protected boolean attached;
 
     /**
-     * Obtém o valor da propriedade transactionId.
+     * Gets the value of the transactionId property.
      * 
      */
     public long getTransactionId() {
@@ -45,7 +45,7 @@ public class FindSignatureReqType {
     }
 
     /**
-     * Define o valor da propriedade transactionId.
+     * Sets the value of the transactionId property.
      * 
      */
     public void setTransactionId(long value) {
@@ -53,7 +53,7 @@ public class FindSignatureReqType {
     }
 
     /**
-     * Obtém o valor da propriedade attached.
+     * Gets the value of the attached property.
      * 
      */
     public boolean isAttached() {
@@ -61,7 +61,7 @@ public class FindSignatureReqType {
     }
 
     /**
-     * Define o valor da propriedade attached.
+     * Sets the value of the attached property.
      * 
      */
     public void setAttached(boolean value) {

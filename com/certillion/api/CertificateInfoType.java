@@ -11,9 +11,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java de CertificateInfoType complex type.
+ * <p>Java class for CertificateInfoType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="CertificateInfoType">
@@ -61,7 +61,7 @@ public class CertificateInfoType {
     protected CertificateInfoType issuerCertificate;
 
     /**
-     * Obtém o valor da propriedade serialNumber.
+     * Gets the value of the serialNumber property.
      * 
      * @return
      *     possible object is
@@ -73,7 +73,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Define o valor da propriedade serialNumber.
+     * Sets the value of the serialNumber property.
      * 
      * @param value
      *     allowed object is
@@ -85,7 +85,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade subjectDn.
+     * Gets the value of the subjectDn property.
      * 
      * @return
      *     possible object is
@@ -97,7 +97,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Define o valor da propriedade subjectDn.
+     * Sets the value of the subjectDn property.
      * 
      * @param value
      *     allowed object is
@@ -109,7 +109,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade issuerDn.
+     * Gets the value of the issuerDn property.
      * 
      * @return
      *     possible object is
@@ -121,7 +121,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Define o valor da propriedade issuerDn.
+     * Sets the value of the issuerDn property.
      * 
      * @param value
      *     allowed object is
@@ -133,7 +133,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade notBefore.
+     * Gets the value of the notBefore property.
      * 
      * @return
      *     possible object is
@@ -145,7 +145,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Define o valor da propriedade notBefore.
+     * Sets the value of the notBefore property.
      * 
      * @param value
      *     allowed object is
@@ -157,7 +157,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade notAfter.
+     * Gets the value of the notAfter property.
      * 
      * @return
      *     possible object is
@@ -169,7 +169,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Define o valor da propriedade notAfter.
+     * Sets the value of the notAfter property.
      * 
      * @param value
      *     allowed object is
@@ -181,7 +181,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade issuerCertificate.
+     * Gets the value of the issuerCertificate property.
      * 
      * @return
      *     possible object is
@@ -193,7 +193,7 @@ public class CertificateInfoType {
     }
 
     /**
-     * Define o valor da propriedade issuerCertificate.
+     * Sets the value of the issuerCertificate property.
      * 
      * @param value
      *     allowed object is

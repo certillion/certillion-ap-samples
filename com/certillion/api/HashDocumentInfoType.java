@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de HashDocumentInfoType complex type.
+ * <p>Java class for HashDocumentInfoType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="HashDocumentInfoType">
@@ -47,7 +47,7 @@ public class HashDocumentInfoType {
     protected String urlToDocument;
 
     /**
-     * Obtém o valor da propriedade contentType.
+     * Gets the value of the contentType property.
      * 
      * @return
      *     possible object is
@@ -59,7 +59,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Define o valor da propriedade contentType.
+     * Sets the value of the contentType property.
      * 
      * @param value
      *     allowed object is
@@ -71,7 +71,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade documentName.
+     * Gets the value of the documentName property.
      * 
      * @return
      *     possible object is
@@ -83,7 +83,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Define o valor da propriedade documentName.
+     * Sets the value of the documentName property.
      * 
      * @param value
      *     allowed object is
@@ -95,7 +95,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade hash.
+     * Gets the value of the hash property.
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Define o valor da propriedade hash.
+     * Sets the value of the hash property.
      * 
      * @param value
      *     allowed object is
@@ -119,7 +119,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade urlToDocument.
+     * Gets the value of the urlToDocument property.
      * 
      * @return
      *     possible object is
@@ -131,7 +131,7 @@ public class HashDocumentInfoType {
     }
 
     /**
-     * Define o valor da propriedade urlToDocument.
+     * Sets the value of the urlToDocument property.
      * 
      * @param value
      *     allowed object is

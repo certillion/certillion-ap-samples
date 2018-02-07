@@ -4,21 +4,22 @@ package com.certillion.api;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SignatureStatusRespType complex type.
+ * <p>Java class for ExecuteTokenCmdRespType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="SignatureStatusRespType">
+ * &lt;complexType name="ExecuteTokenCmdRespType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}StatusType"/>
- *         &lt;element name="Signature" type="{http://www.w3.org/2001/XMLSchema}base64Binary" minOccurs="0"/>
+ *         &lt;element name="Status" type="{http://esec.com.br/mss/ap}TokenCmdStatus"/>
+ *         &lt;element name="Value" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,26 +29,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SignatureStatusRespType", propOrder = {
+@XmlType(name = "ExecuteTokenCmdRespType", propOrder = {
     "status",
-    "signature"
+    "value"
 })
-public class SignatureStatusRespType {
+public class ExecuteTokenCmdRespType {
 
     @XmlElement(name = "Status", required = true)
-    protected StatusType status;
-    @XmlElement(name = "Signature")
-    protected byte[] signature;
+    @XmlSchemaType(name = "string")
+    protected TokenCmdStatus status;
+    @XmlElement(name = "Value", required = true)
+    protected String value;
 
     /**
      * Gets the value of the status property.
      * 
      * @return
      *     possible object is
-     *     {@link StatusType }
+     *     {@link TokenCmdStatus }
      *     
      */
-    public StatusType getStatus() {
+    public TokenCmdStatus getStatus() {
         return status;
     }
 
@@ -56,33 +58,35 @@ public class SignatureStatusRespType {
      * 
      * @param value
      *     allowed object is
-     *     {@link StatusType }
+     *     {@link TokenCmdStatus }
      *     
      */
-    public void setStatus(StatusType value) {
+    public void setStatus(TokenCmdStatus value) {
         this.status = value;
     }
 
     /**
-     * Gets the value of the signature property.
+     * Gets the value of the value property.
      * 
      * @return
      *     possible object is
-     *     byte[]
+     *     {@link String }
+     *     
      */
-    public byte[] getSignature() {
-        return signature;
+    public String getValue() {
+        return value;
     }
 
     /**
-     * Sets the value of the signature property.
+     * Sets the value of the value property.
      * 
      * @param value
      *     allowed object is
-     *     byte[]
+     *     {@link String }
+     *     
      */
-    public void setSignature(byte[] value) {
-        this.signature = value;
+    public void setValue(String value) {
+        this.value = value;
     }
 
 }

@@ -104,19 +104,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MobileUserInfoTypeV2 }
+     * 
+     */
+    public MobileUserInfoTypeV2 createMobileUserInfoTypeV2() {
+        return new MobileUserInfoTypeV2();
+    }
+
+    /**
      * Create an instance of {@link CertificateInfoType }
      * 
      */
     public CertificateInfoType createCertificateInfoType() {
         return new CertificateInfoType();
-    }
-
-    /**
-     * Create an instance of {@link SignatureInfoType }
-     * 
-     */
-    public SignatureInfoType createSignatureInfoType() {
-        return new SignatureInfoType();
     }
 
     /**
@@ -152,6 +152,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ValidateRespTypeV2 }
+     * 
+     */
+    public ValidateRespTypeV2 createValidateRespTypeV2() {
+        return new ValidateRespTypeV2();
+    }
+
+    /**
      * Create an instance of {@link HashDocumentInfoType }
      * 
      */
@@ -165,6 +173,14 @@ public class ObjectFactory {
      */
     public AttributeIdNameXmldsigOptionType createAttributeIdNameXmldsigOptionType() {
         return new AttributeIdNameXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link ExecuteTokenCmdReqType }
+     * 
+     */
+    public ExecuteTokenCmdReqType createExecuteTokenCmdReqType() {
+        return new ExecuteTokenCmdReqType();
     }
 
     /**
@@ -208,6 +224,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link HeightPadesOptionType }
+     * 
+     */
+    public HeightPadesOptionType createHeightPadesOptionType() {
+        return new HeightPadesOptionType();
+    }
+
+    /**
      * Create an instance of {@link SimpleSignatureRespTypeV4 }
      * 
      */
@@ -232,6 +256,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link FindUserInfoRespType }
+     * 
+     */
+    public FindUserInfoRespType createFindUserInfoRespType() {
+        return new FindUserInfoRespType();
+    }
+
+    /**
      * Create an instance of {@link ValidateReqType }
      * 
      */
@@ -248,6 +280,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link HsmSyncSignatureReqType }
+     * 
+     */
+    public HsmSyncSignatureReqType createHsmSyncSignatureReqType() {
+        return new HsmSyncSignatureReqType();
+    }
+
+    /**
      * Create an instance of {@link AddKeyValXmldsigOptionType }
      * 
      */
@@ -256,19 +296,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ValidateRespType }
-     * 
-     */
-    public ValidateRespType createValidateRespType() {
-        return new ValidateRespType();
-    }
-
-    /**
      * Create an instance of {@link SignaturePosXPadesOptionType }
      * 
      */
     public SignaturePosXPadesOptionType createSignaturePosXPadesOptionType() {
         return new SignaturePosXPadesOptionType();
+    }
+
+    /**
+     * Create an instance of {@link WidthPadesOptionType }
+     * 
+     */
+    public WidthPadesOptionType createWidthPadesOptionType() {
+        return new WidthPadesOptionType();
     }
 
     /**
@@ -296,11 +336,43 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PersonInfoTypeV2 }
+     * 
+     */
+    public PersonInfoTypeV2 createPersonInfoTypeV2() {
+        return new PersonInfoTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link ExecuteTokenCmdRespType }
+     * 
+     */
+    public ExecuteTokenCmdRespType createExecuteTokenCmdRespType() {
+        return new ExecuteTokenCmdRespType();
+    }
+
+    /**
+     * Create an instance of {@link FindUserInfoReqType }
+     * 
+     */
+    public FindUserInfoReqType createFindUserInfoReqType() {
+        return new FindUserInfoReqType();
+    }
+
+    /**
      * Create an instance of {@link StatusRespType }
      * 
      */
     public StatusRespType createStatusRespType() {
         return new StatusRespType();
+    }
+
+    /**
+     * Create an instance of {@link CertificateResumedInfoType }
+     * 
+     */
+    public CertificateResumedInfoType createCertificateResumedInfoType() {
+        return new CertificateResumedInfoType();
     }
 
     /**
@@ -317,6 +389,14 @@ public class ObjectFactory {
      */
     public BatchSignatureRespTypeV2 createBatchSignatureRespTypeV2() {
         return new BatchSignatureRespTypeV2();
+    }
+
+    /**
+     * Create an instance of {@link RemoveSignatureIdXmldsigOptionType }
+     * 
+     */
+    public RemoveSignatureIdXmldsigOptionType createRemoveSignatureIdXmldsigOptionType() {
+        return new RemoveSignatureIdXmldsigOptionType();
     }
 
     /**
@@ -344,11 +424,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link FontSizePadesOptionType }
+     * 
+     */
+    public FontSizePadesOptionType createFontSizePadesOptionType() {
+        return new FontSizePadesOptionType();
+    }
+
+    /**
      * Create an instance of {@link ElementsIdXmldsigOptionType }
      * 
      */
     public ElementsIdXmldsigOptionType createElementsIdXmldsigOptionType() {
         return new ElementsIdXmldsigOptionType();
+    }
+
+    /**
+     * Create an instance of {@link DigestMethodXmldsigOptionType }
+     * 
+     */
+    public DigestMethodXmldsigOptionType createDigestMethodXmldsigOptionType() {
+        return new DigestMethodXmldsigOptionType();
     }
 
     /**

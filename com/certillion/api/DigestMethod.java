@@ -7,34 +7,34 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for MessagingModeType.
+ * <p>Java class for DigestMethod.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="MessagingModeType">
+ * &lt;simpleType name="DigestMethod">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="synch"/>
- *     &lt;enumeration value="asynchClientServer"/>
- *     &lt;enumeration value="asynchServerServer"/>
+ *     &lt;enumeration value="SHA1"/>
+ *     &lt;enumeration value="SHA256"/>
+ *     &lt;enumeration value="SHA512"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "MessagingModeType")
+@XmlType(name = "DigestMethod")
 @XmlEnum
-public enum MessagingModeType {
+public enum DigestMethod {
 
-    @XmlEnumValue("synch")
-    SYNCH("synch"),
-    @XmlEnumValue("asynchClientServer")
-    ASYNCH_CLIENT_SERVER("asynchClientServer"),
-    @XmlEnumValue("asynchServerServer")
-    ASYNCH_SERVER_SERVER("asynchServerServer");
+    @XmlEnumValue("SHA1")
+    SHA_1("SHA1"),
+    @XmlEnumValue("SHA256")
+    SHA_256("SHA256"),
+    @XmlEnumValue("SHA512")
+    SHA_512("SHA512");
     private final String value;
 
-    MessagingModeType(String v) {
+    DigestMethod(String v) {
         value = v;
     }
 
@@ -42,8 +42,8 @@ public enum MessagingModeType {
         return value;
     }
 
-    public static MessagingModeType fromValue(String v) {
-        for (MessagingModeType c: MessagingModeType.values()) {
+    public static DigestMethod fromValue(String v) {
+        for (DigestMethod c: DigestMethod.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de SimpleSignatureReqTypeV4 complex type.
+ * <p>Java class for SimpleSignatureReqTypeV4 complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="SimpleSignatureReqTypeV4">
@@ -77,7 +77,7 @@ public class SimpleSignatureReqTypeV4 {
     protected long apId;
 
     /**
-     * Obtém o valor da propriedade user.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
@@ -89,7 +89,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade user.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
@@ -101,7 +101,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade dataToBeSigned.
+     * Gets the value of the dataToBeSigned property.
      * 
      * @return
      *     possible object is
@@ -113,7 +113,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade dataToBeSigned.
+     * Sets the value of the dataToBeSigned property.
      * 
      * @param value
      *     allowed object is
@@ -125,7 +125,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade fingerprint.
+     * Gets the value of the fingerprint property.
      * 
      * @return
      *     possible object is
@@ -137,7 +137,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade fingerprint.
+     * Sets the value of the fingerprint property.
      * 
      * @param value
      *     allowed object is
@@ -149,7 +149,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade certificateFilters.
+     * Gets the value of the certificateFilters property.
      * 
      * @return
      *     possible object is
@@ -161,7 +161,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade certificateFilters.
+     * Sets the value of the certificateFilters property.
      * 
      * @param value
      *     allowed object is
@@ -202,7 +202,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade signaturePolicy.
+     * Gets the value of the signaturePolicy property.
      * 
      * @return
      *     possible object is
@@ -214,7 +214,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade signaturePolicy.
+     * Sets the value of the signaturePolicy property.
      * 
      * @param value
      *     allowed object is
@@ -226,7 +226,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade signatureStandard.
+     * Gets the value of the signatureStandard property.
      * 
      * @return
      *     possible object is
@@ -238,7 +238,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade signatureStandard.
+     * Sets the value of the signatureStandard property.
      * 
      * @param value
      *     allowed object is
@@ -250,7 +250,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade timeOut.
+     * Gets the value of the timeOut property.
      * 
      * @return
      *     possible object is
@@ -262,7 +262,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade timeOut.
+     * Sets the value of the timeOut property.
      * 
      * @param value
      *     allowed object is
@@ -274,7 +274,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade messagingMode.
+     * Gets the value of the messagingMode property.
      * 
      * @return
      *     possible object is
@@ -286,7 +286,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade messagingMode.
+     * Sets the value of the messagingMode property.
      * 
      * @param value
      *     allowed object is
@@ -298,7 +298,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade testMode.
+     * Gets the value of the testMode property.
      * 
      */
     public boolean isTestMode() {
@@ -306,7 +306,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade testMode.
+     * Sets the value of the testMode property.
      * 
      */
     public void setTestMode(boolean value) {
@@ -314,7 +314,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Obtém o valor da propriedade apId.
+     * Gets the value of the apId property.
      * 
      */
     public long getApId() {
@@ -322,7 +322,7 @@ public class SimpleSignatureReqTypeV4 {
     }
 
     /**
-     * Define o valor da propriedade apId.
+     * Sets the value of the apId property.
      * 
      */
     public void setApId(long value) {

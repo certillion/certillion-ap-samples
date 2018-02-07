@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de SignaturePolicyType.
+ * <p>Java class for SignaturePolicyType.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
  * &lt;simpleType name="SignaturePolicyType">
@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="AD_RC"/>
  *     &lt;enumeration value="AD_RV"/>
  *     &lt;enumeration value="AD_RA"/>
+ *     &lt;enumeration value="ADOBE_PDF"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -31,7 +32,8 @@ public enum SignaturePolicyType {
     AD_RT,
     AD_RC,
     AD_RV,
-    AD_RA;
+    AD_RA,
+    ADOBE_PDF;
 
     public String value() {
         return name();

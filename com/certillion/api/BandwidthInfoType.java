@@ -10,9 +10,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java de BandwidthInfoType complex type.
+ * <p>Java class for BandwidthInfoType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="BandwidthInfoType">
@@ -47,7 +47,7 @@ public class BandwidthInfoType {
     protected XMLGregorianCalendar dateToRenew;
 
     /**
-     * Obtém o valor da propriedade totalBandwidth.
+     * Gets the value of the totalBandwidth property.
      * 
      */
     public long getTotalBandwidth() {
@@ -55,7 +55,7 @@ public class BandwidthInfoType {
     }
 
     /**
-     * Define o valor da propriedade totalBandwidth.
+     * Sets the value of the totalBandwidth property.
      * 
      */
     public void setTotalBandwidth(long value) {
@@ -63,7 +63,7 @@ public class BandwidthInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade usedBandwidth.
+     * Gets the value of the usedBandwidth property.
      * 
      */
     public long getUsedBandwidth() {
@@ -71,7 +71,7 @@ public class BandwidthInfoType {
     }
 
     /**
-     * Define o valor da propriedade usedBandwidth.
+     * Sets the value of the usedBandwidth property.
      * 
      */
     public void setUsedBandwidth(long value) {
@@ -79,7 +79,7 @@ public class BandwidthInfoType {
     }
 
     /**
-     * Obtém o valor da propriedade dateToRenew.
+     * Gets the value of the dateToRenew property.
      * 
      * @return
      *     possible object is
@@ -91,7 +91,7 @@ public class BandwidthInfoType {
     }
 
     /**
-     * Define o valor da propriedade dateToRenew.
+     * Sets the value of the dateToRenew property.
      * 
      * @param value
      *     allowed object is

@@ -12,9 +12,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Classe Java de SignatureInfoTypeV2 complex type.
+ * <p>Java class for SignatureInfoTypeV2 complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="SignatureInfoTypeV2">
@@ -66,7 +66,7 @@ public class SignatureInfoTypeV2 {
     protected String legalIdentifier;
 
     /**
-     * Obtém o valor da propriedade valid.
+     * Gets the value of the valid property.
      * 
      */
     public boolean isValid() {
@@ -74,7 +74,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade valid.
+     * Sets the value of the valid property.
      * 
      */
     public void setValid(boolean value) {
@@ -111,7 +111,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade signingTime.
+     * Gets the value of the signingTime property.
      * 
      * @return
      *     possible object is
@@ -123,7 +123,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade signingTime.
+     * Sets the value of the signingTime property.
      * 
      * @param value
      *     allowed object is
@@ -135,7 +135,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade signerCertificate.
+     * Gets the value of the signerCertificate property.
      * 
      * @return
      *     possible object is
@@ -147,7 +147,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade signerCertificate.
+     * Sets the value of the signerCertificate property.
      * 
      * @param value
      *     allowed object is
@@ -159,7 +159,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade policyId.
+     * Gets the value of the policyId property.
      * 
      * @return
      *     possible object is
@@ -171,7 +171,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade policyId.
+     * Sets the value of the policyId property.
      * 
      * @param value
      *     allowed object is
@@ -183,7 +183,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade policyUrl.
+     * Gets the value of the policyUrl property.
      * 
      * @return
      *     possible object is
@@ -195,7 +195,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade policyUrl.
+     * Sets the value of the policyUrl property.
      * 
      * @param value
      *     allowed object is
@@ -207,7 +207,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Obtém o valor da propriedade legalIdentifier.
+     * Gets the value of the legalIdentifier property.
      * 
      * @return
      *     possible object is
@@ -219,7 +219,7 @@ public class SignatureInfoTypeV2 {
     }
 
     /**
-     * Define o valor da propriedade legalIdentifier.
+     * Sets the value of the legalIdentifier property.
      * 
      * @param value
      *     allowed object is

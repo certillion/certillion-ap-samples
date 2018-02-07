@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de ValidateReqType complex type.
+ * <p>Java class for ValidateReqType complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="ValidateReqType">
@@ -43,7 +43,7 @@ public class ValidateReqType {
     protected byte[] content;
 
     /**
-     * Obtém o valor da propriedade signature.
+     * Gets the value of the signature property.
      * 
      * @return
      *     possible object is
@@ -55,7 +55,7 @@ public class ValidateReqType {
     }
 
     /**
-     * Define o valor da propriedade signature.
+     * Sets the value of the signature property.
      * 
      * @param value
      *     allowed object is
@@ -67,7 +67,7 @@ public class ValidateReqType {
     }
 
     /**
-     * Obtém o valor da propriedade content.
+     * Gets the value of the content property.
      * 
      * @return
      *     possible object is
@@ -78,7 +78,7 @@ public class ValidateReqType {
     }
 
     /**
-     * Define o valor da propriedade content.
+     * Sets the value of the content property.
      * 
      * @param value
      *     allowed object is

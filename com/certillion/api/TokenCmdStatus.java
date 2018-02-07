@@ -6,34 +6,32 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for mobileStatus.
+ * <p>Java class for TokenCmdStatus.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="mobileStatus">
+ * &lt;simpleType name="TokenCmdStatus">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="UNREAD"/>
- *     &lt;enumeration value="READ"/>
- *     &lt;enumeration value="DONE"/>
+ *     &lt;enumeration value="OK"/>
+ *     &lt;enumeration value="ERROR"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "mobileStatus")
+@XmlType(name = "TokenCmdStatus")
 @XmlEnum
-public enum MobileStatus {
+public enum TokenCmdStatus {
 
-    UNREAD,
-    READ,
-    DONE;
+    OK,
+    ERROR;
 
     public String value() {
         return name();
     }
 
-    public static MobileStatus fromValue(String v) {
+    public static TokenCmdStatus fromValue(String v) {
         return valueOf(v);
     }
 

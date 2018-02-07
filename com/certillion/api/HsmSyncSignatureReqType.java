@@ -1,7 +1,6 @@
 
 package com.certillion.api;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,28 +12,26 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for BatchSignatureReqTypeV2 complex type.
+ * <p>Java class for HsmSyncSignatureReqType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="BatchSignatureReqTypeV2">
+ * &lt;complexType name="HsmSyncSignatureReqType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="User" type="{http://esec.com.br/mss/ap}UserType"/>
- *         &lt;element name="DataToBeDisplayed" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Fingerprint" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="DocumentsToBeSigned" type="{http://esec.com.br/mss/ap}BatchInfoType" maxOccurs="unbounded"/>
+ *         &lt;element name="Fingerprint" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="DocumentsToBeSigned" type="{http://esec.com.br/mss/ap}BatchInfoType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="DataToBeSigned" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="CertificateFilters" type="{http://esec.com.br/mss/ap}CertificateFiltersType" minOccurs="0"/>
  *         &lt;element name="AdditionalServices" type="{http://esec.com.br/mss/ap}AdditionalServiceType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attribute name="TimeOut" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
- *       &lt;attribute name="MessagingMode" use="required" type="{http://esec.com.br/mss/ap}MessagingModeType" />
- *       &lt;attribute name="TestMode" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="ApId" type="{http://www.w3.org/2001/XMLSchema}long" />
  *       &lt;attribute name="SignatureStandard" type="{http://esec.com.br/mss/ap}SignatureStandardType" />
  *       &lt;attribute name="SignaturePolicy" type="{http://esec.com.br/mss/ap}SignaturePolicyType" />
- *       &lt;attribute name="ApId" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
+ *       &lt;attribute name="TestMode" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -43,42 +40,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "BatchSignatureReqTypeV2", propOrder = {
+@XmlType(name = "HsmSyncSignatureReqType", propOrder = {
     "user",
-    "dataToBeDisplayed",
     "fingerprint",
     "documentsToBeSigned",
+    "dataToBeSigned",
     "certificateFilters",
     "additionalServices"
 })
-public class BatchSignatureReqTypeV2 {
+public class HsmSyncSignatureReqType {
 
     @XmlElement(name = "User", required = true)
     protected UserType user;
-    @XmlElement(name = "DataToBeDisplayed", required = true)
-    protected String dataToBeDisplayed;
-    @XmlElement(name = "Fingerprint")
+    @XmlElement(name = "Fingerprint", required = true)
     protected String fingerprint;
-    @XmlElement(name = "DocumentsToBeSigned", required = true)
+    @XmlElement(name = "DocumentsToBeSigned")
     protected List<BatchInfoType> documentsToBeSigned;
+    @XmlElement(name = "DataToBeSigned")
+    protected String dataToBeSigned;
     @XmlElement(name = "CertificateFilters")
     protected CertificateFiltersType certificateFilters;
     @XmlElement(name = "AdditionalServices")
     @XmlSchemaType(name = "string")
     protected List<AdditionalServiceType> additionalServices;
-    @XmlAttribute(name = "TimeOut")
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger timeOut;
-    @XmlAttribute(name = "MessagingMode", required = true)
-    protected MessagingModeType messagingMode;
-    @XmlAttribute(name = "TestMode", required = true)
-    protected boolean testMode;
+    @XmlAttribute(name = "ApId")
+    protected Long apId;
     @XmlAttribute(name = "SignatureStandard")
     protected SignatureStandardType signatureStandard;
     @XmlAttribute(name = "SignaturePolicy")
     protected SignaturePolicyType signaturePolicy;
-    @XmlAttribute(name = "ApId", required = true)
-    protected long apId;
+    @XmlAttribute(name = "TestMode")
+    protected Boolean testMode;
 
     /**
      * Gets the value of the user property.
@@ -102,30 +94,6 @@ public class BatchSignatureReqTypeV2 {
      */
     public void setUser(UserType value) {
         this.user = value;
-    }
-
-    /**
-     * Gets the value of the dataToBeDisplayed property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDataToBeDisplayed() {
-        return dataToBeDisplayed;
-    }
-
-    /**
-     * Sets the value of the dataToBeDisplayed property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDataToBeDisplayed(String value) {
-        this.dataToBeDisplayed = value;
     }
 
     /**
@@ -182,6 +150,30 @@ public class BatchSignatureReqTypeV2 {
     }
 
     /**
+     * Gets the value of the dataToBeSigned property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDataToBeSigned() {
+        return dataToBeSigned;
+    }
+
+    /**
+     * Sets the value of the dataToBeSigned property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDataToBeSigned(String value) {
+        this.dataToBeSigned = value;
+    }
+
+    /**
      * Gets the value of the certificateFilters property.
      * 
      * @return
@@ -235,67 +227,27 @@ public class BatchSignatureReqTypeV2 {
     }
 
     /**
-     * Gets the value of the timeOut property.
+     * Gets the value of the apId property.
      * 
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link Long }
      *     
      */
-    public BigInteger getTimeOut() {
-        return timeOut;
+    public Long getApId() {
+        return apId;
     }
 
     /**
-     * Sets the value of the timeOut property.
+     * Sets the value of the apId property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link Long }
      *     
      */
-    public void setTimeOut(BigInteger value) {
-        this.timeOut = value;
-    }
-
-    /**
-     * Gets the value of the messagingMode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MessagingModeType }
-     *     
-     */
-    public MessagingModeType getMessagingMode() {
-        return messagingMode;
-    }
-
-    /**
-     * Sets the value of the messagingMode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MessagingModeType }
-     *     
-     */
-    public void setMessagingMode(MessagingModeType value) {
-        this.messagingMode = value;
-    }
-
-    /**
-     * Gets the value of the testMode property.
-     * 
-     */
-    public boolean isTestMode() {
-        return testMode;
-    }
-
-    /**
-     * Sets the value of the testMode property.
-     * 
-     */
-    public void setTestMode(boolean value) {
-        this.testMode = value;
+    public void setApId(Long value) {
+        this.apId = value;
     }
 
     /**
@@ -347,19 +299,27 @@ public class BatchSignatureReqTypeV2 {
     }
 
     /**
-     * Gets the value of the apId property.
+     * Gets the value of the testMode property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
-    public long getApId() {
-        return apId;
+    public Boolean isTestMode() {
+        return testMode;
     }
 
     /**
-     * Sets the value of the apId property.
+     * Sets the value of the testMode property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
-    public void setApId(long value) {
-        this.apId = value;
+    public void setTestMode(Boolean value) {
+        this.testMode = value;
     }
 
 }
