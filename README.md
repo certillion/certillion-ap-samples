@@ -16,7 +16,7 @@ Em [Manual de Integração](https://docs.certillion.com/manual-integracao) você
 
 Você precisa ter um "e-CNPJ" ou "certificado de equipamento" A1 válido da ICP-BR para autenticar o seu servidor junto ao Certillion.
 
-1. Use a ferramenta [WS-Signer](https://download.certillion.com/ws-signer), que funciona como um proxy que autentica as requisões para você.
+1. Use a ferramenta [WS-Signer](https://download.certillion.com/ws-signer), que funciona como um proxy que autentica as requisições para você.
 
 Não esqueça de alterar a URL do servidor.
 
