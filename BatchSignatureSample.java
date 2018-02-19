@@ -92,13 +92,10 @@ public class BatchSignatureSample {
 		
 		for (int i = shift; i < args.length; i++)
 			files[i-shift] = new File(args[i]);
-//long t1, t2, t3, t4, t5, t6;
-//t1 = System.currentTimeMillis();
 		
 		// uploading documents through Rest protocol
 		for (int i = 0; i < files.length; i++)
 			hashes[i] = uploadFile(files[i], REST_URL + "/uploadDocument");
-//t3 = System.currentTimeMillis();
 			
 		// connecting to endpoint
 		Service signatureService = Service.create(new URL(WSDL_URL), new QName("http://esec.com.br/mss/ap", "SignatureService"));
@@ -211,7 +208,6 @@ public class BatchSignatureSample {
 		}
 		BatchSignatureRespTypeV2 batchSignatureResp = null;
 		
-//t5 = System.currentTimeMillis();
 		try {
 			batchSignatureResp = endpoint.batchSignature(batchSignatureReq);
 		}
@@ -284,7 +280,6 @@ public class BatchSignatureSample {
 				System.out.println("Error receiving the response, the status is " + statusRespValue);
 			}
 			else {
-//t6 = System.currentTimeMillis();
 				
 				System.out.println("Signature received, the status is " + statusRespValue);
 				
@@ -307,7 +302,6 @@ public class BatchSignatureSample {
 						System.out.println("\t- Transaction [" + documentId + "], document \"" + documentName + "\", status: " + documentStatus);
 						
 						if (documentStatus == CertillionStatus.SIGNATURE_VALID) {
-//t4 = System.currentTimeMillis();
 							SignatureInfoTypeV2 signatureInfo = document.getSignatureInfo();
 							
 							if (signatureInfo != null) {
@@ -333,10 +327,6 @@ public class BatchSignatureSample {
 							
 							// [OPTIONAL] requesting, downloading and writing signature with original file attached 
 							downloadFile(documentName + ".p7m", documentId, path, REST_URL + "/document/signed/");
-//t2 = System.currentTimeMillis();
-//System.out.println("req-resp = " + (t6 - t5) + " ms");
-//System.out.println("req-resp + soap = " + (t4 - t3) + " ms");
-//System.out.println("TOTAL = " + (t2 - t1) + " ms");
 						}
 					}
 				}
