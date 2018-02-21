@@ -49,6 +49,7 @@ public class BatchSignatureSample {
 
 	private static String REST_URL;
 	private static String WSDL_URL;
+	private static String FINGERPRINT;
 	
 	private static boolean DUMP_XML;
 	
@@ -131,7 +132,7 @@ public class BatchSignatureSample {
 		
 		if (useAuthentic) {
 			System.out.println("Requesting authorization for automatic signature");
-			batchSignatureReq.setFingerprint("UseToken=false;OtpValue=814098");
+			batchSignatureReq.setFingerprint(FINGERPRINT);
 		}
 		
 		// set the target user
@@ -149,10 +150,10 @@ public class BatchSignatureSample {
 				document.setDocumentName(files[i].getName());
 				document.setContentType(getContentTypeFromExtension(files[i].getName()));
 				document.setHash(hashes[i]);
-				
 				/*
 				SignatureStandardOptionsType signatureStandardOptions = new SignatureStandardOptionsType();
 				List<Object> options = signatureStandardOptions.getElementsIdOrAttributeIdNameOrElementsName();
+				
 				
 				// ---------- BEGIN ADOBEPDF/PADES ----------
 				// how to set a visible signature on PAdES standard
@@ -165,7 +166,7 @@ public class BatchSignatureSample {
 				WidthPadesOptionType width = new WidthPadesOptionType();
 				FontSizePadesOptionType size = new FontSizePadesOptionType();
 				
-				text.setValue("Signed by John Smith");
+				text.setValue("Signed by ");
 				page.setValue(1);
 				posX.setValue(100);
 				posY.setValue(100);
@@ -199,7 +200,7 @@ public class BatchSignatureSample {
 		        options.add(attributeIdName);
 		        options.add(addSubjectName);
 		        options.add(addKeyVal);
-				// ---------- END XMLDSIG ----------
+		        // ---------- END XMLDSIG ----------
 				
 				document.setSignatureStandardOptions(signatureStandardOptions);
 				*/
@@ -280,7 +281,6 @@ public class BatchSignatureSample {
 				System.out.println("Error receiving the response, the status is " + statusRespValue);
 			}
 			else {
-				
 				System.out.println("Signature received, the status is " + statusRespValue);
 				
 				List<DocumentSignatureStatusInfoTypeV3> documentInfos = statusResp.getDocumentSignatureStatus();
@@ -516,25 +516,27 @@ public class BatchSignatureSample {
 		}
 		
 		//To use your own ws-signer
-		String BASE_DEFAULT = "http://localhost:8280";
+		//String BASE_DEFAULT = "http://localhost:8280";
 		
 		// To use e-Sec's development server (must require access)
-		//String BASE_DEFAULT = "http://labs.certillion.com";
+		String BASE_DEFAULT = "http://labs.certillion.com";
 		
 		String REST_DEFAULT = "/mss/restful/applicationProvider";
 		String WSDL_DEFAULT = "/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
 		
-		boolean DUMP_DEFAULT = false;
+		boolean DUMP_DEFAULT = true;
 		
 		String base = null;
 		String rest = null;
 		String wsdl = null;
 		boolean dump = false;
+		String fingerprint = null;
 
 		String BASE_PROPERTY_NAME = "BASE";
 		String REST_PROPERTY_NAME = "REST";
 		String WSDL_PROPERTY_NAME = "WSDL";
 		String DUMP_PROPERTY_NAME = "DUMP";
+		String FING_PROPERTY_NAME = "FING";
 		
 		if (loaded) {
 			base = prop.getProperty(BASE_PROPERTY_NAME);
@@ -560,6 +562,10 @@ public class BatchSignatureSample {
 				System.out.println("\"" + DUMP_PROPERTY_NAME + "\" property not found. Using default \"" + DUMP_DEFAULT + "\".");
 				dump = DUMP_DEFAULT;
 			}
+			else
+				dump = Boolean.parseBoolean(dumpStr);
+			
+			fingerprint = prop.getProperty(FING_PROPERTY_NAME);
 		}
 		else {
 			base = BASE_DEFAULT;
@@ -572,9 +578,12 @@ public class BatchSignatureSample {
 		System.out.println("\t" + REST_PROPERTY_NAME + " = \"" + rest + "\"");
 		System.out.println("\t" + WSDL_PROPERTY_NAME + " = \"" + wsdl + "\"");
 		System.out.println("\t" + DUMP_PROPERTY_NAME + " = \"" + dump + "\"");
+		System.out.println("\t" + FING_PROPERTY_NAME + " = \"" + (fingerprint != null ? fingerprint : "") + "\" (must use \"-hsmauth\" to work)");
 		
 		REST_URL = base + rest;
 		WSDL_URL = base + wsdl;
 		DUMP_XML = dump;
+		FINGERPRINT = fingerprint;
+		//FINGERPRINT = "UseToken=false;OtpValue=123456";
 	}
 }
