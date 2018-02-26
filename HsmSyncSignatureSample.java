@@ -29,7 +29,7 @@ import com.certillion.api.UserType;
 import com.certillion.utils.CertillionStatus;
 
 /**
- * Exemplo de assinatura síncrons de documentos para chaves <b>exclusivamente</b> em HSM.
+ * Exemplo de assinatura síncrona de documentos para chaves <b>exclusivamente</b> em HSM.
  * 
  * NOTA: ESTE EXEMPLO TEM COMO OBJETIVO PRINCIPAL A DIDÁTICA, PARA QUE O 
  * 		 DESENVOLVEDOR ENTENDA O FUNCIONAMENTO DE MODO RÁPIDO E EFETIVO. ANTES
@@ -43,52 +43,53 @@ public class HsmSyncSignatureSample {
 
 	static String REST_URL;
 	static String WSDL_URL;
-	static String FINGERPRINT;
 	
 	private static boolean DUMP_XML;
 	
 	public static void main(String[] args) throws Exception {
 		if (args.length < 2) {
-			System.out.println("use: java HsmSyncSignatureSample [-fp \"fingerprint-options\"] id file1 [file2] ... [fileN]");
+			System.out.println("use: java HsmSyncSignatureSample [-fingerprint \"fingerprint-options\"] id file1 [file2] ... [fileN]");
 			System.out.println("where:");
 			System.out.println("\t-fp: use <FINGERPRINT> option - must specify options");
-			System.out.println("ex:  java HsmSyncSignatureSample -fp \"UseToken=false;OtpValue=123456\" user@gmail.com doc1.pdf");
+			System.out.println("ex:  java HsmSyncSignatureSample -fingerprint \"UseToken=false;OtpValue=123456\" user@gmail.com doc1.pdf");
 			System.exit(1);
 		}
 
 		loadURLs();
 
 		//Do you want to see the generated soap messages?
-		//com.certillion.utils.WSUtils.dumpToConsole(DUMP_XML);
+		com.certillion.utils.WSUtils.dumpToConsole(DUMP_XML);
 		
 		// reading command-line parameters
 		int shift = 0;
-		boolean fp = false;
+		String fingerprint = null;
 		
-		if (args[0].toLowerCase().trim().equals("-fp")) {
-			fp = true;
-			FINGERPRINT = args[1];
+		if (args[0].toLowerCase().trim().equals("-fingerprint")) {
+			fingerprint = args[1];
 			shift = 2;
 		}
 		
 		String userId = args[0+shift];
-		String note = args[1+shift];
-		
+
+		shift++;
+
 		File files[] = new File[args.length - shift];
 
-		for (int i = shift; i < args.length; i++)
+		for (int i = shift; i < args.length; i++) {
 			files[i-shift] = new File(args[i]);
+		}
 		
 		// request signature
-		sign(files, userId, note, fp);
+		sign(files, userId, fingerprint);
 	}
 	
-	static void sign(File files[], String userId, String note, boolean fp) throws Exception {
+	static void sign(File files[], String userId, String fingerprint) throws Exception {
 		String hashes[] = new String[files.length];
 		
 		// uploading documents through Rest protocol
-		for (int i = 0; i < files.length; i++)
+		for (int i = 0; i < files.length; i++) {
 			hashes[i] = uploadFile(files[i], REST_URL + "/uploadDocument");
+		}
 			
 		// connecting to endpoint
 		Service signatureService = Service.create(new URL(WSDL_URL), new QName("http://esec.com.br/mss/ap", "SignatureService"));
@@ -109,9 +110,9 @@ public class HsmSyncSignatureSample {
 		
 		hsmSyncSignatureReq.setTestMode(!usingICPBRASILCertificates);
 		
-		if (fp) {
+		if (fingerprint != null) {
 			System.out.println("Requesting with FINGERPRINT options");
-			hsmSyncSignatureReq.setFingerprint(FINGERPRINT);
+			hsmSyncSignatureReq.setFingerprint(fingerprint);
 		}
 		
 		// set the target user
@@ -464,19 +465,17 @@ public class HsmSyncSignatureSample {
 		String REST_DEFAULT = "/mss/restful/applicationProvider";
 		String WSDL_DEFAULT = "/mss/SignatureService/SignatureEndpointBeanV2.wsdl";
 		
-		boolean DUMP_DEFAULT = true;
+		boolean DUMP_DEFAULT = false;
 		
 		String base = null;
 		String rest = null;
 		String wsdl = null;
 		boolean dump = false;
-		String fingerprint = null;
 
 		String BASE_PROPERTY_NAME = "BASE";
 		String REST_PROPERTY_NAME = "REST";
 		String WSDL_PROPERTY_NAME = "WSDL";
 		String DUMP_PROPERTY_NAME = "DUMP";
-		String FING_PROPERTY_NAME = "FING";
 		
 		if (loaded) {
 			base = prop.getProperty(BASE_PROPERTY_NAME);
@@ -504,8 +503,6 @@ public class HsmSyncSignatureSample {
 			}
 			else
 				dump = Boolean.parseBoolean(dumpStr);
-			
-			fingerprint = prop.getProperty(FING_PROPERTY_NAME);
 		}
 		else {
 			base = BASE_DEFAULT;
@@ -518,11 +515,9 @@ public class HsmSyncSignatureSample {
 		System.out.println("\t" + REST_PROPERTY_NAME + " = \"" + rest + "\"");
 		System.out.println("\t" + WSDL_PROPERTY_NAME + " = \"" + wsdl + "\"");
 		System.out.println("\t" + DUMP_PROPERTY_NAME + " = \"" + dump + "\"");
-		System.out.println("\t" + FING_PROPERTY_NAME + " = \"" + (fingerprint != null ? fingerprint : "") + "\" (must use \"-fp\" to work)");
 		
 		REST_URL = base + rest;
 		WSDL_URL = base + wsdl;
 		DUMP_XML = dump;
-		FINGERPRINT = fingerprint;
 	}
 }
