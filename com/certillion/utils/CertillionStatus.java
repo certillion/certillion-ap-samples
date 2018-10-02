@@ -26,7 +26,10 @@ public enum CertillionStatus {
 	// 140 to 149: signature process
 	SIGNATURE_VALID(140),
 
-	
+	// 150 to 159: querying information
+	USER_ACTIVE(150),
+	DEVICE_READY(151),
+
 	/* Codes from 200 to 299 indicates an error of the sender or problems with the request, a transaction is not even created. */
 
 	// 200 to 209: malformed or ignored requests
@@ -47,17 +50,23 @@ public enum CertillionStatus {
 	ACCESS_NOT_AUTHORIZED(220),
 	ACCESS_NO_HANDSHAKE(221),
 	ACCESS_NO_SPECIFIED(222),
+	TRANSACTION_NOT_AUTHORIZED(223),
 
-	
+	// 230 to 239: user status
+	USER_NO_DEVICE(230),
+	DEVICE_NO_CERTIFICATE(231),
+	DEVICE_REMOVED_FROM_POLLING(232),
+
 	/* Codes from 300 to 399 are for errors that can happen in any transaction, this errors are returned only by the server. */
 
 	// 300 to 309: network problems
-	NETWORK_ERROR(300),	
+	NETWORK_ERROR(300),
 
 	// 310 to 319: not found
 	TRANSACTION_NOT_FOUND(310),
 	IDENTIFIER_NOT_FOUND(311),
 	SERVICE_NOT_FOUND(312),
+
 
 	// 320 to 329: redirecting mobile errors
 	MOBILE_SIGNATURE_ERROR(320),
@@ -66,7 +75,7 @@ public enum CertillionStatus {
 
 	/* Codes from 400 to 499 are for errors that can happen with any message, in the server or in the mobile. */
 
-	// 400 to 409: cancelations
+	// 400 to 409: cancellations
 	USER_CANCELED(400),
 
 	// 410 to 419: error reading message
@@ -119,7 +128,7 @@ public enum CertillionStatus {
 	CERTIFICATE_BLOCKED(607),
 	CERTIFICATE_NOT_TRUSTED(608),
 	KEY_SIZE_INVALID(609),
-	CRL_UNAVAILABLE (610),
+	CRL_UNAVAILABLE(610),
 
 	// 620 to 629: not found
 	CERTIFICATE_NOT_FOUND(620),
@@ -148,20 +157,26 @@ public enum CertillionStatus {
 
 	// 700 to 709: generic invalid signature errors
 	SIGNATURE_INVALID(700),
+	SIGNATURE_CANT_VALIDATE(701),
 
 	// 710 to 719: not found
 	TEMPLATE_NOT_FOUND(710),
 	DOCUMENT_NOT_FOUND(711),
 	WRONG_DOCUMENT_HASH(712),
 	WRONG_DOCUMENT_TYPE(713),
-	
-	// 720 to 729: errors in XMLDsig signatures
+
+	// 720 to 729: errors in XMLDSig signatures
 	XMLDSIG_EMPTY_ELEMENT_LIST(720),
-	XMLDSIG_ELEMENTS_WITHOUT_ATRIBUTE_ID(721),
+	XMLDSIG_ELEMENTS_WITHOUT_ATTRIBUTE_ID(721),
 	XMLDSIG_SAME_ID_FOR_MULTIPLE_ELEMENTS(722),
-	XMLDSIG_NO_ELEMENT_FOUND(723);
+	XMLDSIG_NO_ELEMENT_FOUND(723),
 
-
+	/* Codes from 800 to 809 are for errors related to Certillion Manager. */
+	CONTRACT_NOT_FOUND(800),
+	DUPLICATED_ACCOUNT(801),
+	MAX_ACCOUNTS_REACHED(802),
+	ACCOUNT_NOT_REGISTERED(803);
+	
 	private int code;
 	
 	private CertillionStatus(int code) {
